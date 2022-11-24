@@ -1,20 +1,36 @@
 import { Component } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { ActivatedRoute, Router } from "@angular/router";
+import { environment } from "src/environments/environment";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"],
 })
 export class AppComponent {
-  title = 'preparely';
-  
+  title = "preparely";
+  showSideBar = true;
+
   sideBarOpen = true;
 
-  constructor() { }
+  constructor(private router: Router) {
+    this.router.events.subscribe((res) => {
+      console.log(this.router.url, "Current URL");
+      if (this.router.url == "/auth/login" || this.router.url == "/auth") {
+        this.showSideBar = false;
+      } else {
+        this.showSideBar = true;
+      }
+    });
+    // router.events.subscribe((event: Event) => {
+    //   console.log(event);
+    //   if (event instanceof NavigationEnd) {
+    //     this.currentUrl = event.url;
+    //   }
+    // });
+  }
 
-  ngOnInit() { }
-
+  ngOnInit() {}
 
   sideBarToggler() {
     this.sideBarOpen = !this.sideBarOpen;

@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { DefaultComponent } from 'src/app/layout/default/default.component';
-import { ViewReviewComponent } from './view-review/view-review.component';
+import { RouterModule, Routes } from "@angular/router";
+import { DefaultComponent } from "src/app/layout/default/default.component";
+import { ViewReviewComponent } from "./view-review/view-review.component";
 
 const routes: Routes = [
   {
-    path: 'managereview',
-    component: DefaultComponent,
-    children: [{ path: 'viewAll^Reviews', component: ViewReviewComponent }],
+    path: "managereview",
+    // component: DefaultComponent,
+    children: [{ path: "viewAll^Reviews", component: ViewReviewComponent }],
   },
 ];
 

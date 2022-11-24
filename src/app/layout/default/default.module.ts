@@ -7,17 +7,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { MatModule } from 'src/app/shared/mat.module';
 
 @NgModule({
-  declarations: [
-    DefaultComponent
-  ],
-  imports: [
-    CommonModule,
-    DefaultRoutingModule,
-    SharedModule,
-    MatModule,
-  ],
-  exports :[
-    DefaultComponent
-  ]
+  declarations: [DefaultComponent],
+  imports: [CommonModule, DefaultRoutingModule, SharedModule, MatModule],
+  exports: [DefaultComponent],
 })
-export class DefaultModule { }
+export class DefaultModule {}

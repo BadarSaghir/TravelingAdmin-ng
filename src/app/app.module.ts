@@ -20,13 +20,10 @@ import { ManageReviewModule } from './Nav-Modules/manage-review/manage-review.mo
 import { ManageUserModule } from './Nav-Modules/manage-user/manage-user.module';
 import { ManageLocationModule } from './Nav-Modules/manage-location/manage-location.module';
 import { AuthModule } from './auth/auth.module';
-
+import { DefaultModule } from "./layout/default/default.module";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    DashboardComponent
-  ],
+  declarations: [AppComponent, DashboardComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -44,10 +41,9 @@ import { AuthModule } from './auth/auth.module';
     ManageProductModule,
     ManageReviewModule,
     ManageUserModule,
-    ManageLocationModule
-    
+    ManageLocationModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

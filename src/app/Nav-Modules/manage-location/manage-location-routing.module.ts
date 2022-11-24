@@ -6,11 +6,11 @@ import { ViewLocationComponent } from './view-location/view-location.component';
 
 const routes: Routes = [
   {
-    path: 'manage^location',
-    component: DefaultComponent,
+    path: "manage^location",
+    // component: DefaultComponent,
     children: [
-      { path: 'Add^location', component: AddLocationComponent },
-      { path: 'view^location', component: ViewLocationComponent },
+      { path: "Add^location", component: AddLocationComponent },
+      { path: "view^location", component: ViewLocationComponent },
     ],
   },
 ];

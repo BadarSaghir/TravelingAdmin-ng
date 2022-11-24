@@ -3,21 +3,19 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: "app-login",
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.css"],
 })
 export class LoginComponent implements OnInit {
-
-
-  constructor(private router: Router){}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
 
-  proceedlogin(name: any){
+  proceedlogin(name: string, pass: string) {
+    console.log(name, pass);
     localStorage.setItem("username", name);
     this.router.navigate([""]);
   }
-
 }
 

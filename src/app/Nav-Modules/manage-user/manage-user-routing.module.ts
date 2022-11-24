@@ -6,15 +6,15 @@ import { ViewUserComponent } from './view-user/view-user.component';
 
 const routes: Routes = [
   {
-    path: 'manage^user',
-    component: DefaultComponent,
+    path: "manage^user",
+    // component: DefaultComponent,
     children: [
       {
-        path: 'Addnew^user',
+        path: "Addnew^user",
         component: AddUserComponent,
       },
       {
-        path: 'view^users',
+        path: "view^users",
         component: ViewUserComponent,
       },
     ],

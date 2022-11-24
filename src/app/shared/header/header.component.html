@@ -1,7 +1,10 @@
+<div *ngIf="showSideBar">
 <div class="container-fluid">
     <mat-toolbar class="shadow">
 
        <span><img src="../assets/images/asta.png" class="img-fluid logo" width="100" alt="">TRAVELING </span>
+       
+
        <button mat-icon-button (click)="toggleSideBar()">
         <mat-icon>menu</mat-icon>
       </button>
@@ -15,7 +18,7 @@
                 </i>
             </button>
         </div>
-    <button mat-icon-button>
+    <button * mat-icon-button>
         <mat-icon matBadge="4">notifications</mat-icon>
     </button>
     <button mat-button [matMenuTriggerFor]="menu">
@@ -42,7 +45,8 @@
                         <mat-icon  > exit_to_app </mat-icon>
                         Sign out
                     </button>
-                    <button mat-menu-item  routerLinkActive="list-item-active" routerLink="/auth/login">
+               
+                    <button   mat-menu-item  routerLinkActive="list-item-active" routerLink="/auth/login">
                         <mat-icon  > exit_to_app </mat-icon>
                         login
                     </button>
@@ -54,10 +58,19 @@
             </div>
 
     </mat-menu>
-     </mat-toolbar>
-    
 
+    
+    
+    
+</mat-toolbar>
+</div>    
 </div>
 
+<div *ngIf="!showSideBar"  class="container-fluid">
+    <mat-toolbar class="shadow">
+
+       <span><img src="../assets/images/asta.png" class="img-fluid logo" width="100" alt="">TRAVELING </span>
+       </mat-toolbar>
+    </div>
 <!-- logo img  -->
 <!-- <img src="assets/images/logo5.png"> -->
