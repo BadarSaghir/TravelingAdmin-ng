@@ -1,0 +1,47 @@
+*
+{
+  color: #696969;
+  font-weight: 500;
+  background-color: #ebebeb;
+ 
+}
+.side{
+  height: 100vh !important;
+  transition: all 0.5s ease-in-out;
+}
+.active-lin{
+  color: #696969;
+}
+
+h4{
+  margin-bottom: -0.2rem;
+}
+.mat-icon {
+  vertical-align: middle;
+  margin-right: 20px;
+  color: #111 !important;
+}
+.profile-card {
+  text-align: center;
+  padding: 0 15x 15x 15x;
+}
+
+img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  padding: 0.5rem;
+  margin-top: -0.9rem;
+}
+.mat-list-item{
+  color: #696969;
+  font-weight: 500;
+}
+.material-icons{
+  color: rgba(17, 17, 17, 0.745) !important;
+}
+
+.mat-list-item:hover{
+  color: #696969;
+}

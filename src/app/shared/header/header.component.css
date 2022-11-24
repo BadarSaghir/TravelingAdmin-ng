@@ -1,0 +1,211 @@
+*{
+  color: #696969;
+  padding: 0px;
+  margin: 0px;
+}
+.logo{
+  width: 3rem;
+}
+img{
+    width: 5rem;
+}
+.mat-toolbar{
+    background-color: #ebebeb;
+    border-bottom: 2px solid #696969;
+}
+.mat-menu-item{
+    color:black;
+}
+.example-spacer {
+    flex: 1 1 auto;
+}
+.searchBox {
+    position: absolute;
+    top: -2.9%;
+    left: 50%;
+    transform:  translate(-50%,50%);
+    height: 40px;
+    border-radius: 40px;
+    padding: 10px;
+}
+.searchBox .searchInput {
+    width: 30em;
+    padding: 0 6px;
+    background-color: #fff;
+}
+
+.searchBox > .searchButton {
+  background: #fff;
+}
+
+.searchButton {
+    float: right;
+    width: 40px;
+    height: 40px;
+    border: none !important;
+    border-radius: 50%;
+    background-color: #043732;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.4s;
+}
+
+.searchInput {
+    border: none !important;
+    background: none;
+    outline:none;
+    float:left;
+    padding: 0;
+    font-size: 16px;
+    transition: 0.4s;
+    line-height: 40px;
+    width: 0px;
+}
+/* admin area code img  */
+.admin-img{
+  width: 40px;
+  border-radius: 50%;
+}
+.mx-auto img{
+  border-radius: 50%;
+  margin-left: 25px;
+}
+.admin-name{
+  color: #043732;
+  font-weight: bold;
+  font-size: 1rem;
+  text-align: center;
+}
+.admin-email{
+  color: #043732;
+  font-size: 0.8rem;
+  text-align: center;
+}
+.social-links a i{
+  text-align: center;
+  margin-left: 16px;
+  font-size: 1.2rem;
+}
+
+/* admin area code end  */
+
+@media (min-width: 360px) { 
+  .searchBox{
+    display: none;
+  }
+}
+
+/* tab screen 1  */
+@media (min-width: 768px) { 
+  .searchBox{
+    position: absolute;
+    top: -2.5%;
+    left: 57%;
+    transform:  translate(-50%,50%);
+    height: 60px;
+    border-radius: 40px;
+    padding: 10px;
+    display: inherit;
+  }
+  .searchBox .searchInput {
+    width: 20em;
+    padding: 0 6px;
+    background-color: #fff;
+}
+
+.searchBox > .searchButton {
+  background: #fff;
+}
+}
+
+/* tab screen 2 */
+@media (min-width: 820px) { 
+  .searchBox{
+    position: absolute;
+    top: -2.5%;
+    left: 60%;
+    transform:  translate(-50%,50%);
+    height: 60px;
+    border-radius: 40px;
+    padding: 10px;
+    display: inherit;
+  }
+  .searchBox .searchInput {
+    width: 20em;
+    padding: 0 6px;
+    background-color: #fff;
+}
+
+.searchBox > .searchButton {
+  background: #fff;
+}
+}
+
+/* nest hub screen */
+@media (min-width: 1024) { 
+  .searchBox{
+    position: absolute;
+    top: -3%;
+    left: 60%;
+    transform:  translate(-50%,50%);
+    height: 60px;
+    border-radius: 40px;
+    padding: 10px;
+    display: inherit;
+  }
+  .searchBox .searchInput {
+    width: 20em;
+    padding: 0 6px;
+    background-color: #fff;
+}
+
+.searchBox > .searchButton {
+  background: #fff;
+}
+}
+/* nest hub pro screen  */
+@media (min-width: 1280) { 
+  .searchBox{
+    position: absolute;
+    top: -4%;
+    left: 60%;
+    transform:  translate(-50%,50%);
+    height: 60px;
+    border-radius: 40px;
+    padding: 10px;
+    display: inherit;
+  }
+  .searchBox .searchInput {
+    width: 20em;
+    padding: 0 6px;
+    background-color: #fff;
+}
+
+.searchBox > .searchButton {
+  background: #fff;
+}
+}
+
+
+@media (min-width: 1536px) { 
+  .searchBox {
+    position: absolute;
+    top: -4%;
+    left: 50%;
+    transform:  translate(-50%,50%);
+    height: 60px;
+    border-radius: 40px;
+    padding: 10px;
+    display: inherit;
+}
+.searchBox .searchInput {
+    width: 30em;
+    padding: 0 6px;
+    background-color: #fff;
+}
+
+.searchBox > .searchButton {
+  background: #fff;
+}
+}

@@ -1,0 +1,104 @@
+<main class="side main-side">
+<mat-nav-list class="side">
+    <div class="profile-card">
+        <div class="header">
+            <!-- <h4>Admin</h4>
+            <h6>admin@gmail.com</h6> -->
+        </div>
+        <img src="../assets/images/dp.png" class="img-fluid mt-1" alt="">
+        <div class="header">
+            <h4>Admin</h4>
+            <h6>admin@gmail.com</h6>
+        </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <!-- Manage Overview  -->
+    <mat-nav-list >
+        <a mat-list-item routerLinkActive="list-item-active" routerLink="/dashboard" class="active-lin">&nbsp;&nbsp;&nbsp;&nbsp;<mat-icon>dashboard</mat-icon>Overview</a>
+    </mat-nav-list>
+    <!-- Manage Overview  -->
+
+    <!-- manage users -->
+    <mat-accordion class="app-nav-accordion">
+        <mat-expansion-panel class="mat-elevation-z0">
+          <mat-expansion-panel-header>
+              <mat-panel-title>&nbsp;&nbsp;<mat-icon>people</mat-icon>Manage User</mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-nav-list >
+              <a mat-list-item routerLinkActive="list-item-active"  routerLink="/manage^user/Addnew^user" >Add User</a>
+              <a mat-list-item  routerLink="/manage^user/view^users">View Users</a>
+          </mat-nav-list>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <!-- manage users End -->
+
+    <!-- Manage seller  -->    
+    <mat-accordion class="app-nav-accordion">
+        <mat-expansion-panel class="mat-elevation-z0">
+          <mat-expansion-panel-header>
+              <mat-panel-title>&nbsp;&nbsp;<mat-icon> streetview</mat-icon>Manage Seller</mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-nav-list >
+              <a mat-list-item routerLinkActive="list-item-active"  routerLink="/manage-seller/Addnew^Seller" >Add Seller</a>
+              <a mat-list-item  routerLink="/manage-seller/seller^view">View Seller</a>
+          </mat-nav-list>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <!-- Manage seller End -->
+
+    <!-- Manage Sub Admin  -->
+    <!-- <mat-nav-list >
+        <a mat-list-item routerLinkActive="list-item-active" routerLink="/dashboard">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="material-icons"></span>&nbsp;&nbsp;&nbsp;&nbsp;Sub Admin</a>
+    </mat-nav-list> -->
+    <!-- Manage Sub Admin end  -->
+    
+    <!-- Manage Product  -->
+    <mat-accordion class="app-nav-accordion">
+        <mat-expansion-panel class="mat-elevation-z0">
+          <mat-expansion-panel-header>
+              <mat-panel-title>&nbsp;&nbsp;<mat-icon> score</mat-icon>Manage Product</mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-nav-list >
+              <a mat-list-item routerLinkActive="list-item-active"  routerLink="/manage-product/Add^product" >Add Product</a>
+              <a mat-list-item  routerLink="/manage-product/View^product">View</a>
+          </mat-nav-list>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <!-- Manage Product End  -->
+
+    <!-- Manage Location  -->
+    <mat-accordion class="app-nav-accordion">
+        <mat-expansion-panel class="mat-elevation-z0">
+          <mat-expansion-panel-header>
+              <mat-panel-title>&nbsp;&nbsp;<mat-icon> location_on</mat-icon> Manage Location</mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-nav-list >
+              <a mat-list-item routerLinkActive="list-item-active"  routerLink="/manage^location/Add^location" >Add Location</a>
+              <a mat-list-item  routerLink="/manage^location/view^location">View Location</a>
+          </mat-nav-list>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <!-- Manage Location End -->
+
+    <!-- Manage Review  -->
+    <mat-accordion class="app-nav-accordion">
+        <mat-expansion-panel class="mat-elevation-z0">
+          <mat-expansion-panel-header>
+              <mat-panel-title>&nbsp;&nbsp;<mat-icon>stars</mat-icon>Manage Review</mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-nav-list >
+              <!-- <a mat-list-item routerLinkActive="list-item-active"  routerLink="/managereview/AddnewSeller" >Add Seller</a> -->
+              <a mat-list-item  routerLink="/managereview/viewAll^Reviews">View Review</a>
+          </mat-nav-list>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <!-- Manage Review End -->
+
+
+
+
+</mat-nav-list>
+
+</main>

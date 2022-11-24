@@ -1,0 +1,177 @@
+<div class="header pb-8 pt-5 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+      <!-- Card stats -->
+      <div class="row">
+        <div class="col-xl-3 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0 shadow-div">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Tourists</h5>
+                  <span class="h2 font-weight-bold mb-0">350,897</span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape  text-white rounded-circle shadow">
+                    <i class="fa-2x fas fa-chart-bar bg-danger p-2"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="mt-3 mb-0 text-muted text-sm">
+                <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+                <span class="text-nowrap">Since last month</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0 shadow-div">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Sellers</h5>
+                  <span class="h2 font-weight-bold mb-0">2,356</span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape  text-white rounded-circle shadow">
+                    <i class="fa-2x fas fa-chart-pie bg-warning p-2"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="mt-3 mb-0 text-muted text-sm">
+                <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 3.48%</span>
+                <span class="text-nowrap">Since last week</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0 shadow-div">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">un-approved Sellers</h5>
+                  <span class="h2 font-weight-bold mb-0">924</span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape  text-white rounded-circle shadow">
+                    <i class="fa-2x fas fa-users bg-user p-2 "></i>
+                  </div>
+                </div>
+              </div>
+              <p class="mt-3 mb-0 text-muted text-sm">
+                <span class="text-warning mr-2"><i class="fas fa-arrow-down"></i> 1.10%</span>
+                <span class="text-nowrap">Since yesterday</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0 shadow-div">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Performance</h5>
+                  <span class="h2 font-weight-bold mb-0">49,65%</span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape  text-white rounded-circle shadow">
+                    <i class="fa-2x fas fa-percent bg-info p-2"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="mt-3 mb-0 text-muted text-sm">
+                <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 12%</span>
+                <span class="text-nowrap">Since last month</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br>
+
+
+<!--Chart  ============================================================= -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9 col-sm-12 mt-3">
+            <div class="chart-wrapper" >
+                <canvas baseChart 
+                    [datasets]="lineChartData" 
+                    [labels]="lineChartLabels" 
+                    [options]="lineChartOptions"
+                    [colors]="lineChartColors" 
+                    [legend]="lineChartLegend" 
+                    [chartType]="lineChartType" 
+                    [plugins]="lineChartPlugins">
+                </canvas>
+            </div> <br>
+            <div class="row">
+              <h2 class="social">Social Media Progress</h2>
+              <div class="col-lg-4 col-md-4 col-sm-12 mt-2 bar" style="width: 90%; border-radius: 0;">
+                  <h2 class="text-danger fw-bold">50%</h2>
+                  <mat-progress-bar mode="determinate" value="50"></mat-progress-bar>
+                  <h3 class="text-secondary">Incoming Target</h3>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-12 mt-2 bar" style="width: 90%; border-radius: 0;">
+                  <h2 class="text-success fw-bold">30%</h2>
+                  <mat-progress-bar mode="determinate" value="30"></mat-progress-bar>
+                  <h3 class="text-secondary">Incoming Target</h3>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-12 mt-2 bar" style="width: 90%; border-radius: 0;">
+                  <h2 class="text-info fw-bold">70%</h2>
+                  <mat-progress-bar mode="determinate" value="70"></mat-progress-bar>
+                  <h3 class="text-secondary">Incoming Target</h3>
+              </div>
+          </div>
+        </div>
+        <div class="col-md-3 mt-3">
+          <div _ngcontent-rff-c27="" class="card p-2">
+            <div _ngcontent-rff-c27="" class="card-header border-3">
+              <div _ngcontent-rff-c27="" class="row align-items-center">
+                <div _ngcontent-rff-c27="" class="col">
+                  <h3 _ngcontent-rff-c27="" class="mb-0">Publisher requests</h3>
+                </div>
+                <div _ngcontent-rff-c27="" class="col text-right">
+                  <a _ngcontent-rff-c27="" href="#!" class="btn btn-sm btn-primary shadow-lg">See all</a>
+                </div>
+              </div>
+            </div>
+            <div _ngcontent-rff-c27="" class="mt-2">
+              <img _ngcontent-rff-c27="" src="../assets/img/brand/favicon.png" alt="" class="img-fluid"><span _ngcontent-rff-c27="" class="float-right"><mat-icon class="float-end">visibility</mat-icon></span> &nbsp;&nbsp;<span _ngcontent-rff-c27=""> hero <br _ngcontent-rff-c27=""><p _ngcontent-rff-c27="">09 sep 2021</p></span>
+            </div>
+            <div _ngcontent-rff-c27="">
+              <img _ngcontent-rff-c27="" src="../assets/img/brand/favicon.png" alt="" class="img-fluid"><span _ngcontent-rff-c27="" class="float-right"><mat-icon class="float-end">visibility</mat-icon></span> &nbsp;&nbsp;<span _ngcontent-rff-c27=""> hero <br _ngcontent-rff-c27=""><p _ngcontent-rff-c27="">02 Oct 2021</p></span>
+            </div>
+            <div _ngcontent-rff-c27=""><img _ngcontent-rff-c27="" src="../assets/img/brand/favicon.png" alt="" class="img-fluid"><span _ngcontent-rff-c27="" class="float-right"><mat-icon class="float-end">visibility</mat-icon></span> &nbsp;&nbsp;<span _ngcontent-rff-c27=""> hero <br _ngcontent-rff-c27=""><p _ngcontent-rff-c27="">23 Oct 2021</p></span>
+            </div>
+            <div _ngcontent-rff-c27=""><img _ngcontent-rff-c27="" src="../assets/img/brand/favicon.png" alt="" class="img-fluid"><span _ngcontent-rff-c27="" class="float-right"><mat-icon class="float-end">visibility</mat-icon></span> &nbsp;&nbsp;<span _ngcontent-rff-c27=""> hero <br _ngcontent-rff-c27=""><p _ngcontent-rff-c27="">07 Nov 2021</p></span>
+            </div>
+            <div _ngcontent-rff-c27=""><img _ngcontent-rff-c27="" src="../assets/img/brand/favicon.png" alt="" class="img-fluid"><span _ngcontent-rff-c27="" class="float-right"><mat-icon class="float-end">visibility</mat-icon></span> &nbsp;&nbsp;<span _ngcontent-rff-c27=""> hero <br _ngcontent-rff-c27=""><p _ngcontent-rff-c27="">15 Nov 2021</p></span>
+            </div>
+            <div _ngcontent-rff-c27=""><img _ngcontent-rff-c27="" src="../assets/img/brand/favicon.png" alt="" class="img-fluid"><span _ngcontent-rff-c27="" class="float-right"><mat-icon class="float-end">visibility</mat-icon></span> &nbsp;&nbsp;<span _ngcontent-rff-c27=""> hero <br _ngcontent-rff-c27=""><p _ngcontent-rff-c27="">10 Dec 2021</p></span>
+            </div>
+          </div><br>
+
+            <div class="chart-wrapper chart-three" >
+                <canvas baseChart 
+                [data]="doughnutChartData"
+                [labels]="doughnutChartLabels"
+                [chartType]="doughnutChartType">
+              </canvas>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+<br>
+
+

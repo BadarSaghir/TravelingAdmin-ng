@@ -1,0 +1,16 @@
+h2{
+    font-weight: 800;
+    font-size: 2rem;
+    text-transform: uppercase;
+    color: #696969;
+}
+
+.form{
+    background-color: #e3e3e388;
+}
+input{
+    border-radius: 0;   
+}
+.bg-user{
+    background-color: orange;
+}

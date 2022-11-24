@@ -1,0 +1,328 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$preparely-primary: mat.define-palette(mat.$indigo-palette);
+$preparely-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$preparely-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$preparely-theme: mat.define-light-theme((
+  color: (
+    primary: $preparely-primary,
+    accent: $preparely-accent,
+    warn: $preparely-warn,
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($preparely-theme);
+
+
+
+// using mat table --view product
+
+
+// <button mat-raised-button color="warn" (click)="onAddProduct()">Add Product</button>
+// <div class="container">
+//   <div class=" row">
+//     <div class="col-md-12">
+//       <mat-form-field appearance="standard">
+//         <mat-label>Filter</mat-label>
+//         <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+//       </mat-form-field>
+      
+//       <div class="mat-elevation-z8" >
+//         <table mat-table [dataSource]="dataSource" matSort >     
+          
+//           <ng-container matColumnDef="name">
+//             <th mat-header-cell *matHeaderCellDef mat-sort-header>Product Name </th>
+//             <td mat-cell *matCellDef="let row of products"> {{row.name}} </td>
+//           </ng-container>
+
+//           <ng-container matColumnDef="size">
+//             <th mat-header-cell *matHeaderCellDef mat-sort-header>Product Size </th>
+//             <td mat-cell *matCellDef="let  row of products"> {{row.size}} </td>
+//           </ng-container>
+      
+//           <ng-container matColumnDef="description">
+//             <th mat-header-cell *matHeaderCellDef mat-sort-header>Product Description </th>
+//             <td mat-cell *matCellDef="let  row of products"> {{row.description}} </td>
+//           </ng-container>
+
+//           <ng-container matColumnDef="stock">
+//             <th mat-header-cell *matHeaderCellDef mat-sort-header>Product Stock </th>
+//             <td mat-cell *matCellDef="let  row of products"> {{row.stock}} </td>
+//           </ng-container>
+
+
+//           <ng-container matColumnDef="category">
+//             <th mat-header-cell *matHeaderCellDef mat-sort-header>Product Categories </th>
+//             <td mat-cell *matCellDef="let  row of products"> {{row.category}} </td>
+//           </ng-container>
+
+//           <ng-container matColumnDef="brand">
+//             <th mat-header-cell *matHeaderCellDef mat-sort-header> Product Brand</th>
+//             <td mat-cell *matCellDef="let  row of products">{{row.brand}}</td>
+//           </ng-container>
+
+//           <ng-container matColumnDef="color">
+//             <th mat-header-cell *matHeaderCellDef mat-sort-header> Product Color</th>
+//             <td mat-cell *matCellDef="let  row of products">{{row.color}}</td>
+//           </ng-container>
+
+//           <!-- <ng-container matColumnDef="color">
+//             <th mat-header-cell *matHeaderCellDef mat-sort-header> Product Color</th>
+//             <td mat-cell *matCellDef="let  row of products"> <img src="{{ row.color}}"> </td>
+//           </ng-container> -->
+      
+          
+         
+
+//           <ng-container matColumnDef="action">
+//             <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+//             <td mat-cell *matCellDef="let  row of products">
+//               <button mat-icon-button color="primary" (click)="onEditProduct(row)">
+//                 <mat-icon>edit</mat-icon>
+//               </button>
+//               <button mat-icon-button color="warn"  (click)="onDeleteProduct(row._id)">
+//                 <mat-icon>delete</mat-icon>
+//               </button>
+//             </td>
+//           </ng-container>
+      
+         
+      
+//           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+//           <tr mat-row *matRowDef="let row of products; columns: displayedColumns;"></tr>
+      
+//           <!-- Row shown when there is no matching data. -->
+//           <tr class="mat-row" *matNoDataRow>
+//             <td class="mat-cell" colspan="3">No data matching the filter "{{input.value}}"</td>
+//           </tr>
+//         </table>
+      
+//         <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+//       </div>
+      
+//     </div>
+//   </div>
+// </div>
+// <div class="modal fade show" [class.show]="showModal">
+//   <div class="modal-dialog modal-dialog-centered" role="document">
+//       <div class="modal-content">
+//       <div class="modal-header">
+//           <h5 class="modal-title">Add product</h5>
+//           <button (click)="onCloseModal()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+//           <span aria-hidden="true">&times;</span>
+//           </button>
+//       </div>
+      
+//       <form [formGroup]="prdForm" (ngSubmit)="onPrdSubmit()"> 
+//           <div class="modal-body">
+//               <div class="form-group">
+//                   <label>Enter Name</label>
+//                   <input type="text" class="form-control" formControlName="name">
+//                   <!-- <small *ngIf="!empForm.get('name').valid && empForm.get('name').touched" class="form-text text-danger">Please Enter Name.</small> -->
+//               </div>
+              
+//               <div class="form-group">
+//                   <label>Enter position</label>
+//                   <input type="text" class="form-control" formControlName="position">
+//                   <!-- <small *ngIf="!empForm.get('position').valid && empForm.get('position').touched" class="form-text text-danger">Please Enter position.</small> -->
+//               </div>
+              
+//               <div class="form-group">
+//                   <label>Enter Department</label>
+//                   <input type="text" class="form-control" formControlName="dept">
+//                   <!-- <small *ngIf="!empForm.get('office').valid && empForm.get('office').touched" class="form-text text-danger">Please Enter office.</small> -->
+//               </div>
+              
+//               <!-- <div class="form-group">
+//                   <label>Enter Salary</label>
+//                   <input type="text" class="form-control" formControlName="salary">
+//                   <small *ngIf="!empForm.get('salary').valid && empForm.get('salary').touched" class="form-text text-danger">Please Enter salary.</small>
+//               </div> -->
+//           </div>
+//           <div class="modal-footer">
+//               <button type="button" (click)="onCloseModal()" class="btn btn-secondary" data-dismiss="modal">Close</button>
+//               <button type="submit" class="btn btn-primary">Submit</button>
+//           </div>
+//       </form>
+//       </div>
+//   </div>
+// </div>
+
+
+
+
+
+// import { Component, OnInit, ViewChild } from '@angular/core';
+// import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+// import {MatDialog, MAT_DIALOG_DATA} from '@angular/material/dialog';
+// import {MatPaginator} from '@angular/material/paginator';
+// import {MatSort} from '@angular/material/sort';
+// import {MatTableDataSource} from '@angular/material/table';
+// import { Product } from 'src/app/Models/Product';
+// import { ProductService } from 'src/app/services/product.service';
+
+
+// @Component({
+//   selector: 'app-viewproduct',
+//   templateUrl: './viewproduct.component.html',
+//   styleUrls: ['./viewproduct.component.css']
+// })
+// export class ViewproductComponent implements OnInit {
+
+//   displayedColumns: string[] = ['name', 'size', 'description', 'stock', 'category', 'brand', 'color', 'action'];
+//   dataSource!: MatTableDataSource<any>;
+
+//   @ViewChild(MatPaginator) paginator!: MatPaginator;
+//   @ViewChild(MatSort) sort!: MatSort;
+  
+//   prdForm! : FormGroup;
+//   showModal:boolean = false;
+//   editMode:boolean = false;
+
+//   products!: Product[];
+//   selectedProduct!: Product;
+
+//   constructor(public dialog: MatDialog, private fb: FormBuilder, private _prdService:ProductService) { }
+//   ngOnInit(): void {
+//     this.getProducts();
+//     this.prdForm = this.fb.group({
+//        _id: [''],
+//        name: ['Ex. Rayhn', Validators.required],
+//        size: ['Ex. large', Validators.required],
+//        description: ['devlpmnt n dsgn', Validators.required],
+//        stock: ['Ex. yes', Validators.required],
+//        category: ['Ex. vegs', Validators.required],
+//        brand: ['Ex. kia', Validators.required],
+//        color: ['Ex. red', Validators.required]
+//     })
+//   }
+
+//   getProducts(){
+//     this._prdService.getProductList().subscribe({
+//       next: (res) => {
+//         console.log(res);
+//         this.dataSource = new MatTableDataSource();
+//         this.dataSource.paginator = this.paginator;
+//         this.dataSource.sort = this.sort;
+//         this.products = res as Product[];
+//       },
+//       error: () => {
+//         alert("Errors while getting records.");
+//       }
+//   })
+// }
+
+//   onPrdSubmit(){
+//     if(this.prdForm.valid){
+//       console.log(this.prdForm.value);
+      
+//       if(this.editMode){
+//         this._prdService.updateProduct(this.prdForm.value).subscribe({
+//           next:(res) => {
+//             console.log('Updated successfully');
+//             this.getProducts();
+//             this.editMode = false;
+//           },
+//           error: () =>  {
+//             alert("Errors while updating the records.");
+//           }
+//       });
+//       }else{
+//         this._prdService.addProduct(this.prdForm.value).subscribe({
+//           next:(res) => {
+//             console.log('Saved successfully');
+//             this.getProducts();
+//           },
+//           error: () =>  {
+//             alert("Errors while adding the product.");
+//           }
+//       });
+//       }
+       
+//       this.prdForm.reset();
+//       this.onCloseModal();
+
+//     }else{
+
+//       let key = Object.keys(this.prdForm.controls);
+//       // console.log(key);
+
+//       key.filter(data =>{
+//         // console.log(data);
+//         let control = this.prdForm.controls[data];
+//         // console.log(control);
+//         if(control.errors !=null){
+//           control.markAsTouched();
+//         }
+//       })
+//     }
+//   }
+
+//   onEditProduct(prd:Product){
+//     this.editMode = true;
+
+//     console.log(prd);
+//     this.showModal = true;
+//     this.selectedProduct = prd;
+//     console.log(this.selectedProduct);
+//     this.prdForm.patchValue(this.selectedProduct);
+//   }
+
+//   onDeleteProduct(id: string){
+//     if(confirm('Do you want to delete this product?')){
+//       // console.log(id);
+//       this._prdService.deleteProduct(id).subscribe({
+//         next:(res) => {
+//           console.log('Delete successfully');
+//           this.getProducts();
+//         },
+//         error: () =>  {
+//           alert("Errors while deleting the product.");
+
+//         }
+//     });
+//     }
+//   }
+
+//   onAddProduct(){
+//     this.showModal = true;
+//   }
+
+//   onCloseModal(){
+//     this.showModal = false;
+//   }
+
+ 
+
+  
+//   applyFilter(event: Event) {
+//     const filterValue = (event.target as HTMLInputElement).value;
+//     this.dataSource.filter = filterValue.trim().toLowerCase();
+
+//     if (this.dataSource.paginator) {
+//       this.dataSource.paginator.firstPage();
+//     }
+//   }
+ 
+
+// }

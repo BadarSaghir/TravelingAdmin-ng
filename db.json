@@ -1,0 +1,97 @@
+{
+  "productList": [
+    {
+      "name": "Car",
+      "size": "medium",
+      "desc": "abcd",
+      "stock": "2",
+      "cat": "electronics",
+      "brand": "KIA",
+      "picture": "C:\\fakepath\\logo.PNG",
+      "id": 1
+    },
+    {
+      "name": "tayyab",
+      "size": "medium",
+      "desc": "hello world",
+      "stock": "a1",
+      "cat": "fruits",
+      "brand": "ali",
+      "picture": "C:\\fakepath\\sale.PNG",
+      "id": 2
+    },
+    {
+      "name": "raza123",
+      "size": "small",
+      "desc": "324234324",
+      "stock": "rdgg",
+      "cat": "vegs",
+      "picture": "C:\\fakepath\\rOgt8.png",
+      "id": 4
+    },
+    {
+      "name": "Ali khan",
+      "size": "medium",
+      "desc": "aleksjdflasjdlfkkjds",
+      "stock": "lksjflkjdyvyuyv",
+      "cat": "fruits",
+      "picture": "C:\\fakepath\\952b4b5b937d9d8a18cf225034e263f6.jpg",
+      "id": 5
+    }
+  ],
+  "categoryList": [
+    {
+      "catName": "op",
+      "catPicture": "./assets/images/logo1.PNG",
+      "parentCat": "electronics",
+      "id": 1
+    },
+    {
+      "catName": "Apple",
+      "catPicture": "./assets/images/logo2.PNG",
+      "parentCat": "fruits",
+      "id": 2
+    },
+    {
+      "catName": "abc",
+      "catPicture": "./assets/images/logo.PNG",
+      "parentCat": "vegs",
+      "id": 4
+    },
+    {
+      "catName": "ttt",
+      "catPicture": "C:\\fakepath\\admin.jpg",
+      "parentCat": "vegs",
+      "id": 5
+    },
+    {
+      "catName": "haider",
+      "catPicture": "C:\\fakepath\\stream mind Entity Relationship Diagram1 (2).jpg",
+      "parentCat": "electronics",
+      "id": 8
+    }
+  ],
+  "sizeList": [
+    {
+      "prodSize": "large",
+      "id": 1
+    }
+  ],
+  "colorList": [
+    {
+      "colorName": "Red",
+      "colorPicture": "C:\\fakepath\\logo.PNG",
+      "id": 1
+    }
+  ],
+  "orderList": [],
+  "adminList": [
+    {
+      "adminName": "tayyab khan",
+      "adminPicture": "C:\\fakepath\\Form C - IT&CS Department (1).pdf",
+      "adminEmail": "hello",
+      "adminPass": "nn",
+      "id": 1
+    }
+  ]
+}
