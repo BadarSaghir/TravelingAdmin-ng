@@ -12,7 +12,12 @@ import { SharedModule } from './shared/shared.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DefaultRoutingModule } from './layout/default/default-routing.module';
 import { environment } from 'src/environments/environment';
-
+// #####Firebase############3
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 // ##### side Nave modules #####
 import { ManageSellerModule } from './Nav-Modules/manage-seller/manage-seller.module';
 import { ManageProductModule } from './Nav-Modules/manage-product/manage-product.module';
@@ -25,6 +30,11 @@ import { DefaultModule } from "./layout/default/default.module";
 @NgModule({
   declarations: [AppComponent, DashboardComponent],
   imports: [
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    AngularFireStorageModule,
+    AngularFireDatabaseModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
