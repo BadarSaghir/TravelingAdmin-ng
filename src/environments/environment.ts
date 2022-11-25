@@ -7,7 +7,7 @@ export const environment = {
   apiBaseUrl: "http://localhost:4000/api/",
   firebase: {
     apiKey: "AIzaSyDJhjEN0HLuC-JqyU3UK3ECJrHXYXSgaDk",
-    authDomain: "thepaktours-d2ddf.firebaseapp.com",
+    authDomain: "http://localhost:4200", //"thepaktours-d2ddf.firebaseapp.com",
     projectId: "thepaktours-d2ddf",
     databaseURL: "https://thepaktours-d2ddf.firebaseio.com",
     storageBucket: "thepaktours-d2ddf.appspot.com",

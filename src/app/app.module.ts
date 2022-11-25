@@ -26,6 +26,7 @@ import { ManageUserModule } from './Nav-Modules/manage-user/manage-user.module';
 import { ManageLocationModule } from './Nav-Modules/manage-location/manage-location.module';
 import { AuthModule } from './auth/auth.module';
 import { DefaultModule } from "./layout/default/default.module";
+import { AuthService } from "./services/firebase/auth.service";
 
 @NgModule({
   declarations: [AppComponent, DashboardComponent],
@@ -53,7 +54,7 @@ import { DefaultModule } from "./layout/default/default.module";
     ManageUserModule,
     ManageLocationModule,
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
