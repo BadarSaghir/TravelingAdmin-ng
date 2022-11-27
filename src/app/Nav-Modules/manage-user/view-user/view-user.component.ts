@@ -4,9 +4,11 @@ import {DataSource} from '@angular/cdk/collections';
 import {Observable, ReplaySubject} from 'rxjs';
 import { FireStoreService } from "src/app/services/firebase/firestore.service";
 import { User } from "src/app/Models/firebase/user.model";
+import { UserService } from "src/app/services/user.service";
 
 export interface PeriodicElement extends User {
   position: number;
+  isApprove?: boolean;
   menu: string;
 }
 const ELEMENT_DATA: PeriodicElement[] = [];
@@ -17,45 +19,20 @@ const ELEMENT_DATA: PeriodicElement[] = [];
   styleUrls: ["./view-user.component.css"],
 })
 export class ViewUserComponent implements OnInit {
-  constructor(private firestore: FireStoreService) {}
+  constructor(
+    private firestore: FireStoreService,
+    private userService: UserService
+  ) {}
   ngOnInit(): void {
-    this.setDataInTable();
+    this.userService.setDataInTable((tmp) => {
+      this.dataSource.setData(tmp);
+    });
   }
 
   displayedColumns: string[] = ["position", "name", "role", "email", "menu"];
   dataToDisplay = [...ELEMENT_DATA];
 
   dataSource = new ExampleDataSource(this.dataToDisplay);
-
-  private setDataInTable() {
-    this.firestore.getCollectionData<User>("users").subscribe((user) => {
-      const temp = this.getPeriodicElements(user);
-      this.dataSource.setData(temp);
-    });
-  }
-
-  private getPeriodicElements(
-    user: User[] | PeriodicElement[],
-    ignoreUid?: string
-  ) {
-    const temp = [] as PeriodicElement[];
-    let i = 0;
-    user.forEach((user, idx) => {
-      if (user.uid != ignoreUid) {
-        i++;
-        temp.push({
-          email: user.email,
-          firstName: user.firstName,
-          position: idx + 1,
-          menu: "",
-          secondName: user.secondName,
-          role: user.role,
-          uid: user.uid,
-        });
-      }
-    });
-    return temp;
-  }
 
   addData() {
     const randomElementIndex = Math.floor(Math.random() * ELEMENT_DATA.length);

@@ -9,7 +9,7 @@
                 <div class="row">
                   <div class="col">
                     <h5 class="card-title text-uppercase text-muted mb-0">Tourists</h5>
-                    <span class="h2 font-weight-bold mb-0">350,897</span>
+                    <span class="h2 font-weight-bold mb-0">{{this.fireStore.totalUsers}}</span>
                   </div>
                   <div class="col-auto">
                     <div class="icon icon-shape  text-white rounded-circle shadow">
@@ -30,7 +30,7 @@
                 <div class="row">
                   <div class="col">
                     <h5 class="card-title text-uppercase text-muted mb-0">Approved Sellers</h5>
-                    <span class="h2 font-weight-bold mb-0">2,356</span>
+                    <span class="h2 font-weight-bold mb-0">{{this.fireStore.totalApproveSellers}}</span>
                   </div>
                   <div class="col-auto">
                     <div class="icon icon-shape  text-white rounded-circle shadow">
@@ -51,7 +51,7 @@
                 <div class="row">
                   <div class="col">
                     <h5 class="card-title text-uppercase text-muted mb-0">Un Approved Sellers</h5>
-                    <span class="h2 font-weight-bold mb-0">{{this.fireStore}}</span>
+                    <span class="h2 font-weight-bold mb-0">{{this.fireStore.totalUnApproveSellers}}</span>
                   </div>
                   <div class="col-auto">
                     <div class="icon icon-shape  text-white rounded-circle shadow">
@@ -72,7 +72,7 @@
                 <div class="row">
                   <div class="col">
                     <h5 class="card-title text-uppercase text-muted mb-0">Places</h5>
-                    <span class="h2 font-weight-bold mb-0">49,65</span>
+                    <span class="h2 font-weight-bold mb-0">{{this.fireStore.totalPlaces}}</span>
                   </div>
                   <div class="col-auto">
                     <div class="icon icon-shape  text-white rounded-circle shadow">

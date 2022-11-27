@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Firestore } from "@angular/fire/firestore";
+import { FireStoreService } from "src/app/services/firebase/firestore.service";
 
 @Component({
   selector: "app-card-counter",
@@ -7,7 +7,7 @@ import { Firestore } from "@angular/fire/firestore";
   styleUrls: ["./card-counter.component.css"],
 })
 export class CardCounterComponent implements OnInit {
-  constructor(public fireStore: Firestore) {}
+  constructor(public fireStore: FireStoreService) {}
 
   ngOnInit(): void {}
 }

@@ -1,10 +1,12 @@
+import { User } from "./firebase/user.model";
+
 export class ManageUser {
-
-    constructor(
-        public name: string,
-        public lastname: string,
-        public email: string,
-        public password: string
-    ){}
-
+  constructor(
+    public email: string,
+    public firstName: string,
+    public role: string,
+    public secondName: string,
+    public uid: string,
+    public password: string
+  ) {}
 }

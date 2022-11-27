@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { environment } from "src/environments/environment";
+import { ManageSellerService } from "./services/manage-seller.service";
+import { UserService } from "./services/user.service";
 
 @Component({
   selector: "app-root",
@@ -13,7 +15,11 @@ export class AppComponent {
 
   sideBarOpen = true;
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private userService: UserService,
+    private sellerService: ManageSellerService
+  ) {
     this.router.events.subscribe((res) => {
       console.log(this.router.url, "Current URL");
       if (this.router.url == "/auth/login" || this.router.url == "/auth") {
@@ -30,7 +36,10 @@ export class AppComponent {
     // });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.userService.setDataInTable();
+    this.sellerService.setDataInTable();
+  }
 
   sideBarToggler() {
     this.sideBarOpen = !this.sideBarOpen;

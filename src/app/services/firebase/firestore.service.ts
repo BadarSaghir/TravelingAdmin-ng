@@ -43,6 +43,18 @@ export class FireStoreService {
   get getTotalUnApproveSeller() {
     return this.totalUnApproveSellers;
   }
+  set setTotalPalce(value: number) {
+    this.totalPlaces = value;
+  }
+  set setTotalUsers(value: number) {
+    this.totalUsers = value;
+  }
+  set setTotalApproveSeller(value: number) {
+    this.totalApproveSellers = value;
+  }
+  set setTotalUnApproveSeller(value: number) {
+    this.totalUnApproveSellers = value;
+  }
 
   async addDocInCollection<T extends { id?: string; uid?: string }>(
     user: T,

@@ -25,24 +25,26 @@ const ELEMENT_DATA: PeriodicElement[] = [
 ];
 
 @Component({
-  selector: 'app-view-seller',
-  templateUrl: './view-seller.component.html',
-  styleUrls: ['./view-seller.component.css']
+  selector: "app-view-seller",
+  templateUrl: "./view-seller.component.html",
+  styleUrls: ["./view-seller.component.css"],
 })
 export class ViewSellerComponent implements OnInit {
-
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    throw new Error("Method not implemented.");
   }
-  
-  displayedColumns: string[] = ['position', 'image', 'name', 'email', 'menu'];
+
+  displayedColumns: string[] = ["position", "name", "Approve", "email", "menu"];
   dataToDisplay = [...ELEMENT_DATA];
 
   dataSource = new ExampleDataSource(this.dataToDisplay);
 
   addData() {
     const randomElementIndex = Math.floor(Math.random() * ELEMENT_DATA.length);
-    this.dataToDisplay = [...this.dataToDisplay, ELEMENT_DATA[randomElementIndex]];
+    this.dataToDisplay = [
+      ...this.dataToDisplay,
+      ELEMENT_DATA[randomElementIndex],
+    ];
     this.dataSource.setData(this.dataToDisplay);
   }
 
