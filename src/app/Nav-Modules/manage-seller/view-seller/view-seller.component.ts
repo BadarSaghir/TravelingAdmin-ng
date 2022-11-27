@@ -2,27 +2,11 @@ import { Component, OnInit } from '@angular/core';
 
 import {DataSource} from '@angular/cdk/collections';
 import {Observable, ReplaySubject} from 'rxjs';
+import { PeriodicElement } from "../../manage-user/view-user/view-user.component";
+import { ManageSellerService } from "src/app/services/manage-seller.service";
+import { FireStoreService } from "src/app/services/firebase/firestore.service";
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  img: string;
-  email: string;
-  menu: string;
-
-}
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, img: '../assets/images/admin.jpg', name: 'Ali', email: 'info@gmail.com', menu: ''},
-  {position: 2, img: '../assets/images/admin.jpg', name: 'rizwan', email: 'info@gmail.com', menu: ''},
-  {position: 3, img: '../assets/images/admin.jpg', name: 'usman', email:'info@gmail.com', menu: ''},
-  {position: 4, img: '../assets/images/admin.jpg', name: 'owais', email: 'info@gmail.com', menu: ''},
-  {position: 5, img: '../assets/images/admin.jpg', name: 'aliza', email: 'info@gmail.com', menu: ''},
-  {position: 6, img: '../assets/images/admin.jpg', name: 'saira', email: 'info@gmail.com', menu: ''},
-  {position: 7, img: '../assets/images/admin.jpg', name: 'akbar', email: 'info@gmail.com', menu: ''},
-  {position: 8, img: '../assets/images/admin.jpg', name: 'raza', email: 'info@gmail.com', menu: ''},
-  {position: 9, img: '../assets/images/admin.jpg', name: 'wajid', email: 'info@gmail.com', menu: ''},
-  {position: 10, img: '../assets/images/admin.jpg', name: 'sumera', email: 'info@gmail.com', menu: ''},
-];
+const ELEMENT_DATA: PeriodicElement[] = [];
 
 @Component({
   selector: "app-view-seller",
@@ -30,8 +14,14 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ["./view-seller.component.css"],
 })
 export class ViewSellerComponent implements OnInit {
+  constructor(
+    private sellerService: ManageSellerService,
+    private fireStoreService: FireStoreService
+  ) {}
   ngOnInit(): void {
-    throw new Error("Method not implemented.");
+    this.sellerService.setDataInTable((tmp) => {
+      this.dataSource.setData(tmp);
+    });
   }
 
   displayedColumns: string[] = ["position", "name", "Approve", "email", "menu"];

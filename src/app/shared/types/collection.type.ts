@@ -2,6 +2,6 @@ export type CollectionsTypes =
   | "users"
   | "products"
   | "Sellerposts"
-  | "seller"
+  | "Seller"
   | "Reviews"
   | "Places";

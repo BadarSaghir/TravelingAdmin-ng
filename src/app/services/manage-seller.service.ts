@@ -19,12 +19,10 @@ export class ManageSellerService {
     fn?: (tmp: PeriodicElement[]) => void,
     ignoreUid?: string
   ) {
-    this.firestore.getCollectionData<Seller>("seller").subscribe((seller) => {
+    this.firestore.getCollectionData<Seller>("Seller").subscribe((seller) => {
+      const temp = this.getPeriodicElements(seller, ignoreUid);
       if (fn) {
-        const temp = this.getPeriodicElements(seller, ignoreUid);
         fn(temp);
-      } else {
-        this.getPeriodicElements(seller, ignoreUid);
       }
     });
   }
