@@ -5,6 +5,7 @@ import {Observable, ReplaySubject} from 'rxjs';
 import { PeriodicElement } from "../../manage-user/view-user/view-user.component";
 import { ManageSellerService } from "src/app/services/manage-seller.service";
 import { FireStoreService } from "src/app/services/firebase/firestore.service";
+import { Seller } from "src/app/Models/firebase/user.model";
 
 const ELEMENT_DATA: PeriodicElement[] = [];
 
@@ -16,12 +17,32 @@ const ELEMENT_DATA: PeriodicElement[] = [];
 export class ViewSellerComponent implements OnInit {
   constructor(
     private sellerService: ManageSellerService,
-    private fireStoreService: FireStoreService
+    public fireStoreService: FireStoreService
   ) {}
   ngOnInit(): void {
     this.sellerService.setDataInTable((tmp) => {
       this.dataSource.setData(tmp);
     });
+  }
+
+  updateApproval(element: PeriodicElement) {
+    this.fireStoreService.updateDoc<Seller>(
+      {
+        email: element.email,
+        firstName: element.firstName,
+        isApprove: element.isApprove as boolean,
+        secondName: element.secondName,
+        uid: element.uid,
+      },
+      {
+        email: element.email,
+        firstName: element.firstName,
+        isApprove: !element.isApprove as boolean,
+        secondName: element.secondName,
+        uid: element.uid,
+      },
+      "Seller"
+    );
   }
 
   displayedColumns: string[] = [
