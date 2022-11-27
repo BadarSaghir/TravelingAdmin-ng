@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgxStarRatingModule } from 'ngx-star-rating';
 import { AuthService } from "../services/firebase/auth.service";
+import { SharedModule } from "../shared/shared.module";
 
 @NgModule({
   declarations: [LoginComponent],
@@ -15,6 +16,7 @@ import { AuthService } from "../services/firebase/auth.service";
     AuthRoutingModule,
     ReactiveFormsModule,
     NgxStarRatingModule,
+    SharedModule,
   ],
 })
 export class AuthModule {}

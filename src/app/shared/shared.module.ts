@@ -7,23 +7,11 @@ import { FooterComponent } from './footer/footer.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { MatModule } from './mat.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { AuthService } from "../services/firebase/auth.service";
 @NgModule({
-  declarations: [
-    HeaderComponent,
-    FooterComponent,
-    SidebarComponent
-  ],
-  imports: [
-    CommonModule,
-    SharedRoutingModule,
-    MatModule,
-    FlexLayoutModule
-  ],
-  exports:
-  [
-    HeaderComponent,
-    FooterComponent,
-    SidebarComponent
-  ]
+  declarations: [HeaderComponent, FooterComponent, SidebarComponent],
+  imports: [CommonModule, SharedRoutingModule, MatModule, FlexLayoutModule],
+  providers: [AuthService],
+  exports: [HeaderComponent, FooterComponent, SidebarComponent],
 })
-export class SharedModule { }
+export class SharedModule {}

@@ -46,7 +46,6 @@ import { AuthService } from "./services/firebase/auth.service";
     MatDialogModule,
     DefaultRoutingModule,
     AuthModule,
-
     // ## side Nave modules ##
     ManageSellerModule,
     ManageProductModule,
