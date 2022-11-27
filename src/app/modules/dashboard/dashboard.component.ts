@@ -25,69 +25,80 @@ const ELEMENT_DATA: TableService[] = [
 
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  selector: "app-dashboard",
+  templateUrl: "./dashboard.component.html",
+  styleUrls: ["./dashboard.component.css"],
 })
 export class DashboardComponent implements OnInit {
-
-
   //radar chart
   public radarChartOptions: RadialChartOptions = {
     responsive: true,
   };
-  public radarChartLabels: Label[] = ['Punctuality', 'Communication', 'Problem Solving',
-    'Team Player', 'Coding', 'Technical Knowledge', 'Meeting Deadlines'];
-  public radarChartData: ChartDataSets[] = [
-    { data: [0, 1, 2, 3, 4, 5, 6], label: 'Employee Skill Analysis' }
+  public radarChartLabels: Label[] = [
+    "Punctuality",
+    "Communication",
+    "Problem Solving",
+    "Team Player",
+    "Coding",
+    "Technical Knowledge",
+    "Meeting Deadlines",
   ];
-  public radarChartType: ChartType = 'radar';
-
-  
+  public radarChartData: ChartDataSets[] = [
+    { data: [0, 1, 2, 3, 4, 5, 6], label: "Employee Skill Analysis" },
+  ];
+  public radarChartType: ChartType = "radar";
 
   //bar chart
   barChartOptions: ChartOptions = {
     responsive: true,
   };
-  barChartLabels: Label[] = ['Apple', 'Banana', 'Kiwifruit', 'Blueberry', 'Orange', 'Grapes'];
-  barChartType: ChartType = 'bar';
+  barChartLabels: Label[] = [
+    "Apple",
+    "Banana",
+    "Kiwifruit",
+    "Blueberry",
+    "Orange",
+    "Grapes",
+  ];
+  barChartType: ChartType = "bar";
   barChartLegend = true;
   barChartPlugins = [];
   barChartData: ChartDataSets[] = [
-    { data: [45, 37, 60, 70, 46, 33], label: 'Best Fruits' }
+    { data: [45, 37, 60, 70, 46, 33], label: "Best Fruits" },
   ];
-
 
   //doughnut chart
-  doughnutChartLabels: Label[] = ['user'];
-  doughnutChartData: MultiDataSet = [
-    [55, 25, 20]
-  ];
-  doughnutChartType: ChartType = 'doughnut';
+  doughnutChartLabels: Label[] = ["user"];
+  doughnutChartData: MultiDataSet = [[55, 25, 20]];
+  doughnutChartType: ChartType = "doughnut";
 
-
-//line chart
+  //line chart
   lineChartData: ChartDataSets[] = [
-    { data: [85, 72, 78, 75, 77, 75], label: 'All Users' },
+    { data: [85, 72, 78, 75, 77, 75], label: "All Users" },
   ];
-  lineChartLabels: Label[] = ['January', 'February', 'March', 'April', 'May', 'June'];
+  lineChartLabels: Label[] = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+  ];
   lineChartOptions = {
     responsive: true,
   };
   lineChartColors: Color[] = [
     {
-      borderColor: 'gray',
-      backgroundColor: '#ebebeb',
+      borderColor: "gray",
+      backgroundColor: "#ebebeb",
     },
   ];
   lineChartLegend = true;
   lineChartPlugins = [];
-  lineChartType : ChartType= 'line';
+  lineChartType: ChartType = "line";
 
-
-
-//table
-displayedColumns: string[] = ['name', 'weight', 'symbol', 'position'];
+  //table
+  displayedColumns: string[] = ["name", "weight", "symbol", "position"];
   dataSource = [...ELEMENT_DATA];
 
   @ViewChild(MatTable) table: MatTable<TableService> | any;
@@ -103,10 +114,7 @@ displayedColumns: string[] = ['name', 'weight', 'symbol', 'position'];
     this.table.renderRows();
   }
 
-  constructor() {
+  constructor() {}
 
-  }
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 }

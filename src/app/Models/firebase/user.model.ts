@@ -9,7 +9,7 @@ export interface User {
 export interface Seller {
   email: string;
   firstName: string;
-
+  isApprove: boolean;
   secondName: string;
   uid: string;
 }

@@ -8,10 +8,22 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { MatModule } from './mat.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AuthService } from "../services/firebase/auth.service";
+import { CardCounterComponent } from "./card-counter/card-counter.component";
+import { FireStoreService } from "../services/firebase/firestore.service";
 @NgModule({
-  declarations: [HeaderComponent, FooterComponent, SidebarComponent],
+  declarations: [
+    HeaderComponent,
+    FooterComponent,
+    SidebarComponent,
+    CardCounterComponent,
+  ],
   imports: [CommonModule, SharedRoutingModule, MatModule, FlexLayoutModule],
-  providers: [AuthService],
-  exports: [HeaderComponent, FooterComponent, SidebarComponent],
+  providers: [AuthService, FireStoreService],
+  exports: [
+    HeaderComponent,
+    FooterComponent,
+    SidebarComponent,
+    CardCounterComponent,
+  ],
 })
 export class SharedModule {}

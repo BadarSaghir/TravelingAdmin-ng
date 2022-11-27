@@ -26,16 +26,15 @@ import { ManageUserModule } from './Nav-Modules/manage-user/manage-user.module';
 import { ManageLocationModule } from './Nav-Modules/manage-location/manage-location.module';
 import { AuthModule } from './auth/auth.module';
 import { DefaultModule } from "./layout/default/default.module";
-import { AuthService } from "./services/firebase/auth.service";
+import { provideFirestore, getFirestore } from "@angular/fire/firestore";
+import { initializeApp, provideFirebaseApp } from "@angular/fire/app";
+import { FireStoreService } from "./services/firebase/firestore.service";
 
 @NgModule({
   declarations: [AppComponent, DashboardComponent],
   imports: [
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAuthModule,
-    AngularFirestoreModule,
-    AngularFireStorageModule,
-    AngularFireDatabaseModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideFirestore(() => getFirestore()),
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -44,8 +43,8 @@ import { AuthService } from "./services/firebase/auth.service";
     ChartsModule,
     SharedModule,
     MatDialogModule,
-    DefaultRoutingModule,
     AuthModule,
+    DefaultModule,
     // ## side Nave modules ##
     ManageSellerModule,
     ManageProductModule,
@@ -53,7 +52,7 @@ import { AuthService } from "./services/firebase/auth.service";
     ManageUserModule,
     ManageLocationModule,
   ],
-  providers: [AuthService],
+  providers: [FireStoreService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
