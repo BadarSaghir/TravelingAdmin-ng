@@ -34,18 +34,22 @@ export class ManageSellerService {
 
     let i = 0;
     this.firestore.totalApproveSellers = 0;
-    this.firestore.totalApproveSellers = 0;
+    this.firestore.totalUnApproveSellers = 0;
 
     sellers.forEach((seller, idx) => {
       if (seller.uid != ignoreUid) {
         i++;
         if (seller.isApprove == true) this.firestore.totalApproveSellers++;
-        else this.firestore.totalUnApproveSellers++;
+        else {
+          this.firestore.totalUnApproveSellers++;
+        }
+
         this.sellers.push({
           email: seller.email,
           firstName: seller.firstName,
           position: idx + 1,
           menu: "",
+          isApprove: seller.isApprove,
           secondName: seller.secondName,
           uid: seller.uid,
         });

@@ -24,7 +24,14 @@ export class ViewSellerComponent implements OnInit {
     });
   }
 
-  displayedColumns: string[] = ["position", "name", "Approve", "email", "menu"];
+  displayedColumns: string[] = [
+    "position",
+    "name",
+    "email",
+    "Approve",
+    "changeApprove",
+    "menu",
+  ];
   dataToDisplay = [...ELEMENT_DATA];
 
   dataSource = new ExampleDataSource(this.dataToDisplay);
