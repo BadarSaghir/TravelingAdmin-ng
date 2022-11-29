@@ -58,6 +58,8 @@ export class ManageProductService {
         });
       }
     });
+    // console.log(this.products);
+
     return this.products;
   }
 }

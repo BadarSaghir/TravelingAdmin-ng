@@ -8,7 +8,9 @@ import {
   collection,
   collectionData,
   collectionGroup,
+  deleteDoc,
   doc,
+  Firestore,
 } from "@angular/fire/firestore";
 import { CollectionsTypes } from "src/app/shared/types/collection.type";
 
@@ -44,11 +46,17 @@ export class ViewProductComponent implements OnInit {
 
   constructor(
     private firestore: FireStoreService,
-    public productService: ManageProductService
+    public productService: ManageProductService,
+    private store: Firestore
   ) {}
 
-  deleteProduct(id: string) {
-    this.firestore.deleteDocument(`products/${id}/items`, { uid: id });
+  deleteProduct(id: string, pid: string | null) {
+    if (pid)
+      this.firestore.deleteDocument(`products/${id}/items`, { uid: pid });
+    console.log("id", id);
+    console.log("pid", pid);
+
+    // deleteDoc(doc(collection(this.store, "products", id, "items"), pid));
   }
 
   displayedColumns: string[] = [
