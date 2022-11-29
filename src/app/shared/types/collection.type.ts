@@ -5,5 +5,5 @@ export type CollectionsTypes =
   | "Seller"
   | "Reviews"
   | "Places"
-  | string;
+  
 

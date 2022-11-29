@@ -33,7 +33,7 @@ export class ViewProductComponent implements OnInit {
     this.productService.setDataInTable((tmp) => {
       this.dataSource.setData(tmp);
     });
-    const selected: CollectionsTypes = "";
+    // const selected: CollectionsTypes = "";
     // this.firestore.getCollectionGroup((AngularStore, fireStore) => {
     // const ref = collectionData(collectionGroup(fireStore, "items"));
     // console.log(
@@ -48,17 +48,17 @@ export class ViewProductComponent implements OnInit {
     private firestore: FireStoreService,
     public productService: ManageProductService,
     private store: Firestore
-  ) {}
-
-  deleteProduct(id: string, pid: string | null) {
-    if (pid)
-      this.firestore.deleteDocument(`products/${id}/items`, { uid: pid });
-    console.log("id", id);
-    console.log("pid", pid);
-
-    // deleteDoc(doc(collection(this.store, "products", id, "items"), pid));
-  }
-
+    ) {}
+    
+    deleteProduct(id: string, pid: string | null) {
+      if (pid)
+        this.firestore.deleteDocument(`products/${id}/items`, { uid: pid });
+      console.log("id", id);
+      console.log("pid", pid);
+    
+      // deleteDoc(doc(collection(this.store, "products", id, "items"), pid));
+    }
+  
   displayedColumns: string[] = [
     "position",
     "name",
@@ -68,9 +68,9 @@ export class ViewProductComponent implements OnInit {
     "menu",
   ];
   dataToDisplay = [...ELEMENT_DATA];
-
+  
   dataSource = new ExampleDataSource(this.dataToDisplay);
-
+  
   addData() {
     const randomElementIndex = Math.floor(Math.random() * ELEMENT_DATA.length);
     this.dataToDisplay = [
@@ -79,7 +79,7 @@ export class ViewProductComponent implements OnInit {
     ];
     this.dataSource.setData(this.dataToDisplay);
   }
-
+  
   removeData() {
     this.dataToDisplay = this.dataToDisplay.slice(0, -1);
     this.dataSource.setData(this.dataToDisplay);
@@ -89,7 +89,7 @@ export class ViewProductComponent implements OnInit {
 class ExampleDataSource extends DataSource<PeriodicElement> {
   private _dataStream = new ReplaySubject<PeriodicElement[]>();
   dialog: any;
-
+  
   constructor(initialData: PeriodicElement[]) {
     super();
     this.setData(initialData);

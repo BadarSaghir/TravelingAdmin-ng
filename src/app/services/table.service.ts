@@ -1,9 +1,6 @@
-
 export interface TableService {
-    name: string;
-    position: number;
-    weight: number;
-    symbol: string;
-  
-
+  position: number;
+  name: string;
+  weight: number;
+  symbol: string;
 }

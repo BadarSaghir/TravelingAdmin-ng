@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from "@angular/router";
-import { ProductService } from "src/app/services/product.service";
+// import { ProductService } from "src/app/services/location.service";
 import { AuthService } from "../../services/firebase/auth.service";
 
 @Component({

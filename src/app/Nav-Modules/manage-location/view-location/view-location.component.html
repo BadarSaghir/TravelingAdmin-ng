@@ -1,16 +1,10 @@
 
   
   <div class="demo-button-container mt-3">
-    <button mat-raised-button (click)="addData()" class="demo-button" >
+    <button mat-raised-button  class="demo-button" >
       Add data
     </button> &nbsp;&nbsp;
-    <button
-        mat-raised-button
-        [disabled]="!dataToDisplay.length"
-        (click)="removeData()"
-        class=" btn-danger">
-      Delete User
-    </button>
+ 
   </div>
   <br>
   
@@ -76,7 +70,7 @@
           </button>
   
         
-            <button mat-menu-item>
+            <button (click)=" deleteLocation(element.id)" mat-menu-item>
               <mat-icon>delete_forever</mat-icon>
               <span>Delete</span>
             </button>

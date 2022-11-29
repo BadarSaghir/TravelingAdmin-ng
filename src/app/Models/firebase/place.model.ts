@@ -3,8 +3,8 @@ export interface Place {
   history: string;
   id: string;
   images: string[];
-  location: [string, string];
-  rating: number;
+  location: { latitude?: number; longitude?: number };
+  rating: number | string;
   title: string;
   type: string;
 }

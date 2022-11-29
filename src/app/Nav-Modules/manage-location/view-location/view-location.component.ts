@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {DataSource} from '@angular/cdk/collections';
 import {Observable, ReplaySubject} from 'rxjs';
+import { FireStoreService } from "src/app/services/firebase/firestore.service";
+import { LocationService } from "src/app/services/location.service";
+import { Firestore } from "@angular/fire/firestore";
+import { CollectionsTypes } from "src/app/shared/types/collection.type";
 
 export interface PeriodicElement {
+  id?: string;
   position: number;
   title: string;
   img: string;
@@ -11,40 +16,76 @@ export interface PeriodicElement {
   location: string;
   rating: string;
   menu: string;
-
 }
 const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, img: '../assets/images/admin.jpg', title: 'any title',    description: 'any description',  history: 'any history', location: 'any location', rating: 'rating star',   menu: ''},
-  {position: 2, img: '../assets/images/admin.jpg', title: 'any title', description: 'any description',  history: 'any history', location: 'any location', rating: 'rating star',   menu: ''},
-  {position: 3, img: '../assets/images/admin.jpg', title: 'any title',  description: 'any description',  history: 'any history', location: 'any location', rating: 'rating star',   menu: ''},
-  {position: 4, img: '../assets/images/admin.jpg', title: 'any title',  description: 'any description',  history: 'any history', location: 'any location', rating: 'rating star',   menu: ''},
-  {position: 5, img: '../assets/images/admin.jpg', title: 'any title',  description: 'any description',  history: 'any history', location: 'any location', rating: 'rating star',   menu: ''},
-  {position: 6, img: '../assets/images/admin.jpg', title: 'any title',  description: 'any description',  history: 'any history', location: 'any location', rating: 'rating star',   menu: ''},
-  {position: 7, img: '../assets/images/admin.jpg', title: 'any title',  description: 'any description',  history: 'any history', location: 'any location', rating: 'rating star',   menu: ''},
-  {position: 8, img: '../assets/images/admin.jpg', title: 'any title',   description: 'any description',  history: 'any history', location: 'any location', rating: 'rating star',   menu: ''},
-  {position: 9, img: '../assets/images/admin.jpg', title: 'any title',  description: 'any description',  history: 'any history', location: 'any location', rating: 'rating star',   menu: ''},
-  {position: 10, img: '../assets/images/admin.jpg',title: 'any title', description: 'any description',  history: 'any history', location: 'any location', rating: 'rating star',   menu: ''},
+  // {position: 1, img: '../assets/images/admin.jpg', title: 'any title',    description: 'any description',  history: 'any history', location: 'any location', rating: 'rating star',   menu: ''},
+  // {position: 2, img: '../assets/images/admin.jpg', title: 'any title', description: 'any description',  history: 'any history', location: 'any location', rating: 'rating star',   menu: ''},
+  // {position: 3, img: '../assets/images/admin.jpg', title: 'any title',  description: 'any description',  history: 'any history', location: 'any location', rating: 'rating star',   menu: ''},
+  // {position: 4, img: '../assets/images/admin.jpg', title: 'any title',  description: 'any description',  history: 'any history', location: 'any location', rating: 'rating star',   menu: ''},
+  // {position: 5, img: '../assets/images/admin.jpg', title: 'any title',  description: 'any description',  history: 'any history', location: 'any location', rating: 'rating star',   menu: ''},
+  // {position: 6, img: '../assets/images/admin.jpg', title: 'any title',  description: 'any description',  history: 'any history', location: 'any location', rating: 'rating star',   menu: ''},
+  // {position: 7, img: '../assets/images/admin.jpg', title: 'any title',  description: 'any description',  history: 'any history', location: 'any location', rating: 'rating star',   menu: ''},
+  // {position: 8, img: '../assets/images/admin.jpg', title: 'any title',   description: 'any description',  history: 'any history', location: 'any location', rating: 'rating star',   menu: ''},
+  // {position: 9, img: '../assets/images/admin.jpg', title: 'any title',  description: 'any description',  history: 'any history', location: 'any location', rating: 'rating star',   menu: ''},
+  // {position: 10, img: '../assets/images/admin.jpg',title: 'any title', description: 'any description',  history: 'any history', location: 'any location', rating: 'rating star',   menu: ''},
 ];
 
 @Component({
-  selector: 'app-view-location',
-  templateUrl: './view-location.component.html',
-  styleUrls: ['./view-location.component.css']
+  selector: "app-view-location",
+  templateUrl: "./view-location.component.html",
+  styleUrls: ["./view-location.component.css"],
 })
 export class ViewLocationComponent implements OnInit {
-
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    // this.productService.setDataInTable((tmp) => {
+    //   this.dataSource.setData(tmp);
+    // });
+    this.productService.setDataInTable((tmp) => {
+      this.dataSource.setData(tmp);
+    });
+    // const selected: CollectionsTypes = "";
+    // this.firestore.getCollectionGroup((AngularStore, fireStore) => {
+    // const ref = collectionData(collectionGroup(fireStore, "items"));
+    // console.log(
+    //   ref.forEach((docs) => {
+    //     console.log(docs);
+    //   })
+    // );
+    // });
   }
-  
-  displayedColumns: string[] = ['position', 'title', 'description', 'image', 'history', 'location', 'rating', 'menu'];
+
+  constructor(
+    private firestore: FireStoreService,
+    public productService: LocationService,
+    private store: Firestore
+  ) {}
+
+  deleteLocation(id: string) {
+    this.firestore.deleteDocument("Places" as CollectionsTypes, { uid: id });
+    console.log("id", id);
+
+    // deleteDoc(doc(collection(this.store, "products", id, "items"), pid));
+  }
+  displayedColumns: string[] = [
+    "position",
+    "title",
+    "description",
+    "image",
+    "history",
+    "location",
+    "rating",
+    "menu",
+  ];
   dataToDisplay = [...ELEMENT_DATA];
 
   dataSource = new ExampleDataSource(this.dataToDisplay);
 
   addData() {
     const randomElementIndex = Math.floor(Math.random() * ELEMENT_DATA.length);
-    this.dataToDisplay = [...this.dataToDisplay, ELEMENT_DATA[randomElementIndex]];
+    this.dataToDisplay = [
+      ...this.dataToDisplay,
+      ELEMENT_DATA[randomElementIndex],
+    ];
     this.dataSource.setData(this.dataToDisplay);
   }
 

@@ -7,7 +7,7 @@ import {MatTable} from '@angular/material/table';
 import { WHITE_ON_BLACK_CSS_CLASS } from '@angular/cdk/a11y/high-contrast-mode/high-contrast-mode-detector'
 
 import {ViewChild} from '@angular/core';
-import { TableService } from 'src/app/services/table.service';
+import { TableService } from "src/app/services/table.service";
 
 
 const ELEMENT_DATA: TableService[] = [

@@ -32,7 +32,9 @@ export class FireStoreService {
     private store: Firestore,
     private angularFireStore: AngularFirestore
   ) {}
-  getCollectionData<T>(collectionName: CollectionsTypes): Observable<T[]> {
+  getCollectionData<T>(
+    collectionName: CollectionsTypes | string
+  ): Observable<T[]> {
     let userCollection = collection(this.store, collectionName);
     return collectionData(userCollection, {
       idField: "uid",
@@ -65,7 +67,7 @@ export class FireStoreService {
 
   async addDocInCollection<
     T extends { id?: string; uid?: string; item?: Item }
-  >(user: T, id: "id" | "uid", collectionName: CollectionsTypes) {
+  >(user: T, id: "id" | "uid", collectionName: CollectionsTypes | string) {
     if (id == "id") user.id = doc(collection(this.store, id)).id;
     if (id == "uid") user.uid = doc(collection(this.store, id)).id;
     return await addDoc<T>(
@@ -75,7 +77,7 @@ export class FireStoreService {
   }
 
   deleteDocument<T extends { uid: string }>(
-    collectionName: CollectionsTypes,
+    collectionName: CollectionsTypes | string,
     user: T
   ) {
     const ref = doc(collection(this.store, `${collectionName}`), `${user.uid}`);
@@ -83,7 +85,7 @@ export class FireStoreService {
   }
 
   deleteCollectionGroupDocument<T extends { uid: string }>(
-    collectionName: CollectionsTypes,
+    collectionName: CollectionsTypes | string,
     user: T
   ) {
     const ref = collectionGroup(this.store, "items");
@@ -94,7 +96,7 @@ export class FireStoreService {
   async updateDoc<T extends { uid: string }>(
     oldUser: T,
     newUser: T,
-    collectionName: CollectionsTypes
+    collectionName: CollectionsTypes | string
   ): Promise<boolean> {
     const ref = doc(
       this.store,
