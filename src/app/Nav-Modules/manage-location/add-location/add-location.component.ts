@@ -61,11 +61,11 @@ export class AddLocationComponent implements OnInit {
   }
 
   manageproduct(){
-    this._auth.manageproduct(this.manageProductData)
-    .subscribe(
-      res => console.log(res),
-      err => console.log(err)
-    )
+    // this._auth.manageproduct(this.manageProductData)
+    // .subscribe(
+    //   res => console.log(res),
+    //   err => console.log(err)
+    // )
   }
 
   get name() {

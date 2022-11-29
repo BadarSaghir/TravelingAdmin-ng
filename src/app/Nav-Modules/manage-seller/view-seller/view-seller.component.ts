@@ -70,6 +70,12 @@ export class ViewSellerComponent implements OnInit {
     this.dataToDisplay = this.dataToDisplay.slice(0, -1);
     this.dataSource.setData(this.dataToDisplay);
   }
+  async deleteUser(uid: string) {
+    console.log("uid", uid);
+    this.fireStoreService.deleteDocument("Seller", { uid: uid });
+    // const tmp = this.getPeriodicElements(ELEMENT_DATA, uid);
+    // this.dataSource.setData(tmp);
+  }
 }
 
 class ExampleDataSource extends DataSource<PeriodicElement> {

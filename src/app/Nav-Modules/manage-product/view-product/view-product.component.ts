@@ -1,48 +1,74 @@
 import { Component, OnInit } from '@angular/core';
 import {DataSource} from '@angular/cdk/collections';
-import {Observable, ReplaySubject} from 'rxjs';
+import { map, Observable, ReplaySubject, switchMap } from "rxjs";
+import { Product } from "src/app/Models/firebase/product.model";
+import { FireStoreService } from "src/app/services/firebase/firestore.service";
+import { ManageProductService } from "src/app/services/manage-product.service";
+import {
+  collection,
+  collectionData,
+  collectionGroup,
+  doc,
+} from "@angular/fire/firestore";
+import { CollectionsTypes } from "src/app/shared/types/collection.type";
 
-export interface PeriodicElement {
-  name: string;
-  description: string;
+export interface PeriodicElement extends Product {
   position: number;
-  img: string;
-  price: string;
   menu: string;
-
 }
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, img: '../assets/images/admin.jpg', name: 'product name', description: 'Short description',  price: 'any price', menu: ''},
-  {position: 2, img: '../assets/images/admin.jpg', name: 'product name', description: 'Short description',  price: 'any price', menu: ''},
-  {position: 3, img: '../assets/images/admin.jpg', name: 'product name', description: 'Short description',  price:'iany price', menu: ''},
-  {position: 4, img: '../assets/images/admin.jpg', name: 'product name', description: 'Short description',  price: 'any price', menu: ''},
-  {position: 5, img: '../assets/images/admin.jpg', name: 'product name', description: 'Short description',  price: 'any price', menu: ''},
-  {position: 6, img: '../assets/images/admin.jpg', name: 'product name', description: 'Short description',  price: 'any price', menu: ''},
-  {position: 7, img: '../assets/images/admin.jpg', name: 'product name', description: 'Short description',  price: 'any price', menu: ''},
-  {position: 8, img: '../assets/images/admin.jpg', name: 'product name', description: 'Short description',  price: 'any price', menu: ''},
-  {position: 9, img: '../assets/images/admin.jpg', name: 'product name', description: 'Short description',  price: 'any price', menu: ''},
-  {position: 10, img: '../assets/images/admin.jpg', name:'product name', description: 'Short description',  price: 'any price', menu: ''},
-];
+const ELEMENT_DATA: PeriodicElement[] = [];
 
 @Component({
-  selector: 'app-view-product',
-  templateUrl: './view-product.component.html',
-  styleUrls: ['./view-product.component.css']
+  selector: "app-view-product",
+  templateUrl: "./view-product.component.html",
+  styleUrls: ["./view-product.component.css"],
 })
 export class ViewProductComponent implements OnInit {
-
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    // this.productService.setDataInTable((tmp) => {
+    //   this.dataSource.setData(tmp);
+    // });
+    this.productService.setDataInTable((tmp) => {
+      this.dataSource.setData(tmp);
+    });
+    const selected: CollectionsTypes = "";
+    // this.firestore.getCollectionGroup((AngularStore, fireStore) => {
+    // const ref = collectionData(collectionGroup(fireStore, "items"));
+    // console.log(
+    //   ref.forEach((docs) => {
+    //     console.log(docs);
+    //   })
+    // );
+    // });
   }
-  
-  displayedColumns: string[] = ['position', 'name', 'description', 'image', 'price', 'menu'];
+
+  constructor(
+    private firestore: FireStoreService,
+    public productService: ManageProductService
+  ) {}
+
+  deleteProduct(id: string) {
+    this.firestore.deleteDocument(`products/${id}/items`, { uid: id });
+  }
+
+  displayedColumns: string[] = [
+    "position",
+    "name",
+    "description",
+    "image",
+    "price",
+    "menu",
+  ];
   dataToDisplay = [...ELEMENT_DATA];
 
   dataSource = new ExampleDataSource(this.dataToDisplay);
 
   addData() {
     const randomElementIndex = Math.floor(Math.random() * ELEMENT_DATA.length);
-    this.dataToDisplay = [...this.dataToDisplay, ELEMENT_DATA[randomElementIndex]];
+    this.dataToDisplay = [
+      ...this.dataToDisplay,
+      ELEMENT_DATA[randomElementIndex],
+    ];
     this.dataSource.setData(this.dataToDisplay);
   }
 

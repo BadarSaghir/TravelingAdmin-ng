@@ -7,19 +7,18 @@ import { ViewProductComponent } from './view-product/view-product.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatModule } from 'src/app/shared/mat.module';
 import { HttpClientModule } from '@angular/common/http';
+import { AngularFireModule } from "@angular/fire/compat";
 
 
 @NgModule({
-  declarations: [
-    AddProductComponent,
-    ViewProductComponent
-  ],
+  declarations: [AddProductComponent, ViewProductComponent],
   imports: [
     CommonModule,
     ManageProductRoutingModule,
     ReactiveFormsModule,
     MatModule,
-    HttpClientModule
-  ]
+    HttpClientModule,
+    AngularFireModule,
+  ],
 })
-export class ManageProductModule { }
+export class ManageProductModule {}

@@ -4,4 +4,6 @@ export type CollectionsTypes =
   | "Sellerposts"
   | "Seller"
   | "Reviews"
-  | "Places";
+  | "Places"
+  | string;
+

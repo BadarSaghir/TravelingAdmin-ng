@@ -10,8 +10,11 @@ import {
   updateDoc,
   DocumentReference,
   CollectionReference,
+  collectionGroup,
 } from "@angular/fire/firestore";
+import { AngularFirestore } from "@angular/fire/compat/firestore";
 import { Observable } from "rxjs";
+import { Item } from "src/app/Models/firebase/product.model";
 import { User } from "src/app/Models/firebase/user.model";
 import { CollectionsTypes } from "src/app/shared/types/collection.type";
 
@@ -21,10 +24,14 @@ import { CollectionsTypes } from "src/app/shared/types/collection.type";
 export class FireStoreService {
   public totalPlaces = 0;
   public totalUsers = 0;
+  public totalProducts = 0;
   public totalApproveSellers = 0;
   public totalUnApproveSellers = 0;
 
-  public constructor(private store: Firestore) {}
+  public constructor(
+    private store: Firestore,
+    private angularFireStore: AngularFirestore
+  ) {}
   getCollectionData<T>(collectionName: CollectionsTypes): Observable<T[]> {
     let userCollection = collection(this.store, collectionName);
     return collectionData(userCollection, {
@@ -56,14 +63,11 @@ export class FireStoreService {
     this.totalUnApproveSellers = value;
   }
 
-  async addDocInCollection<T extends { id?: string; uid?: string }>(
-    user: T,
-    id: "id" | "uid",
-    collectionName: CollectionsTypes
-  ) {
+  async addDocInCollection<
+    T extends { id?: string; uid?: string; item?: Item }
+  >(user: T, id: "id" | "uid", collectionName: CollectionsTypes) {
     if (id == "id") user.id = doc(collection(this.store, id)).id;
     if (id == "uid") user.uid = doc(collection(this.store, id)).id;
-
     return await addDoc<T>(
       collection(this.store, collectionName) as CollectionReference<T>,
       user
@@ -77,6 +81,16 @@ export class FireStoreService {
     const ref = doc(collection(this.store, `${collectionName}`), `${user.uid}`);
     return deleteDoc(ref);
   }
+
+  deleteCollectionGroupDocument<T extends { uid: string }>(
+    collectionName: CollectionsTypes,
+    user: T
+  ) {
+    const ref = collectionGroup(this.store, "items");
+
+    // return deleteDoc();
+  }
+
   async updateDoc<T extends { uid: string }>(
     oldUser: T,
     newUser: T,
@@ -92,6 +106,11 @@ export class FireStoreService {
     } catch (error) {
       return false;
     }
+  }
+  async getCollectionGroup(
+    fn: (store: AngularFirestore, firestore: Firestore) => void
+  ) {
+    fn(this.angularFireStore, this.store);
   }
   // Save logged in user data
 }

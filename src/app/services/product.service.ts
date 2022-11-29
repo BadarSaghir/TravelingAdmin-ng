@@ -5,33 +5,9 @@ import { Product } from "src/app/Models/product";
 
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
-export class ProductService {
-  
-  product: any;
-  
-  constructor(private http: HttpClient) { }
-
-  updateProduct(value: any) {
-    throw new Error('Method not implemented.');
-  }
-
-  // addProduct(value: any) {
-  //   throw new Error('Method not implemented.');
-  // }
-
-  addProduct(product: Product): Observable<Product[]> {
-    return this.http.post<Product[]>(this.url, product)
-  }; 
-
-  private url:string = "https://mamas-kids.herokuapp.com/api/products";
-
-  getproduct():Observable<Product[]>{
-    return this.http.get<Product[]>(this.url)
-  }
-
-}
+export class ProductService {}
 
 
 

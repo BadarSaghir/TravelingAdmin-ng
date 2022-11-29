@@ -29,6 +29,7 @@ import { DefaultModule } from "./layout/default/default.module";
 import { provideFirestore, getFirestore } from "@angular/fire/firestore";
 import { initializeApp, provideFirebaseApp } from "@angular/fire/app";
 import { FireStoreService } from "./services/firebase/firestore.service";
+import { FIREBASE_OPTIONS } from "@angular/fire/compat";
 
 @NgModule({
   declarations: [AppComponent, DashboardComponent],
@@ -52,7 +53,10 @@ import { FireStoreService } from "./services/firebase/firestore.service";
     ManageUserModule,
     ManageLocationModule,
   ],
-  providers: [FireStoreService],
+  providers: [
+    FireStoreService,
+    { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
