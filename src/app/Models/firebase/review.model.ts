@@ -4,4 +4,5 @@ export interface Review {
   place_id: string | number;
   rating: number | string;
   remarks: string;
+  uid: string;
 }

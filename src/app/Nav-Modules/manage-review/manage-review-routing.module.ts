@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from "@angular/router";
+import { AuthGuardService } from "src/app/gaurds/auth.gaurd";
 import { DefaultComponent } from "src/app/layout/default/default.component";
 import { ViewReviewComponent } from "./view-review/view-review.component";
 
@@ -7,7 +8,15 @@ const routes: Routes = [
   {
     path: "managereview",
     // component: DefaultComponent,
-    children: [{ path: "viewAll^Reviews", component: ViewReviewComponent }],
+    canActivate: [AuthGuardService],
+
+    children: [
+      {
+        path: "viewAll^Reviews",
+        canActivate: [AuthGuardService],
+        component: ViewReviewComponent,
+      },
+    ],
   },
 ];
 

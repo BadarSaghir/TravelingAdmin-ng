@@ -8,6 +8,7 @@ import { MatModule } from 'src/app/shared/mat.module';
 import { EmailValidatorDirective } from '../manage-user/email-validator.directive';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from "src/app/shared/shared.module";
+import { AuthGuardService } from "src/app/gaurds/auth.gaurd";
 
 
 
@@ -15,6 +16,8 @@ import { SharedModule } from "src/app/shared/shared.module";
 
 @NgModule({
   declarations: [AddUserComponent, ViewUserComponent, EmailValidatorDirective],
+  providers: [AuthGuardService],
+
   imports: [
     CommonModule,
     ManageUserRoutingModule,

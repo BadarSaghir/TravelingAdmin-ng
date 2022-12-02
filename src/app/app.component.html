@@ -7,7 +7,7 @@
     </mat-drawer>
 
     <mat-drawer-content>
-        <app-card-counter></app-card-counter>
+        <app-card-counter *ngIf="showSideBar"></app-card-counter>
         <router-outlet></router-outlet>
     </mat-drawer-content>
 </mat-drawer-container>

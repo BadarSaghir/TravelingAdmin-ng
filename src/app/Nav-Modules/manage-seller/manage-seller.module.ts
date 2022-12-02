@@ -6,18 +6,18 @@ import { AddSellerComponent } from './add-seller/add-seller.component';
 import { ViewSellerComponent } from './view-seller/view-seller.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatModule } from 'src/app/shared/mat.module';
+import { AuthGuardService } from "src/app/gaurds/auth.gaurd";
 
 
 @NgModule({
-  declarations: [
-    AddSellerComponent,
-    ViewSellerComponent
-  ],
+  declarations: [AddSellerComponent, ViewSellerComponent],
+  providers: [AuthGuardService],
+
   imports: [
     CommonModule,
     ManageSellerRoutingModule,
     ReactiveFormsModule,
-    MatModule
-  ]
+    MatModule,
+  ],
 })
-export class ManageSellerModule { }
+export class ManageSellerModule {}

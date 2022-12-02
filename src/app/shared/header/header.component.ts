@@ -12,9 +12,13 @@ export class HeaderComponent implements OnInit {
   @Output() toggleSideBarForMe: EventEmitter<any> = new EventEmitter();
   showSideBar = false;
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(public auth: AuthService, private router: Router) {}
+  public image = "../assets/images/dp.png";
 
   ngOnInit() {
+    this.image = this.auth.user?.photoURL
+      ? this.auth.user?.photoURL
+      : "../assets/images/dp.png";
     // this.auth.authHandling();
     // this.auth.isLoggedIn;
     this.router.events.subscribe((res) => {

@@ -28,10 +28,7 @@ export class UserService {
       }
     });
   }
-  private getPeriodicElements(
-    user: User[] | PeriodicElement[],
-    ignoreUid?: string
-  ) {
+  private getPeriodicElements(user: User[], ignoreUid?: string) {
     this.users = [] as PeriodicElement[];
     let i = 0;
     this.firestore.totalUsers = 0;

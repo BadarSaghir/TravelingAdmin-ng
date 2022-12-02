@@ -9,22 +9,12 @@ export interface PeriodicElement {
   id?: string;
   title: string;
   position: number;
-  userid: number;
+  placeid: string;
+  userid: string | number;
   rating: string;
   menu: string;
 }
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, title: "Ali", rating: "stars", userid: 1, menu: "" },
-  { position: 2, title: "rizwan", rating: "stars", userid: 2, menu: "" },
-  { position: 3, title: "usman", rating: "stars", userid: 3, menu: "" },
-  { position: 4, title: "owais", rating: "stars", userid: 4, menu: "" },
-  { position: 5, title: "aliza", rating: "stars", userid: 5, menu: "" },
-  { position: 6, title: "saira", rating: "stars", userid: 6, menu: "" },
-  { position: 7, title: "akbar", rating: "stars", userid: 7, menu: "" },
-  { position: 8, title: "raza", rating: "stars", userid: 8, menu: "" },
-  { position: 9, title: "wajid", rating: "stars", userid: 9, menu: "" },
-  { position: 10, title: "sumera", rating: "stars", userid: 10, menu: "" },
-];
+const ELEMENT_DATA: PeriodicElement[] = [];
 
 @Component({
   selector: "app-view-review",
@@ -42,7 +32,7 @@ export class ViewReviewComponent implements OnInit {
     public reviewService: ReviewService // private store: Firestore
   ) {}
 
-  deleteLocation(id: string) {
+  deleteReview(id: string) {
     this.firestore.deleteDocument("Reviews" as CollectionsTypes, { uid: id });
     console.log("id", id);
 
@@ -51,8 +41,9 @@ export class ViewReviewComponent implements OnInit {
   displayedColumns: string[] = [
     "position",
     "title",
-    "rating",
     "userid",
+    "place_id",
+    "rating",
     "menu",
   ];
   dataToDisplay = [...ELEMENT_DATA];

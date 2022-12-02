@@ -3,8 +3,11 @@ import {DataSource} from '@angular/cdk/collections';
 import {Observable, ReplaySubject} from 'rxjs';
 import { FireStoreService } from "src/app/services/firebase/firestore.service";
 import { LocationService } from "src/app/services/location.service";
-import { Firestore } from "@angular/fire/firestore";
+import { collection, Firestore } from "@angular/fire/firestore";
 import { CollectionsTypes } from "src/app/shared/types/collection.type";
+import { doc } from "firebase/firestore";
+import { AngularFirestore } from "@angular/fire/compat/firestore";
+import { Product } from "src/app/Models/firebase/product.model";
 
 export interface PeriodicElement {
   id?: string;
@@ -43,10 +46,13 @@ export class ViewLocationComponent implements OnInit {
     this.productService.setDataInTable((tmp) => {
       this.dataSource.setData(tmp);
     });
+    // const _ref = this.ngstore.collection("products").snapshotChanges();
+    // console.log("checking doc id ", _ref);
+
     // const selected: CollectionsTypes = "";
     // this.firestore.getCollectionGroup((AngularStore, fireStore) => {
     // const ref = collectionData(collectionGroup(fireStore, "items"));
-    // console.log(
+    // console.log(t
     //   ref.forEach((docs) => {
     //     console.log(docs);
     //   })
@@ -57,7 +63,8 @@ export class ViewLocationComponent implements OnInit {
   constructor(
     private firestore: FireStoreService,
     public productService: LocationService,
-    private store: Firestore
+    private store: Firestore,
+    private ngstore: AngularFirestore
   ) {}
 
   deleteLocation(id: string) {
@@ -79,15 +86,6 @@ export class ViewLocationComponent implements OnInit {
   dataToDisplay = [...ELEMENT_DATA];
 
   dataSource = new ExampleDataSource(this.dataToDisplay);
-
-  addData() {
-    const randomElementIndex = Math.floor(Math.random() * ELEMENT_DATA.length);
-    this.dataToDisplay = [
-      ...this.dataToDisplay,
-      ELEMENT_DATA[randomElementIndex],
-    ];
-    this.dataSource.setData(this.dataToDisplay);
-  }
 
   removeData() {
     this.dataToDisplay = this.dataToDisplay.slice(0, -1);

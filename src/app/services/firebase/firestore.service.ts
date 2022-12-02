@@ -27,6 +27,7 @@ export class FireStoreService {
   public totalProducts = 0;
   public totalApproveSellers = 0;
   public totalUnApproveSellers = 0;
+  public isAdmin = false;
 
   public constructor(
     private store: Firestore,
@@ -113,6 +114,21 @@ export class FireStoreService {
     fn: (store: AngularFirestore, firestore: Firestore) => void
   ) {
     fn(this.angularFireStore, this.store);
+  }
+
+  getUser(uid: string) {
+    const ref = this.angularFireStore
+      .collection<User>("users")
+      .doc(uid)
+      .snapshotChanges()
+      .subscribe((u) => {
+        console.log("login");
+        if (u.payload.data()?.role == "admin") {
+          this.isAdmin = true;
+        } else {
+          this.isAdmin = false;
+        }
+      });
   }
   // Save logged in user data
 }

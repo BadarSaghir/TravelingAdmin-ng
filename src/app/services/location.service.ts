@@ -33,9 +33,10 @@ export class LocationService {
   }
   private getPeriodicElements(places: Place[], ignoreUid?: string) {
     this.location = [] as PeriodicElement[];
-
+    this.firestore.totalPlaces = 0;
     places.forEach((place, idx) => {
       if (place.id != ignoreUid) {
+        this.firestore.totalPlaces++;
         this.location.push({
           position: idx + 1,
           history: place.history,
@@ -52,7 +53,7 @@ export class LocationService {
         });
       }
     });
-    console.log(this.location);
+    // console.log(this.location);
     return this.location;
   }
 }

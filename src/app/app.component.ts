@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { environment } from "src/environments/environment";
+import { LocationService } from "./services/location.service";
 import { ManageSellerService } from "./services/manage-seller.service";
 import { UserService } from "./services/user.service";
 
@@ -18,16 +19,9 @@ export class AppComponent {
   constructor(
     private router: Router,
     private userService: UserService,
-    private sellerService: ManageSellerService
+    private sellerService: ManageSellerService,
+    private placeSerice: LocationService
   ) {
-    this.router.events.subscribe((res) => {
-      console.log(this.router.url, "Current URL");
-      if (this.router.url == "/auth/login" || this.router.url == "/auth") {
-        this.showSideBar = false;
-      } else {
-        this.showSideBar = true;
-      }
-    });
     // router.events.subscribe((event: Event) => {
     //   console.log(event);
     //   if (event instanceof NavigationEnd) {
@@ -37,8 +31,17 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    this.userService.setDataInTable();
-    this.sellerService.setDataInTable();
+    this.router.events.subscribe((res) => {
+      console.log(this.router.url, "Current URL");
+      if (this.router.url == "/auth/login" || this.router.url == "/auth") {
+        this.showSideBar = false;
+      } else {
+        this.userService.setDataInTable();
+        this.sellerService.setDataInTable();
+        this.placeSerice.setDataInTable();
+        this.showSideBar = true;
+      }
+    });
   }
 
   sideBarToggler() {

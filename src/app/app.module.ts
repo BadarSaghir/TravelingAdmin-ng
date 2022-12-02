@@ -17,25 +17,31 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
-import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import {
+  AngularFireDatabase,
+  AngularFireDatabaseModule,
+} from "@angular/fire/compat/database";
 // ##### side Nave modules #####
-import { ManageSellerModule } from './Nav-Modules/manage-seller/manage-seller.module';
-import { ManageProductModule } from './Nav-Modules/manage-product/manage-product.module';
-import { ManageReviewModule } from './Nav-Modules/manage-review/manage-review.module';
-import { ManageUserModule } from './Nav-Modules/manage-user/manage-user.module';
-import { ManageLocationModule } from './Nav-Modules/manage-location/manage-location.module';
-import { AuthModule } from './auth/auth.module';
+import { ManageSellerModule } from "./Nav-Modules/manage-seller/manage-seller.module";
+import { ManageProductModule } from "./Nav-Modules/manage-product/manage-product.module";
+import { ManageReviewModule } from "./Nav-Modules/manage-review/manage-review.module";
+import { ManageUserModule } from "./Nav-Modules/manage-user/manage-user.module";
+import { ManageLocationModule } from "./Nav-Modules/manage-location/manage-location.module";
+import { AuthModule } from "./auth/auth.module";
 import { DefaultModule } from "./layout/default/default.module";
 import { provideFirestore, getFirestore } from "@angular/fire/firestore";
 import { initializeApp, provideFirebaseApp } from "@angular/fire/app";
 import { FireStoreService } from "./services/firebase/firestore.service";
 import { FIREBASE_OPTIONS } from "@angular/fire/compat";
+import { AuthGuardService } from "./gaurds/auth.gaurd";
 
 @NgModule({
   declarations: [AppComponent, DashboardComponent],
   imports: [
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
+    AngularFireDatabaseModule,
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -56,6 +62,8 @@ import { FIREBASE_OPTIONS } from "@angular/fire/compat";
   providers: [
     FireStoreService,
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
+    AngularFireDatabase,
+    AuthGuardService,
   ],
   bootstrap: [AppComponent],
 })

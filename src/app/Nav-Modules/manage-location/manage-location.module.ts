@@ -7,19 +7,19 @@ import { ViewLocationComponent } from './view-location/view-location.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxStarRatingModule } from 'ngx-star-rating';
 import { MatModule } from 'src/app/shared/mat.module';
+import { AuthGuardService } from "src/app/gaurds/auth.gaurd";
 
 
 @NgModule({
-  declarations: [
-    AddLocationComponent,
-    ViewLocationComponent
-  ],
+  declarations: [AddLocationComponent, ViewLocationComponent],
+  providers: [AuthGuardService],
+
   imports: [
     CommonModule,
     ManageLocationRoutingModule,
     ReactiveFormsModule,
     NgxStarRatingModule,
-    MatModule
-  ]
+    MatModule,
+  ],
 })
-export class ManageLocationModule { }
+export class ManageLocationModule {}

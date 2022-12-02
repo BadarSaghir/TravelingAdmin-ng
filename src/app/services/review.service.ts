@@ -18,7 +18,7 @@ export class ReviewService {
     fn?: (tmp: PeriodicElement[]) => void,
     ignoreUid?: string
   ) {
-    this.firestore.getCollectionData<Review>("Places").subscribe((place) => {
+    this.firestore.getCollectionData<Review>("Reviews").subscribe((place) => {
       if (fn) {
         const temp = this.getPeriodicElements(place, ignoreUid);
         fn(temp);
@@ -29,16 +29,17 @@ export class ReviewService {
   }
   private getPeriodicElements(reviews: Review[], ignoreUid?: string) {
     this.reviews = [] as PeriodicElement[];
-
+    console.log(reviews);
     reviews.forEach((review, idx) => {
       if (review.id != ignoreUid) {
         this.reviews.push({
           id: review.id,
           position: idx + 1,
           menu: "",
-          rating: review.rating as string,
+          rating: review.rating.toString() as string,
           title: review.remarks,
-          userid: review.place_id as number,
+          userid: review.uid,
+          placeid: review.place_id as string,
         });
       }
     });
