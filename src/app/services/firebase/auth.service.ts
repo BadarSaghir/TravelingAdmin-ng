@@ -10,35 +10,38 @@ import { FireStoreService } from "./firestore.service";
   providedIn: "root",
 })
 export class AuthService {
-  static isLoggedIn = false;
-  public user?: firebase.default.User; // Save logged in user data
+  public isLogIn = false;
+  public user: firebase.default.User | null = null; // Save logged in user data
   constructor(
     public fireStore: FireStoreService,
     private auth: AngularFireAuth
   ) {}
 
-  async SignIn(email: string, password: string) {
+  async SignIn(email: string, password: string, fn: (chk: boolean) => void) {
     try {
       const rs = await this.auth.signInWithEmailAndPassword(email, password);
       console.log(rs);
       const user = rs.user as firebase.default.User;
       this.user = user;
-      this.fireStore.getUser(user.uid);
-      if (this.fireStore.isAdmin) {
+      // this.fireStore.getUser(user.uid);
+      this.fireStore.getUser(user.uid, () => {
+        console.log("isAdmin", this.fireStore.isAdmin);
+        if (this.fireStore.isAdmin) {
+          localStorage.setItem(
+            "isAdmin",
+            JSON.stringify(this.fireStore.isAdmin ? user : null)
+          );
+        }
+        this.isLogIn = this.fireStore.isAdmin ? true : false;
         localStorage.setItem(
-          "user",
-          JSON.stringify(this.fireStore.isAdmin ? user : null)
+          "isAdmin",
+          JSON.stringify(this.fireStore.isAdmin ? true : false)
         );
-      }
-      AuthService.isLoggedIn = this.fireStore.isAdmin ? true : false;
-      localStorage.setItem(
-        "isAdmin",
-        JSON.stringify(this.fireStore.isAdmin ? true : false)
-      );
-      return this.fireStore.isAdmin;
+        fn(this.fireStore.isAdmin);
+      });
     } catch (error) {
       localStorage.setItem("user", JSON.stringify(null));
-      return false;
+      fn(false);
     }
   }
 
@@ -47,7 +50,7 @@ export class AuthService {
       localStorage.getItem("user")!
     );
     this.user = user;
-    AuthService.isLoggedIn = user ? true : false;
+    this.isLogIn = user ? true : false;
 
     return user !== null ? true : false;
   }
@@ -58,7 +61,10 @@ export class AuthService {
   SignOut() {
     this.auth.signOut();
     // localStorage.getItem("user");
+    this.user = null;
     localStorage.removeItem("user");
     localStorage.removeItem("isAdmin");
+    this.isLogIn = false;
+    this.fireStore.isAdmin = false;
   }
 }

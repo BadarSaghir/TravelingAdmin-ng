@@ -21,13 +21,16 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
   err = false;
-  async proceedlogin(name: string, pass: string) {
-    if (await this.auth.SignIn(name, pass)) {
-      this.router.navigate(["/"]);
-      this.err = false;
-    } else {
-      this.err = true;
-    }
+  proceedlogin(name: string, pass: string) {
+    console.log("button press", name, pass);
+    this.auth.SignIn(name, pass, (chk) => {
+      if (chk) {
+        this.router.navigate(["/"]);
+        this.err = false;
+      } else {
+        this.err = true;
+      }
+    });
   }
 }
 

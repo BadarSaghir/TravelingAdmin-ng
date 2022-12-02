@@ -11,8 +11,9 @@ import {
   DocumentReference,
   CollectionReference,
   collectionGroup,
+  DocumentSnapshot,
 } from "@angular/fire/firestore";
-import { AngularFirestore } from "@angular/fire/compat/firestore";
+import { Action, AngularFirestore } from "@angular/fire/compat/firestore";
 import { Observable } from "rxjs";
 import { Item } from "src/app/Models/firebase/product.model";
 import { User } from "src/app/Models/firebase/user.model";
@@ -116,19 +117,26 @@ export class FireStoreService {
     fn(this.angularFireStore, this.store);
   }
 
-  getUser(uid: string) {
-    const ref = this.angularFireStore
+  async getUser(uid: string, fn?: (a: any) => void) {
+    const ref = await this.angularFireStore
       .collection<User>("users")
       .doc(uid)
-      .snapshotChanges()
+      .get()
       .subscribe((u) => {
-        console.log("login");
-        if (u.payload.data()?.role == "admin") {
+        console.log("login", u.data()?.role == "admin");
+        if (u.data()?.role == "admin") {
           this.isAdmin = true;
+          if (fn) fn(u);
+          ref.unsubscribe();
         } else {
           this.isAdmin = false;
+          if (fn) fn(u);
+          ref.unsubscribe();
         }
+        //
       });
+
+    // ref.unsubscribe();
   }
   // Save logged in user data
 }

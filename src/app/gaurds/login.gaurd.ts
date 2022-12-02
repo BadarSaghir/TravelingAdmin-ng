@@ -6,10 +6,7 @@ import {
   canActivate,
 } from "@angular/fire/compat/auth-guard";
 
-export const adminOnlyPipe = () =>
-  localStorage.getItem("isAdmin")
-    ? redirectLoggedInTo(["/"])
-    : redirectUnauthorizedTo(["/auth/login"]);
+
 
 import { Injectable } from "@angular/core";
 import { Router, CanActivate } from "@angular/router";
@@ -19,7 +16,7 @@ export class LoginGuardService implements CanActivate {
   constructor(public auth: AuthService, public router: Router) {}
   canActivate(): boolean {
     console.log("logged", this.auth.isLoggedIn);
-    if (this.auth.isLoggedIn) {
+    if (this.auth.isLogIn) {
       this.router.navigate(["/"]);
       return false;
     }

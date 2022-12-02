@@ -18,8 +18,8 @@ import { AuthService } from "../services/firebase/auth.service";
 export class AuthGuardService implements CanActivate {
   constructor(public auth: AuthService, public router: Router) {}
   canActivate(): boolean {
-    console.log("logged", this.auth.isLoggedIn);
-    if (!this.auth.isLoggedIn) {
+    console.log("logged", this.auth.isLogIn);
+    if (!this.auth.isLogIn) {
       this.router.navigate(["/auth/login"]);
       return false;
     }
