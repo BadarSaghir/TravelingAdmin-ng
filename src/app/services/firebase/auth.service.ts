@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { AngularFirestore } from "@angular/fire/compat/firestore";
 import { collection, collectionData, doc } from "@angular/fire/firestore";
+import { Route, Router } from "@angular/router";
 import { CollectionReference, Firestore } from "firebase/firestore";
 import { User } from "src/app/Models/firebase/user.model";
 import { UserService } from "../user.service";
@@ -14,6 +15,7 @@ export class AuthService {
   public user: firebase.default.User | null = null; // Save logged in user data
   constructor(
     public fireStore: FireStoreService,
+    public router: Router,
     private auth: AngularFireAuth
   ) {}
 
@@ -58,13 +60,14 @@ export class AuthService {
 
   // Auth logic to run auth providers
 
-  SignOut() {
-    this.auth.signOut();
+  async SignOut() {
+    await this.auth.signOut();
     // localStorage.getItem("user");
     this.user = null;
     localStorage.removeItem("user");
     localStorage.removeItem("isAdmin");
     this.isLogIn = false;
     this.fireStore.isAdmin = false;
+    this.router.navigate(["/auth/login"]);
   }
 }
