@@ -13,12 +13,12 @@ export class HeaderComponent implements OnInit {
   showSideBar = false;
 
   constructor(public auth: AuthService, private router: Router) {}
-  public image = "../assets/images/dp.png";
+  public image = "/assets/images/dp.png";
 
   ngOnInit() {
     this.image = this.auth.user?.photoURL
       ? this.auth.user?.photoURL
-      : "../assets/images/dp.png";
+      : "/assets/images/dp.png";
     // this.auth.authHandling();
     // this.auth.isLoggedIn;
     this.router.events.subscribe((res) => {

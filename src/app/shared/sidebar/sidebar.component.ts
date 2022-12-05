@@ -8,11 +8,11 @@ import { AuthService } from "src/app/services/firebase/auth.service";
   styleUrls: ["./sidebar.component.css"],
 })
 export class SidebarComponent {
-  public image = "../assets/images/dp.png";
+  public image = "/assets/images/dp.png";
   constructor(public auth: AuthService) {
     this.image = this.auth.user?.photoURL
       ? this.auth.user?.photoURL
-      : "../assets/images/dp.png";
+      : "/assets/images/dp.png";
   }
 
   ngOnInit(): void {}
