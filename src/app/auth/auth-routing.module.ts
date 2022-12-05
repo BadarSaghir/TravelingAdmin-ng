@@ -9,17 +9,18 @@ import {
   canActivate,
 } from "@angular/fire/compat/auth-guard";
 import { adminOnlyPipe, AuthGuardService } from "../gaurds/auth.gaurd";
+import { LoginGuardService } from "../gaurds/login.gaurd";
 // export const adminOnly = () => hasCustomClaim("admin");
 
 const routes: Routes = [
   {
     path: "auth",
-    // canActivate: [AuthGuardService],
+    canActivate: [LoginGuardService],
     children: [
       {
         path: "login",
         component: LoginComponent,
-        // canActivate: [AuthGuardService],
+        canActivate: [LoginGuardService],
       },
     ],
   },

@@ -11,7 +11,7 @@ import { FireStoreService } from "./firestore.service";
   providedIn: "root",
 })
 export class AuthService {
-  public isLogIn = false;
+  public isLogIn: boolean | null = null;
   public user: firebase.default.User | null = null; // Save logged in user data
   constructor(
     public fireStore: FireStoreService,
@@ -25,36 +25,37 @@ export class AuthService {
       console.log(rs);
       const user = rs.user as firebase.default.User;
       this.user = user;
-      // this.fireStore.getUser(user.uid);
-      this.fireStore.getUser(user.uid, () => {
-        console.log("isAdmin", this.fireStore.isAdmin);
-        if (this.fireStore.isAdmin) {
-          localStorage.setItem(
-            "isAdmin",
-            JSON.stringify(this.fireStore.isAdmin ? user : null)
-          );
-        }
-        this.isLogIn = this.fireStore.isAdmin ? true : false;
+      const admin = await this.fireStore.getUser(user.uid);
+      // this.fireStore.getUser(user.uid, () => {
+      console.log("isAdmin", admin ? admin : null);
+      if (admin) {
+        localStorage.setItem(
+          "user",
+          JSON.stringify(this.fireStore.isAdmin ? user : null)
+        );
+        this.isLogIn = this.fireStore.isAdmin ? true : null;
         localStorage.setItem(
           "isAdmin",
-          JSON.stringify(this.fireStore.isAdmin ? true : false)
+          JSON.stringify(this.fireStore.isAdmin ? true : null)
         );
         fn(this.fireStore.isAdmin);
-      });
+      }
+      // });
     } catch (error) {
       localStorage.setItem("user", JSON.stringify(null));
       fn(false);
     }
   }
 
-  get isLoggedIn(): boolean {
-    const user: firebase.default.User = JSON.parse(
-      localStorage.getItem("user")!
-    );
+  get isLoggedIn(): boolean|null {
+    const user: firebase.default.User | null =
+      localStorage.getItem("user") != null
+        ? JSON.parse(localStorage.getItem("user")!)
+        : null;
     this.user = user;
-    this.isLogIn = user ? true : false;
+    this.isLogIn = user ? true : null;
 
-    return user !== null ? true : false;
+    return user !== null ? true : null;
   }
   // Sign in with Google
 

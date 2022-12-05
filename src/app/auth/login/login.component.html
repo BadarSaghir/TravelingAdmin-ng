@@ -37,14 +37,14 @@
             </div>
   
             <!-- Email input -->
-            <div class="form-outline mb-4  d-flex align-items-center justify-content-center">
-              <input type="email" #email  id="form3Example3" class="form-control form-control-lg"
+            <div class="form-outline mb-4   d-flex align-items-center justify-content-center">
+              <input type="email" #email autocomplete="email"  id="form3Example3" class="form-control form-control-lg"
                 placeholder="Enter a valid email address" />
             </div>
   
             <!-- Password input -->
             <div class="form-outline mb-3">
-              <input type="password" #password id="form3Example4" class="form-control form-control-lg"
+              <input type="password" #password autocomplete="current-password" id="form3Example4" class="form-control form-control-lg"
                 placeholder="Enter password" />
             </div>
             <div *ngIf="err" class="alert alert-warning alert-dismissible fade show" role="alert">

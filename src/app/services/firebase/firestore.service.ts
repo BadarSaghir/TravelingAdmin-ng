@@ -14,7 +14,7 @@ import {
   DocumentSnapshot,
 } from "@angular/fire/firestore";
 import { Action, AngularFirestore } from "@angular/fire/compat/firestore";
-import { Observable } from "rxjs";
+import { firstValueFrom, Observable } from "rxjs";
 import { Item } from "src/app/Models/firebase/product.model";
 import { User } from "src/app/Models/firebase/user.model";
 import { CollectionsTypes } from "src/app/shared/types/collection.type";
@@ -118,23 +118,33 @@ export class FireStoreService {
   }
 
   async getUser(uid: string, fn?: (a: any) => void) {
-    const ref = await this.angularFireStore
-      .collection<User>("users")
-      .doc(uid)
-      .get()
-      .subscribe((u) => {
-        console.log("login", u.data()?.role == "admin");
-        if (u.data()?.role == "admin") {
-          this.isAdmin = true;
-          if (fn) fn(u);
-          ref.unsubscribe();
-        } else {
-          this.isAdmin = false;
-          if (fn) fn(u);
-          ref.unsubscribe();
-        }
-        //
-      });
+    const ref = await firstValueFrom(
+      this.angularFireStore.collection<User>("users").doc(uid).get()
+    );
+    console.log("login", ref.data()?.role == "admin");
+    if (ref.data()?.role == "admin") {
+      this.isAdmin = true;
+      
+    } else {
+      this.isAdmin = false;
+      //     if (fn) fn(u);
+      //     ref.unsubscribe();
+    }
+    return this.isAdmin;
+
+    // .subscribe((u) => {
+    //   console.log("login", u.data()?.role == "admin");
+    //   if (u.data()?.role == "admin") {
+    //     this.isAdmin = true;
+    //     if (fn) fn(u);
+    //     ref.unsubscribe();
+    //   } else {
+    //     this.isAdmin = false;
+    //     if (fn) fn(u);
+    //     ref.unsubscribe();
+    //   }
+    //   //
+    // });
 
     // ref.unsubscribe();
   }
