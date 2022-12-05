@@ -1,11 +1,17 @@
 {
   "name": "preparely",
   "version": "0.0.0",
+  "author": {
+    "name": "badar",
+    "email": "dataentrybadar@gmail.com",
+    "url": "https: //github.com/BadarSaghir/TravelingAdmin-ng"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
+    "deploy": "gh-pages -d dist",
     "test": "ng test"
   },
   "private": true,
