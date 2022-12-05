@@ -4,7 +4,9 @@
   "author": {
     "name": "badar",
     "email": "dataentrybadar@gmail.com",
-    "url": "https: //github.com/BadarSaghir/TravelingAdmin-ng"
+  },
+  "repository": {
+    "url": "https: //github.com/BadarSaghir/TravelingAdmin-ng.git"
   },
   "scripts": {
     "ng": "ng",
