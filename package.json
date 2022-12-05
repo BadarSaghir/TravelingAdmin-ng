@@ -1,9 +1,11 @@
 {
   "name": "preparely",
   "version": "0.0.0",
+  "homepage": "https: //badarsaghir.github.io/TravelingAdmin-ng",
   "author": {
     "name": "badar",
     "email": "dataentrybadar@gmail.com",
+    "url": "https: //github.com/BadarSaghir"
   },
   "repository": {
     "url": "https: //github.com/BadarSaghir/TravelingAdmin-ng.git"
