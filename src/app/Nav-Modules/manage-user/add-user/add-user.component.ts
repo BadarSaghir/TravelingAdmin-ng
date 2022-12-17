@@ -1,108 +1,105 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Seller, User } from "src/app/Models/firebase/user.model";
-import { FireStoreService } from "src/app/services/firebase/firestore.service";
-import { emailValidator } from "../../../email-validator.directive";
-import { ManageUser } from "../../../Models/manage-user";
-import { UserService } from "../../../services/user.service";
+// import { Component, OnInit } from '@angular/core';
+// import { FormControl, FormGroup, Validators } from '@angular/forms';
+// import { Seller, User } from "src/app/Models/firebase/user.model";
+// import { FireStoreService } from "src/app/services/firebase/firestore.service";
+// import { emailValidator } from "../../../email-validator.directive";
+// import { ManageUser } from "../../../Models/manage-user";
+// import { UserService } from "../../../services/user.service";
 
-interface IUser extends User {
-  password: string;
-  showPassword: boolean;
-}
+// interface IUser extends User {
+//   password: string;
+//   showPassword: boolean;
+// }
 
-@Component({
-  selector: "app-add-user",
-  templateUrl: "./add-user.component.html",
-  styleUrls: ["./add-user.component.css"],
-})
-export class AddUserComponent implements OnInit {
-  reactiveForm!: FormGroup;
-  user: IUser;
+// @Component({
+//   selector: "app-add-user",
+//   templateUrl: "./add-user.component.html",
+//   styleUrls: ["./add-user.component.css"],
+// })
+// export class AddUserComponent implements OnInit {
+//   reactiveForm!: FormGroup;
+//   user: IUser;
 
-  constructor(
-    private _auth: UserService,
-    private _fireStore: FireStoreService
-  ) {
-    this.user = {} as IUser;
-  }
-  manageUser = new ManageUser("", "", "", "", "", "");
+//   constructor(
+//     private _auth: UserService,
+//     private _fireStore: FireStoreService
+//   ) {
+//     this.user = {} as IUser;
+//   }
+//   manageUser = new ManageUser("", "", "", "", "", "");
 
-  ngOnInit(): void {
-    this.reactiveForm = new FormGroup({
-      firstName: new FormControl(this.user.firstName, [
-        Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(250),
-      ]),
-      secondName: new FormControl(this.user.secondName, [
-        Validators.maxLength(10),
-      ]),
-      email: new FormControl(this.user.email, [
-        Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(250),
-        emailValidator(),
-      ]),
-      role: new FormControl(this.user.role, [
-        Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(10),
-      ]),
-      password: new FormControl(this.user.password, [
-        Validators.required,
-        Validators.minLength(3),
-      ]),
-    });
-  }
+//   ngOnInit(): void {
+//     this.reactiveForm = new FormGroup({
+//       firstName: new FormControl(this.user.name, [
+//         Validators.required,
+//         Validators.minLength(1),
+//         Validators.maxLength(250),
+//       ]),
 
-  get firstName() {
-    return this.reactiveForm.get("firstName")!;
-  }
+//       email: new FormControl(this.user.email_address, [
+//         Validators.required,
+//         Validators.minLength(1),
+//         Validators.maxLength(250),
+//         emailValidator(),
+//       ]),
+//       role: new FormControl(this.user.roles[0], [
+//         Validators.required,
+//         Validators.minLength(1),
+//         Validators.maxLength(10),
+//       ]),
+//       password: new FormControl(this.user.password, [
+//         Validators.required,
+//         Validators.minLength(3),
+//       ]),
+//     });
+//   }
 
-  get secondName() {
-    return this.reactiveForm.get("secondName")!;
-  }
+//   get firstName() {
+//     return this.reactiveForm.get("firstName")!;
+//   }
 
-  get email() {
-    return this.reactiveForm.get("email")!;
-  }
+//   get secondName() {
+//     return this.reactiveForm.get("secondName")!;
+//   }
 
-  get password() {
-    return this.reactiveForm.get("password")!;
-  }
-  get role() {
-    return this.reactiveForm.get("role")!;
-  }
+//   get email() {
+//     return this.reactiveForm.get("email")!;
+//   }
 
-  public validate(): void {
-    if (this.reactiveForm.invalid) {
-      for (const control of Object.keys(this.reactiveForm.controls)) {
-        this.reactiveForm.controls[control].markAsTouched();
-      }
+//   get password() {
+//     return this.reactiveForm.get("password")!;
+//   }
+//   get role() {
+//     return this.reactiveForm.get("role")!;
+//   }
 
-      return;
-    }
+//   public validate(): void {
+//     if (this.reactiveForm.invalid) {
+//       for (const control of Object.keys(this.reactiveForm.controls)) {
+//         this.reactiveForm.controls[control].markAsTouched();
+//       }
 
-    this.user = this.reactiveForm.value;
-    // console.info(this.ManageUser);
-    console.info("Name:", this.user.firstName);
-    console.info("Nickname:", this.user.secondName);
-    console.info("Nickname:", this.user.role);
+//       return;
+//     }
 
-    console.info("Email:", this.user.email);
-    console.info("Password:", this.user.password);
-    this._fireStore.addDocInCollection<User>(
-      {
-        email: this.user.email,
-        firstName: this.user.firstName,
-        role: this.user.role,
-        secondName: this.user.secondName,
-        uid: "",
-      },
-      "uid",
-      "users"
-    );
-  }
-}
+//     this.user = this.reactiveForm.value;
+//     // console.info(this.ManageUser);
+//     console.info("Name:", this.user.firstName);
+//     console.info("Nickname:", this.user.secondName);
+//     console.info("Nickname:", this.user.role);
 
+//     console.info("Email:", this.user.email);
+//     console.info("Password:", this.user.password);
+//     this._fireStore.addDocInCollection<User>(
+//       {
+//         email: this.user.email,
+//         firstName: this.user.firstName,
+//         role: this.user.role,
+//         secondName: this.user.secondName,
+//         uid: "",
+//       },
+//       "uid",
+//       "users"
+//     );
+//   }
+// }

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Seller } from "../Models/firebase/user.model";
+import { Seller, User } from "../Models/firebase/user.model";
 import { PeriodicElement } from "../Nav-Modules/manage-user/view-user/view-user.component";
 import { FireStoreService } from "./firebase/firestore.service";
+import { AngularFirestore } from "@angular/fire/compat/firestore";
 
 @Injectable({
   providedIn: "root",
@@ -13,21 +14,32 @@ export class ManageSellerService {
   // registerUser(user: any) {
   //   return this.http.post<any>(this._registerUrl, user);
   // }
-  constructor(private firestore: FireStoreService) {}
+  constructor(
+    private firestore: FireStoreService,
+    private angularFireStore: AngularFirestore
+  ) {}
 
   public setDataInTable(
     fn?: (tmp: PeriodicElement[]) => void,
     ignoreUid?: string
   ) {
-    this.firestore.getCollectionData<Seller>("Seller").subscribe((seller) => {
-      const temp = this.getPeriodicElements(seller, ignoreUid);
-      if (fn) {
-        fn(temp);
-      }
-    });
+    this.angularFireStore
+      .collection<User>("Users", (ref) =>
+        ref.where("roles", "array-contains", "seller")
+      )
+      .valueChanges()
+      .subscribe((seller) => {
+        const temp = this.getPeriodicElements(seller, ignoreUid);
+        if (fn) {
+          fn(temp);
+        }
+      });
+    // this.firestore.getCollectionData<User>("Users").subscribe((seller) => {
+
+    // });
   }
   private getPeriodicElements(
-    sellers: Seller[] | PeriodicElement[],
+    sellers: User[] | PeriodicElement[],
     ignoreUid?: string
   ) {
     this.sellers = [] as PeriodicElement[];
@@ -37,21 +49,26 @@ export class ManageSellerService {
     this.firestore.totalUnApproveSellers = 0;
 
     sellers.forEach((seller, idx) => {
-      if (seller.uid != ignoreUid) {
+      if (seller.id != ignoreUid) {
         i++;
-        if (seller.isApprove == true) this.firestore.totalApproveSellers++;
+        if (seller.is_allowed == true) this.firestore.totalApproveSellers++;
         else {
           this.firestore.totalUnApproveSellers++;
         }
 
         this.sellers.push({
-          email: seller.email,
-          firstName: seller.firstName,
+          email_address: seller.email_address,
+          name: seller.name,
           position: idx + 1,
           menu: "",
-          isApprove: seller.isApprove,
-          secondName: seller.secondName,
-          uid: seller.uid,
+          isApprove: seller.is_allowed,
+          roles: seller.roles,
+          id: seller.id,
+          image_url: seller.image_url,
+          joined_at: seller.joined_at,
+          is_allowed: seller.is_allowed,
+          location: seller.location,
+          image: seller.image_url,
         });
       }
     });

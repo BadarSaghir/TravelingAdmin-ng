@@ -95,17 +95,17 @@ export class FireStoreService {
     // return deleteDoc();
   }
 
-  async updateDoc<T extends { uid: string }>(
+  async updateDoc<T extends { id: string }>(
     oldUser: T,
     newUser: T,
     collectionName: CollectionsTypes | string
   ): Promise<boolean> {
-    const ref = doc(
+    const ref = (await doc(
       this.store,
-      `${collectionName}/${oldUser.uid}`
-    ) as DocumentReference<User>;
+      `${collectionName}/${oldUser.id}`
+    )) as DocumentReference<T>;
     try {
-      await updateDoc<User>(ref, newUser);
+      this.angularFireStore.doc(`options/${oldUser.id}`).update(newUser);
       return true;
     } catch (error) {
       return false;
@@ -119,17 +119,25 @@ export class FireStoreService {
 
   async getUser(uid: string, fn?: (a: any) => void) {
     const ref = await firstValueFrom(
-      this.angularFireStore.collection<User>("users").doc(uid).get()
+      this.angularFireStore.collection<User>("Users").doc(uid).get()
     );
-    console.log("login", ref.data()?.role == "admin");
-    if (ref.data()?.role == "admin") {
-      this.isAdmin = true;
-      
+    // console.log("login",  == "admin");
+    const user = ref.data();
+    if (user) {
+      for (let index = 0; index < user.roles.length; index++) {
+        if (user.roles[index]) {
+          this.isAdmin = true;
+          break;
+        } else {
+          this.isAdmin = false;
+          //     if (fn) fn(u);
+          //     ref.unsubscribe();
+        }
+      }
     } else {
       this.isAdmin = false;
-      //     if (fn) fn(u);
-      //     ref.unsubscribe();
     }
+
     return this.isAdmin;
 
     // .subscribe((u) => {

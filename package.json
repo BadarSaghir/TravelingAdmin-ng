@@ -12,10 +12,12 @@
   },
   "scripts": {
     "ng": "ng",
+
     "start": "ng serve",
     "build": "ng build",
+    "build:gh-pages": "ng build --prod --base-href /TravelingAdmin-ng/",
     "watch": "ng build --watch --configuration development",
-    "deploy": "gh-pages -d dist/preparely",
+    "deploy:gh-pages": "yarn build:gh-pages && gh-pages -d dist/preparely",
     "test": "ng test"
   },
   "private": true,

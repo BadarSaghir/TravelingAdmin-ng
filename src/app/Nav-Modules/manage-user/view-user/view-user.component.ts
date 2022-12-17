@@ -10,7 +10,6 @@ export interface PeriodicElement extends User {
   position: number;
   isApprove?: boolean;
   menu: string;
-  name?: string;
   description?: string;
   image?: string;
   price?: string;

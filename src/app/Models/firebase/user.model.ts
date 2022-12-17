@@ -1,9 +1,14 @@
+import { GeoPoint, Timestamp } from "firebase/firestore";
+
 export interface User {
-  email: string;
-  firstName: string;
-  role?: string;
-  secondName: string;
-  uid: string;
+  email_address: string;
+  id: string;
+  image_url: string;
+  is_allowed: boolean;
+  joined_at: Timestamp;
+  location?: GeoPoint;
+  name: string;
+  roles: string[];
 }
 
 export interface Seller {

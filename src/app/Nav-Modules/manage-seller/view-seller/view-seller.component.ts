@@ -5,7 +5,7 @@ import {Observable, ReplaySubject} from 'rxjs';
 import { PeriodicElement } from "../../manage-user/view-user/view-user.component";
 import { ManageSellerService } from "src/app/services/manage-seller.service";
 import { FireStoreService } from "src/app/services/firebase/firestore.service";
-import { Seller } from "src/app/Models/firebase/user.model";
+import { Seller, User } from "src/app/Models/firebase/user.model";
 
 const ELEMENT_DATA: PeriodicElement[] = [];
 
@@ -26,22 +26,28 @@ export class ViewSellerComponent implements OnInit {
   }
 
   updateApproval(element: PeriodicElement) {
-    this.fireStoreService.updateDoc<Seller>(
+    this.fireStoreService.updateDoc<User>(
       {
-        email: element.email,
-        firstName: element.firstName,
-        isApprove: element.isApprove as boolean,
-        secondName: element.secondName,
-        uid: element.uid,
+        email_address: element.email_address,
+        name: element.name,
+        roles: element.roles,
+        id: element.id,
+        image_url: element.image_url,
+        joined_at: element.joined_at,
+        is_allowed: element.is_allowed,
+        location: element.location,
       },
       {
-        email: element.email,
-        firstName: element.firstName,
-        isApprove: !element.isApprove as boolean,
-        secondName: element.secondName,
-        uid: element.uid,
+        email_address: element.email_address,
+        name: element.name,
+        roles: element.roles,
+        id: element.id,
+        image_url: element.image_url,
+        joined_at: element.joined_at,
+        is_allowed: !element.is_allowed,
+        location: element.location,
       },
-      "Seller"
+      "Users"
     );
   }
 

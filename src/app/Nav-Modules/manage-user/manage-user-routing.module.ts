@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DefaultComponent } from 'src/app/layout/default/default.component';
-import { AddUserComponent } from './add-user/add-user.component';
+// import { AddUserComponent } from './add-user/add-user.component';
 import { ViewUserComponent } from './view-user/view-user.component';
 import { AngularFireAuthGuard } from "@angular/fire/compat/auth-guard";
 import { AuthGuardService } from "src/app/gaurds/auth.gaurd";
@@ -12,12 +12,12 @@ const routes: Routes = [
     // component: DefaultComponent,
     canActivate: [AuthGuardService],
     children: [
-      {
-        path: "Addnew^user",
-        canActivate: [AuthGuardService],
+      // {
+      //   path: "Addnew^user",
+      //   canActivate: [AuthGuardService],
 
-        component: AddUserComponent,
-      },
+      //   component: AddUserComponent,
+      // },
       {
         path: "view^users",
         canActivate: [AuthGuardService],

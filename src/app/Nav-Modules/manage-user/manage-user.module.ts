@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ManageUserRoutingModule } from './manage-user-routing.module';
-import { AddUserComponent } from './add-user/add-user.component';
+import { ManageUserRoutingModule } from "./manage-user-routing.module";
 import { ViewUserComponent } from './view-user/view-user.component';
 import { MatModule } from 'src/app/shared/mat.module';
 import { EmailValidatorDirective } from '../manage-user/email-validator.directive';
@@ -15,7 +14,7 @@ import { AuthGuardService } from "src/app/gaurds/auth.gaurd";
 
 
 @NgModule({
-  declarations: [AddUserComponent, ViewUserComponent, EmailValidatorDirective],
+  declarations: [ViewUserComponent, EmailValidatorDirective],
   providers: [AuthGuardService],
 
   imports: [

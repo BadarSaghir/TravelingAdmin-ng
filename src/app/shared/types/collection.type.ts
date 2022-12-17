@@ -1,9 +1,1 @@
-export type CollectionsTypes =
-  | "users"
-  | "products"
-  | "Sellerposts"
-  | "Seller"
-  | "Reviews"
-  | "Places"
-  
-
+export type CollectionsTypes = "Users" | "Reviews" | "Places";

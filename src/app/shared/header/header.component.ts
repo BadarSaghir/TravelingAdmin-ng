@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from "@angular/router";
+import { environment } from "src/environments/environment";
 // import { ProductService } from "src/app/services/location.service";
 import { AuthService } from "../../services/firebase/auth.service";
 
@@ -13,12 +14,12 @@ export class HeaderComponent implements OnInit {
   showSideBar = false;
 
   constructor(public auth: AuthService, private router: Router) {}
-  public image = "/assets/images/dp.png";
+  public image = environment.baseUrl + "/assets/images/dp.png";
 
   ngOnInit() {
     this.image = this.auth.user?.photoURL
       ? this.auth.user?.photoURL
-      : "/assets/images/dp.png";
+      : environment.baseUrl + "/assets/images/dp.png";
     // this.auth.authHandling();
     // this.auth.isLoggedIn;
     this.router.events.subscribe((res) => {
