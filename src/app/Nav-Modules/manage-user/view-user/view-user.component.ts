@@ -52,7 +52,7 @@ export class ViewUserComponent implements OnInit {
   }
   async deleteUser(uid: string) {
     console.log("uid", uid);
-    await this.firestore.deleteDocument("users", { uid: uid });
+    await this.firestore.deleteDocument("Users", { uid: uid });
     // const tmp = this.getPeriodicElements(ELEMENT_DATA, uid);
     // this.dataSource.setData(tmp);
   }

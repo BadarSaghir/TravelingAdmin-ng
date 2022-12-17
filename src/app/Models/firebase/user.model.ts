@@ -6,7 +6,7 @@ export interface User {
   image_url: string;
   is_allowed: boolean;
   joined_at: Timestamp;
-  location?: GeoPoint;
+  location?: GeoPoint | null;
   name: string;
   roles: string[];
 }

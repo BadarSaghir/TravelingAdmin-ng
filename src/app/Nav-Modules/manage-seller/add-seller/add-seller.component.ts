@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Seller } from "src/app/Models/firebase/user.model";
+import { AngularFireAuth } from "@angular/fire/compat/auth";
+import { AngularFirestore } from "@angular/fire/compat/firestore";
+import { serverTimestamp, Timestamp } from "@angular/fire/firestore";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
+import { Seller, User } from "src/app/Models/firebase/user.model";
 import { ManageSeller } from "src/app/Models/manage-seller";
 import { ManageUser } from "src/app/Models/manage-user";
 import { FireStoreService } from "src/app/services/firebase/firestore.service";
@@ -29,7 +33,10 @@ export class AddSellerComponent implements OnInit {
 
   constructor(
     private _auth: ManageSellerService,
-    private _fireStore: FireStoreService
+    private _fireStore: FireStoreService,
+    private router: Router,
+    private _angularFire: AngularFirestore,
+    private _angularAuth: AngularFireAuth
   ) {
     this.user = {} as IUser;
   }
@@ -95,17 +102,26 @@ export class AddSellerComponent implements OnInit {
 
     console.info("Email:", this.user.email);
     console.info("Password:", this.user.password);
-    this._fireStore.addDocInCollection<Seller>(
-      {
-        email: this.user.email,
-        firstName: this.user.firstName,
-        isApprove: this.user.role,
-        secondName: this.user.secondName,
-        uid: "",
-      },
-      "id",
-      "Seller"
-    );
+    this._angularAuth
+      .createUserWithEmailAndPassword(this.user.email, this.user.password)
+      .then(async (auth) => {
+        await auth.user?.uid;
+        this._angularFire
+          .collection<User>("Users")
+          .doc(auth.user?.uid)
+          .set({
+            email_address: this.user.email,
+            name: this.user.firstName,
+            is_allowed: this.user.role,
+            id: auth.user?.uid || "",
+            image_url: "",
+            roles: ["seller"],
+            joined_at: serverTimestamp() as Timestamp,
+            location: null,
+          });
+
+        this, this.router.navigateByUrl("/manage-seller/seller^view");
+      });
   }
 }
 

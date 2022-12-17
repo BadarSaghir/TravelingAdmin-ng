@@ -47,7 +47,7 @@
 
       <!-- second colum  -->
       <div class="col-md-6">
-        <label for="nickname" class="form-label">Last Name:</label>
+        <!-- <label for="nickname" class="form-label">Last Name:</label>
         <input
           [ngModel]="manageUser.secondName"
           type="text"
@@ -60,15 +60,15 @@
           [class.is-invalid]="
             secondName.invalid && (secondName.dirty || secondName.touched)
           "
-        />
-        <div
+        /> -->
+        <!-- <div
           *ngIf="secondName.invalid && (secondName.dirty || secondName.touched)"
           class="invalid-feedback"
         >
           <div *ngIf="secondName.errors?.['maxlength']">
             This field must have at most 10 characters.
           </div>
-        </div>
+        </div> -->
       </div>
 
       <!-- third colum  -->

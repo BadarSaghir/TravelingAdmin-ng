@@ -78,7 +78,7 @@ export class ViewSellerComponent implements OnInit {
   }
   async deleteUser(uid: string) {
     console.log("uid", uid);
-    this.fireStoreService.deleteDocument("Seller", { uid: uid });
+    this.fireStoreService.deleteDocument("Users", { uid: uid });
     // const tmp = this.getPeriodicElements(ELEMENT_DATA, uid);
     // this.dataSource.setData(tmp);
   }

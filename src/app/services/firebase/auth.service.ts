@@ -3,6 +3,7 @@ import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { AngularFirestore } from "@angular/fire/compat/firestore";
 import { collection, collectionData, doc } from "@angular/fire/firestore";
 import { Route, Router } from "@angular/router";
+import * as firebase from "firebase/compat";
 import { CollectionReference, Firestore } from "firebase/firestore";
 import { User } from "src/app/Models/firebase/user.model";
 import { UserService } from "../user.service";
@@ -21,6 +22,7 @@ export class AuthService {
 
   async SignIn(email: string, password: string, fn: (chk: boolean) => void) {
     try {
+      // this.auth.setPersistence(firebase.default.auth.Auth.Persistence.LOCAL);
       const rs = await this.auth.signInWithEmailAndPassword(email, password);
       console.log(rs);
       const user = rs.user as firebase.default.User;
@@ -47,7 +49,7 @@ export class AuthService {
     }
   }
 
-  get isLoggedIn(): boolean|null {
+  get isLoggedIn(): boolean | null {
     const user: firebase.default.User | null =
       localStorage.getItem("user") != null
         ? JSON.parse(localStorage.getItem("user")!)
