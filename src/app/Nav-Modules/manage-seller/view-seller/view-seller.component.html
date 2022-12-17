@@ -29,13 +29,13 @@
     <!-- Name Column -->
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>User Name</th>
-      <td mat-cell *matCellDef="let element">{{element.firstName+" "+element.secondName}}</td>
+      <td mat-cell *matCellDef="let element">{{element.name}}</td>
     </ng-container>
   
     <!-- Email Column -->
     <ng-container matColumnDef="email">
       <th mat-header-cell *matHeaderCellDef>User Email</th>
-      <td mat-cell *matCellDef="let element">{{element.email}}</td>
+      <td mat-cell *matCellDef="let element">{{element.email_address}}</td>
     </ng-container>
 
     <ng-container matColumnDef="Approve">
@@ -44,7 +44,7 @@
         
         
         
-        {{element.isApprove?"Approved":"Un-Approve"}}</td>
+        {{element.is_allowed?"Approved":"Un-Approve"}}</td>
     </ng-container>
     <ng-container matColumnDef="changeApprove">
       <th mat-header-cell *matHeaderCellDef>Approval</th>
@@ -59,8 +59,8 @@
             </label>
           </div> -->
 
-        <button   *ngIf="element.isApprove"  class="btn shadow-div text-sm pt-2 text-white btn-warning btn-sm">Un-Approve</button>
-        <button *ngIf="!element.isApprove" class="btn shadow-div text-sm pt-2  text-white btn-info btn-sm" >Approve</button>
+        <button   *ngIf="element.is_allowed"  class="btn shadow-div text-sm pt-2 text-white btn-warning btn-sm">Un-Approve</button>
+        <button *ngIf="!element.is_allowed" class="btn shadow-div text-sm pt-2  text-white btn-info btn-sm" >Approve</button>
       </div>
       </td>
       <!-- <td mat-cell *matCellDef="let element">{{element.isApprove?(<button class="btn btn-warning btn-sm">Un-Approve</button>):(<button class="btn btn-info btn-sm">Approve</button>)}}</td> -->

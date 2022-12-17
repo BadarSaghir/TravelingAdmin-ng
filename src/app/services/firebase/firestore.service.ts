@@ -105,7 +105,9 @@ export class FireStoreService {
       `${collectionName}/${oldUser.id}`
     )) as DocumentReference<T>;
     try {
-      this.angularFireStore.doc(`options/${oldUser.id}`).update(newUser);
+      this.angularFireStore
+        .doc(`${collectionName}/${oldUser.id}`)
+        .update(newUser);
       return true;
     } catch (error) {
       return false;

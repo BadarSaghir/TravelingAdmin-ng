@@ -25,11 +25,19 @@ export class UserService {
   ) {
     this.angularFireStore
       .collection<User>("Users", (ref) =>
-        ref.where("roles", "array-contains", "tourist")
+        ref.where("roles", "array-contains-any", ["tourist", "admin"])
       )
       .valueChanges()
-      .subscribe((seller) => {
-        const temp = this.getPeriodicElements(seller, ignoreUid);
+      .subscribe((user) => {
+        user = user.map((u, i) => {
+          u.roles.map((role, i) => {
+            if (role == "seller") {
+              u.roles.splice(i, 1);
+            }
+          });
+          return u;
+        });
+        const temp = this.getPeriodicElements(user, ignoreUid);
         if (fn) {
           fn(temp);
         }
