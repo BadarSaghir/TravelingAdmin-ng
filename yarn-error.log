@@ -1,8 +1,8 @@
 Arguments: 
-  /usr/bin/node /usr/local/bin/yarn add -D gh-pages
+  /usr/bin/node /usr/local/bin/yarn add @angular/platfrom-browser
 
 PATH: 
-  /home/badar/.deno/bin:/home/badar/.bun/bin:/home/badar/.pyenv/bin:/home/badar/anaconda3/condabin:/home/badar/.deno/bin:/home/badar/.bun/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/snap/bin:/home/badar/.dotnet/tools:/home/badar/development/flutter/bin:/home/badar/.cargo/bin:/home/badar/.local/bin:/home/badar/.yarn/bin:/home/badar/development/flutter/bin:/home/badar/.cargo/bin:/home/badar/.local/bin
+  /home/badar/.pyenv/bin:/home/badar/anaconda3/condabin:/home/badar/.deno/bin:/home/badar/.bun/bin:/home/badar/.cargo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/games:/usr/games:/home/badar/development/flutter/bin:/home/badar/.cargo/bin:/home/badar/.local/bin:/home/badar/.yarn/bin
 
 Yarn version: 
   1.22.19
@@ -14,31 +14,39 @@ Platform:
   linux x64
 
 Trace: 
-  SyntaxError: /home/badar/workspace/fiverr/programming/angular/Trveling CMS/package.json: Unexpected token } in JSON at position 196
-      at JSON.parse (<anonymous>)
-      at /usr/local/lib/node_modules/yarn/lib/cli.js:1629:59
-      at Generator.next (<anonymous>)
-      at step (/usr/local/lib/node_modules/yarn/lib/cli.js:310:30)
-      at /usr/local/lib/node_modules/yarn/lib/cli.js:321:13
+  Error: https://registry.yarnpkg.com/@angular%2fplatfrom-browser: Not found
+      at Request.params.callback [as _callback] (/usr/local/lib/node_modules/yarn/lib/cli.js:66145:18)
+      at Request.self.callback (/usr/local/lib/node_modules/yarn/lib/cli.js:140890:22)
+      at Request.emit (node:events:527:28)
+      at Request.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141862:10)
+      at Request.emit (node:events:527:28)
+      at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141784:12)
+      at Object.onceWrapper (node:events:641:28)
+      at IncomingMessage.emit (node:events:539:35)
+      at endReadableNT (node:internal/streams/readable:1345:12)
+      at processTicksAndRejections (node:internal/process/task_queues:83:21)
 
 npm manifest: 
   {
     "name": "preparely",
     "version": "0.0.0",
-    "homepage": "https: //github.com/BadarSaghir/TravelingAdmin-ng.git",
+    "homepage": "https: //badarsaghir.github.io/TravelingAdmin-ng",
     "author": {
       "name": "badar",
       "email": "dataentrybadar@gmail.com",
+      "url": "https: //github.com/BadarSaghir"
     },
     "repository": {
       "url": "https: //github.com/BadarSaghir/TravelingAdmin-ng.git"
     },
     "scripts": {
       "ng": "ng",
+  
       "start": "ng serve",
       "build": "ng build",
+      "build:gh-pages": "ng build --prod --base-href /TravelingAdmin-ng/",
       "watch": "ng build --watch --configuration development",
-      "deploy": "gh-pages -d dist",
+      "deploy:gh-pages": "yarn build:gh-pages && gh-pages -d dist/preparely",
       "test": "ng test"
     },
     "private": true,
@@ -82,6 +90,7 @@ npm manifest:
       "@angular/compiler-cli": "~13.3.0",
       "@types/jasmine": "~3.10.0",
       "@types/node": "^12.11.1",
+      "gh-pages": "^4.0.0",
       "jasmine-core": "~4.0.0",
       "karma": "~6.3.0",
       "karma-chrome-launcher": "~3.1.0",

@@ -5,7 +5,8 @@
             <!-- <h4>Admin</h4>
             <h6>admin@gmail.com</h6> -->
         </div>
-        <img src={{this.image}} class="img-fluid mt-1" alt="">
+        <img [src]='this.image'
+         class="img-fluid mt-1" alt="">
         <div class="header">
             <h4>{{this.auth.user?.displayName}}</h4>
             <h6>{{this.auth.user?.email}}</h6>
