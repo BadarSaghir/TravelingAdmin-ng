@@ -126,6 +126,8 @@ export class FireStoreService {
     // console.log("login",  == "admin");
     const user = ref.data();
     if (user) {
+      if (user.image_url.length > 0)
+        localStorage.setItem("img", user.image_url);
       for (let index = 0; index < user.roles.length; index++) {
         if (user.roles[index]) {
           this.isAdmin = true;
