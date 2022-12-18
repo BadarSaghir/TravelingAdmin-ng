@@ -47,6 +47,8 @@
 
       <!-- second colum  -->
       <div class="col-md-6">
+
+  
         <!-- <label for="nickname" class="form-label">Last Name:</label>
         <input
           [ngModel]="manageUser.secondName"
@@ -61,6 +63,41 @@
             secondName.invalid && (secondName.dirty || secondName.touched)
           "
         /> -->
+        <div>
+          <input type="number"
+          name="lat" 
+          placeholder="latitude"
+          step="0.000000001"
+          [value]="user.lat"
+          >
+          <input type="number"
+          placeholder="longitude"
+          name="log" 
+          step="0.000000001"
+
+          [value]="user.lat"
+          >
+        </div>
+        <iframe 
+        width="300" 
+        height="170" 
+        frameborder="0" 
+        scrolling="no" 
+        marginheight="0" 
+        marginwidth="0" 
+        src="https://maps.google.com/maps?q='+YO{{user.lat}}+','+{{user.log}}+'&hl=es&z=14&amp;output=embed"
+       >
+       </iframe>
+       <br />
+       <!-- <small>
+         <a 
+          href="https://maps.google.com/maps?q='+data.lat+','+data.lon+'&hl=es;z=14&amp;output=embed" 
+          style="color:#0000FF;text-align:left" 
+          target="_blank"
+         >
+           See map bigger
+         </a>
+       </small> -->
         <!-- <div
           *ngIf="secondName.invalid && (secondName.dirty || secondName.touched)"
           class="invalid-feedback"

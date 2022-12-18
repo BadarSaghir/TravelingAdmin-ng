@@ -23,7 +23,7 @@
     </button>
     <button mat-button [matMenuTriggerFor]="menu">
         <!-- <mat-icon>person_outline</mat-icon> -->
-        <img src={{this.image}} class="img-fluid admin-img"  alt="">
+        <img [src]="this.image"   class="img-fluid admin-img"  alt="">
     </button>
     
     <mat-menu #menu="matMenu" class="container-fluid p-5">

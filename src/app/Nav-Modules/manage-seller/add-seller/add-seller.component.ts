@@ -20,6 +20,8 @@ interface IUser {
   email: string;
   password: string;
   showPassword: boolean;
+  lat?: string;
+  log?: string;
 }
 
 @Component({
@@ -29,7 +31,7 @@ interface IUser {
 })
 export class AddSellerComponent implements OnInit {
   reactiveForm!: FormGroup;
-  user: IUser;
+  public user: IUser;
 
   constructor(
     private _auth: ManageSellerService,
@@ -38,7 +40,7 @@ export class AddSellerComponent implements OnInit {
     private _angularFire: AngularFirestore,
     private _angularAuth: AngularFireAuth
   ) {
-    this.user = {} as IUser;
+    this.user = { lat: "0", log: "0" } as IUser;
   }
   manageUser = new ManageUser("", "", "", "", "", "");
 
@@ -102,26 +104,29 @@ export class AddSellerComponent implements OnInit {
 
     console.info("Email:", this.user.email);
     console.info("Password:", this.user.password);
-    this._angularAuth
-      .createUserWithEmailAndPassword(this.user.email, this.user.password)
-      .then(async (auth) => {
-        await auth.user?.uid;
-        this._angularFire
-          .collection<User>("Users")
-          .doc(auth.user?.uid)
-          .set({
-            email_address: this.user.email,
-            name: this.user.firstName,
-            is_allowed: this.user.role,
-            id: auth.user?.uid || "",
-            image_url: "",
-            roles: ["seller"],
-            joined_at: serverTimestamp() as Timestamp,
-            location: null,
-          });
+    console.info("lat:", this.user.lat);
+    console.info("log:", this.user.log);
 
-        this, this.router.navigateByUrl("/manage-seller/seller^view");
-      });
+    // this._angularAuth
+    //   .createUserWithEmailAndPassword(this.user.email, this.user.password)
+    //   .then(async (auth) => {
+    //     await auth.user?.uid;
+    //     this._angularFire
+    //       .collection<User>("Users")
+    //       .doc(auth.user?.uid)
+    //       .set({
+    //         email_address: this.user.email,
+    //         name: this.user.firstName,
+    //         is_allowed: this.user.role,
+    //         id: auth.user?.uid || "",
+    //         image_url: "",
+    //         roles: ["seller"],
+    //         joined_at: serverTimestamp() as Timestamp,
+    //         location: null,
+    //       });
+
+    //     this, this.router.navigateByUrl("/manage-seller/seller^view");
+    //   });
   }
 }
 

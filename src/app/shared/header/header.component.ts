@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 import { Router } from "@angular/router";
 import { environment } from "src/environments/environment";
 // import { ProductService } from "src/app/services/location.service";
@@ -12,14 +13,24 @@ import { AuthService } from "../../services/firebase/auth.service";
 export class HeaderComponent implements OnInit {
   @Output() toggleSideBarForMe: EventEmitter<any> = new EventEmitter();
   showSideBar = false;
-
-  constructor(public auth: AuthService, private router: Router) {}
-  public image = environment.baseUrl + "/assets/images/dp.png";
+  public image: SafeResourceUrl = environment.baseUrl + "/assets/images/dp.png";
+  constructor(
+    public auth: AuthService,
+    private router: Router,
+    private sanitize: DomSanitizer
+  ) {}
 
   ngOnInit() {
-    this.image = this.auth.user?.photoURL
-      ? this.auth.user?.photoURL
+    const img = localStorage.getItem("img");
+
+    if (img) console.log("img", img);
+
+    this.image = img
+      ? this.sanitize.bypassSecurityTrustResourceUrl(img)
       : environment.baseUrl + "/assets/images/dp.png";
+    // this.image = this.auth.user?.photoURL
+    //   ? this.auth.user?.photoURL
+    //   : environment.baseUrl + "/assets/images/dp.png";
     // this.auth.authHandling();
     // this.auth.isLoggedIn;
     this.router.events.subscribe((res) => {
