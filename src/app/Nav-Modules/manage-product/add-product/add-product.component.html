@@ -8,36 +8,39 @@
   <br />
   
   <div class="container">
-    <form [formGroup]="reactiveForm" #form="ngForm" class="form p-4">
+    <mat-progress-spinner mode="indeterminate" *ngIf="showSpinner" style="margin-left: 50%;">
+    </mat-progress-spinner>
+    <form [formGroup]="reactiveForm" *ngIf="!showSpinner" #form="ngForm" class="form p-4">
       <div class="row">
         <div class="col-md-6">
           
           <!-- First column This is name  -->
-          <label for="name" class="form-label">Product Name</label>
-          <input [ngModel]="Product.name" type="text" id="name" name="name" formControlName="name" placeholder="Your name" required minlength="1" maxlength="250" class="form-control form-control-sm p-2" [class.is-invalid]="name.invalid && (name.dirty || name.touched)">
-          <div *ngIf="name.invalid && (name.dirty || name.touched)" class="invalid-feedback">
-            <div *ngIf="name.errors?.['required']">
+          <label for="title" class="form-label">Product Title</label>
+          <input [ngModel]="Product.title" type="text" id="title" name="title" formControlName="title" placeholder="Your Product name" required minlength="1" maxlength="250" class="form-control form-control-sm p-2" [class.is-invalid]="title.invalid && (title.dirty || title.touched)">
+          <div *ngIf="title.invalid && (title.dirty || title.touched)" class="invalid-feedback">
+            <div *ngIf="title.errors?.['required']">
               This field is required.
             </div>
-            <div *ngIf="name.errors?.['minlength']">
+            <div *ngIf="title.errors?.['minlength']">
               This field must have at least 1 character.
             </div>
-            <div *ngIf="name.errors?.['maxlength']">
+            <div *ngIf="title.errors?.['maxlength']">
               This field must have at most 250 characters.
             </div>
           </div>
         </div>
   
         <!-- second colum This is descriptions please carefully binding name is nickname not a description   -->
-        <div class="col-md-6">
-          <label for="nickname" class="form-label">Description</label>
-          <input [ngModel]="Product.description" type="text" id="nickname" name="nickname" formControlName="nickname" placeholder="Your nickname" maxlength="100000" class="form-control form-control-sm p-2" [class.is-invalid]="nickname.invalid && (nickname.dirty || nickname.touched)">
-          <div *ngIf="nickname.invalid && (nickname.dirty || nickname.touched)" class="invalid-feedback">
+        <div class="col-md-12  mt-2">
+          <label for="description" class="form-label">Description</label>
+          <textarea [ngModel]="Product.description" type="text"  cols="5" 
+          rows="10" id="description" name="description" formControlName="nickname" placeholder="Your nickname" maxlength="100000" class="form-control form-control-sm p-2" [class.is-invalid]="description.invalid && (nickname.dirty || nickname.touched)"></textarea>
+          <div *ngIf="description.invalid && (nickname.dirty || nickname.touched)" class="invalid-feedback">
             <div *ngIf="nickname.errors?.['maxlength']">
               This field must have at most 10 characters.
             </div>
             <div *ngIf="name.errors?.['maxlength']">
-              This field must have at most 250 characters.
+              This field must have at most 1000 characters.
             </div>
           </div>
         </div>
@@ -45,7 +48,7 @@
         <!-- third colum This is product image  -->
         <div class="col-md-6 mt-2">
           <label for="image" class="form-label">Product Image</label>
-          <input [ngModel]="Product.image" type="file" id="image" name="image" formControlName="image" placeholder="product image" required minlength="1" maxlength="250" class="form-control form-control-sm p-2" [class.is-invalid]="image.invalid && (image.dirty || image.touched)">
+          <input [ngModel]="Product.image" accept=".jpg, .jpeg, .png" type="file" id="image" name="image" formControlName="image" placeholder="product image" required minlength="1" maxlength="250" class="form-control form-control-sm p-2" [class.is-invalid]="image.invalid && (image.dirty || image.touched)">
           <div *ngIf="image.invalid && (image.dirty || image.touched)" class="invalid-feedback">
             <div *ngIf="image.errors?.['required']">
               This field is required.
@@ -61,20 +64,49 @@
             </div>
           </div>        
         </div>
-  
-        <!-- fouth colum This is price -->
+
         <div class="col-md-6 mt-2">
-          <label for="price" class="form-label">Price</label>
-          <input [ngModel]="Product.price" type="text" id="price" name="price" formControlName="price" placeholder="Your price" required minlength="1" maxlength="250" class="form-control form-control-sm p-2" [class.is-invalid]="price.invalid && (price.dirty || price.touched)">
+          <label for="price" class="form-label">Product Price</label>
+          <input [ngModel]="Product.price" accept=".jpg, .jpeg, .png" type="number"  id="image" name="price" formControlName="price" placeholder="product price" required minlength="1" maxlength="250" class="form-control form-control-sm p-2" [class.is-invalid]="price.invalid && (price.dirty || price.touched)">
           <div *ngIf="price.invalid && (price.dirty || price.touched)" class="invalid-feedback">
             <div *ngIf="price.errors?.['required']">
               This field is required.
             </div>
-            <div *ngIf="price.errors?.['minlength']">
-              This field must have at least 1 character.
-            </div>
-          </div>
+        
+          </div>        
         </div>
+
+        <div class="col-md-12 mt-2">
+          <h4>Basic mat-select</h4>
+          <mat-form-field appearance="fill">
+            <mat-label>Sellers food</mat-label>
+            <mat-select [(value)]="Product.seller" required>
+              <mat-option *ngFor="let seller_ of sellers" [value]="seller_.id">
+                {{seller_.name}}seller
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+             
+        </div>
+  
+        <!-- fouth colum This is price -->
+        <div class="col-md-12 mt-2">
+          <div class="form-check form-switch">
+            <input
+              [ngModel]="Product.is_allowed"
+              class="form-check-input"
+              name="role"
+              type="checkbox"
+              formControlName="role"
+              id="flexSwitchCheckChecked"
+              checked
+            />
+            <label class="form-check-label" for="flexSwitchCheckChecked"
+              >Published</label
+            >
+            </div>
+      
+          </div>
       </div><!--row end-->
   
       <button type="button" class="btn text-white btn-info mt-3 " (click)="validate()">Submit</button>
