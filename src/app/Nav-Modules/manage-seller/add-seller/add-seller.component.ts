@@ -37,6 +37,7 @@ export class AddSellerComponent implements OnInit {
   public currentImageUrl = "";
   public selectedFiles: Array<File> = [];
   public user: IUser;
+  public showSpinner = false;
 
   constructor(
     private _auth: ManageSellerService,
@@ -44,7 +45,6 @@ export class AddSellerComponent implements OnInit {
     private router: Router,
     private _angularFire: AngularFirestore,
     private storage: AngularFireStorage,
-
     private _angularAuth: AngularFireAuth
   ) {
     this.user = {} as IUser;
@@ -107,6 +107,7 @@ export class AddSellerComponent implements OnInit {
   }
 
   public validate(): void {
+    this.showSpinner = true;
     if (this.reactiveForm.invalid) {
       for (const control of Object.keys(this.reactiveForm.controls)) {
         this.reactiveForm.controls[control].markAsTouched();
@@ -163,8 +164,12 @@ export class AddSellerComponent implements OnInit {
             location: location,
             // location: { latitude: this.lat, longitude: this.log },
           });
+        this.showSpinner = false;
 
         this, this.router.navigateByUrl("/manage-seller/seller^view");
+      })
+      .catch(() => {
+        this.showSpinner = false;
       });
   }
 }
