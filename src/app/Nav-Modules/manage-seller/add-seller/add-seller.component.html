@@ -45,72 +45,10 @@
         </div>
       </div>
 
-      <!-- second colum  -->
-      <div class="col-md-6">
-
-  
-        <!-- <label for="nickname" class="form-label">Last Name:</label>
-        <input
-          [ngModel]="manageUser.secondName"
-          type="text"
-          id="secondName"
-          name="secondName"
-          formControlName="secondName"
-          placeholder="Your nickname"
-          maxlength="10"
-          class="form-control form-control-sm p-2"
-          [class.is-invalid]="
-            secondName.invalid && (secondName.dirty || secondName.touched)
-          "
-        /> -->
-        <div>
-          <input type="number"
-          name="lat" 
-          placeholder="latitude"
-          step="0.000000001"
-          [value]="user.lat"
-          >
-          <input type="number"
-          placeholder="longitude"
-          name="log" 
-          step="0.000000001"
-
-          [value]="user.lat"
-          >
-        </div>
-        <iframe 
-        width="300" 
-        height="170" 
-        frameborder="0" 
-        scrolling="no" 
-        marginheight="0" 
-        marginwidth="0" 
-        src="https://maps.google.com/maps?q='+YO{{user.lat}}+','+{{user.log}}+'&hl=es&z=14&amp;output=embed"
-       >
-       </iframe>
-       <br />
-       <!-- <small>
-         <a 
-          href="https://maps.google.com/maps?q='+data.lat+','+data.lon+'&hl=es;z=14&amp;output=embed" 
-          style="color:#0000FF;text-align:left" 
-          target="_blank"
-         >
-           See map bigger
-         </a>
-       </small> -->
-        <!-- <div
-          *ngIf="secondName.invalid && (secondName.dirty || secondName.touched)"
-          class="invalid-feedback"
-        >
-          <div *ngIf="secondName.errors?.['maxlength']">
-            This field must have at most 10 characters.
-          </div>
-        </div> -->
-      </div>
-
+   
       <!-- third colum  -->
 
-      <div class="col-md-6 mt-2">
+      <div class="col-md-6">
         <label for="email" class="form-label">Email:</label>
         <input
           [ngModel]="manageUser.email"
@@ -188,6 +126,93 @@
         </div>
       </div>
 
+
+   <!-- second colum  -->
+   <div class="col-md-12 mt-4">
+
+  
+    <!-- <label for="nickname" class="form-label">Last Name:</label>
+    <input
+      [ngModel]="manageUser.secondName"
+      type="text"
+      id="secondName"
+      name="secondName"
+      formControlName="secondName"
+      placeholder="Your nickname"
+      maxlength="10"
+      class="form-control form-control-sm p-2"
+      [class.is-invalid]="
+        secondName.invalid && (secondName.dirty || secondName.touched)
+      "
+    /> -->
+    <div class="col-md-12 d-flex flex-column ">
+      <div class="d-flex ">
+        <label>Latitude</label>
+        <pre >     </pre>
+      <input type="number"
+      name="lat" 
+      placeholder="latitude"
+      step="0.00001"
+      min="-180"
+      max="180"
+      val="lat"
+      [(ngModel)]="lat"
+      name="lat"
+      formControlName="lat"
+      placeholder="Latitude"
+      >
+    </div>
+    <div class="d-flex mt-4">
+      <label>Longitude </label>
+      <pre >   </pre>
+      <input type="number"
+      
+      placeholder="longitude"
+      step="0.00001"
+      min="-180"
+      max="180"
+      val="log"
+      [(ngModel)]="log"
+      name="log"
+      formControlName="log"
+
+      >
+    </div>
+    </div>
+
+
+  
+   
+    <!-- <iframe 
+    width="300" 
+    height="170" 
+    frameborder="0" 
+    scrolling="no" 
+    marginheight="0" 
+    marginwidth="0" 
+    src="https://maps.google.com/maps?q='+YO{{user.lat}}+','+{{user.log}}+'&hl=es&z=14&amp;output=embed"
+   >
+   </iframe> -->
+   <br />
+   <!-- <small>
+     <a 
+      href="https://maps.google.com/maps?q='+data.lat+','+data.lon+'&hl=es;z=14&amp;output=embed" 
+      style="color:#0000FF;text-align:left" 
+      target="_blank"
+     >
+       See map bigger
+     </a>
+   </small> -->
+    <!-- <div
+      *ngIf="secondName.invalid && (secondName.dirty || secondName.touched)"
+      class="invalid-feedback"
+    >
+      <div *ngIf="secondName.errors?.['maxlength']">
+        This field must have at most 10 characters.
+      </div>
+    </div> -->
+  </div>
+
       <!-- Role -->
       <div class="col-6 align-items-center mt-3 justify-content-center">
       <div class="form-check form-switch">
@@ -204,6 +229,19 @@
           >Approve The Seller</label
         >
       </div>
+    </div>
+
+<!-- File Image -->
+    <div class="col-md-12 mt-4 d-flex flex-column ">
+      <div class="d-flex ">
+        <label>Upload Profile Picture</label>
+        <pre >     </pre>
+        <input type="file" (change)="onFileChosen($event)" accept=".jpg, .png, .jpeg"/>
+
+        <img [src]="currentImageUrl"  />
+    </div>
+    
+   
     </div>
     </div>
     <!--row end-->

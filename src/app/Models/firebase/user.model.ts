@@ -11,6 +11,7 @@ export interface User {
   roles: string[];
 }
 
+
 export interface Seller {
   email: string;
   firstName: string;

@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { AngularFirestore } from "@angular/fire/compat/firestore";
-import { serverTimestamp, Timestamp } from "@angular/fire/firestore";
+import { AngularFireStorage } from "@angular/fire/compat/storage";
+import { GeoPoint, serverTimestamp, Timestamp } from "@angular/fire/firestore";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { firstValueFrom } from "rxjs";
+
 import { Seller, User } from "src/app/Models/firebase/user.model";
 import { ManageSeller } from "src/app/Models/manage-seller";
 import { ManageUser } from "src/app/Models/manage-user";
@@ -31,6 +34,8 @@ interface IUser {
 })
 export class AddSellerComponent implements OnInit {
   reactiveForm!: FormGroup;
+  public currentImageUrl = "";
+  public selectedFiles: Array<File> = [];
   public user: IUser;
 
   constructor(
@@ -38,11 +43,15 @@ export class AddSellerComponent implements OnInit {
     private _fireStore: FireStoreService,
     private router: Router,
     private _angularFire: AngularFirestore,
+    private storage: AngularFireStorage,
+
     private _angularAuth: AngularFireAuth
   ) {
-    this.user = { lat: "0", log: "0" } as IUser;
+    this.user = {} as IUser;
   }
   manageUser = new ManageUser("", "", "", "", "", "");
+  public lat = 0;
+  public log = 0;
 
   ngOnInit(): void {
     this.reactiveForm = new FormGroup({
@@ -51,8 +60,16 @@ export class AddSellerComponent implements OnInit {
         Validators.minLength(1),
         Validators.maxLength(250),
       ]),
-      secondName: new FormControl(this.user.secondName, [
+
+      lat: new FormControl(this.lat, [
         Validators.maxLength(10),
+        Validators.min(-180),
+        Validators.max(180),
+      ]),
+      log: new FormControl(this.log, [
+        Validators.maxLength(10),
+        Validators.min(-180),
+        Validators.max(180),
       ]),
       email: new FormControl(this.user.email, [
         Validators.required,
@@ -63,11 +80,13 @@ export class AddSellerComponent implements OnInit {
       role: new FormControl(this.user.role, []),
       password: new FormControl(this.user.password, [
         Validators.required,
-        Validators.minLength(3),
+        Validators.minLength(6),
       ]),
     });
   }
-
+  onFileChosen(event: any) {
+    this.selectedFiles = event.target.files; // just assigns the selected file/s in <input> this.selectedFiles
+  }
   get firstName() {
     return this.reactiveForm.get("firstName")!;
   }
@@ -95,7 +114,7 @@ export class AddSellerComponent implements OnInit {
 
       return;
     }
-
+    const location = new GeoPoint(this.lat, this.log);
     this.user = this.reactiveForm.value;
     // console.info(this.ManageUser);
     console.info("Name:", this.user.firstName);
@@ -106,27 +125,47 @@ export class AddSellerComponent implements OnInit {
     console.info("Password:", this.user.password);
     console.info("lat:", this.user.lat);
     console.info("log:", this.user.log);
+    this._angularAuth
+      .createUserWithEmailAndPassword(this.user.email, this.user.password)
+      .then(async (auth) => {
+        let url = "";
+        try {
+          const file = this.selectedFiles[0];
+          const fileRef = this.storage
+            .ref(auth.user?.uid as string)
+            .child(file.name);
 
-    // this._angularAuth
-    //   .createUserWithEmailAndPassword(this.user.email, this.user.password)
-    //   .then(async (auth) => {
-    //     await auth.user?.uid;
-    //     this._angularFire
-    //       .collection<User>("Users")
-    //       .doc(auth.user?.uid)
-    //       .set({
-    //         email_address: this.user.email,
-    //         name: this.user.firstName,
-    //         is_allowed: this.user.role,
-    //         id: auth.user?.uid || "",
-    //         image_url: "",
-    //         roles: ["seller"],
-    //         joined_at: serverTimestamp() as Timestamp,
-    //         location: null,
-    //       });
+          // Upload file in reference
+          if (!!file) {
+            const result = await fileRef.put(file);
 
-    //     this, this.router.navigateByUrl("/manage-seller/seller^view");
-    //   });
+            this.currentImageUrl = await firstValueFrom(
+              this.storage.ref(result.ref.fullPath).getDownloadURL()
+            );
+            url = this.currentImageUrl;
+          }
+        } catch (error) {
+          url = "";
+        }
+
+        await auth.user?.uid;
+        this._angularFire
+          .collection<User>("Users")
+          .doc(auth.user?.uid)
+          .set({
+            email_address: this.user.email,
+            name: this.user.firstName,
+            is_allowed: this.user.role,
+            id: auth.user?.uid || "",
+            image_url: url,
+            roles: ["seller"],
+            joined_at: serverTimestamp() as Timestamp,
+            location: location,
+            // location: { latitude: this.lat, longitude: this.log },
+          });
+
+        this, this.router.navigateByUrl("/manage-seller/seller^view");
+      });
   }
 }
 
