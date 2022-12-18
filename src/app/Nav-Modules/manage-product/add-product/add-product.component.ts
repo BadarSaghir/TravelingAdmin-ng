@@ -196,7 +196,7 @@ export class AddProductComponent implements OnInit {
 
     this.showSpinner = false;
 
-    this.router.navigateByUrl("/manage-seller/seller^view");
+    this.router.navigateByUrl("/manage-product/product^view");
     // })
     // .catch(() => {
     //   // this.showSpinner = false;
