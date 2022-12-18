@@ -133,8 +133,9 @@ export class AddSellerComponent implements OnInit {
         try {
           const file = this.selectedFiles[0];
           const fileRef = this.storage
-            .ref(auth.user?.uid as string)
-            .child(file.name);
+            .ref("Users")
+            .child("ProfilePictures")
+            .child(auth.user?.uid as string);
 
           // Upload file in reference
           if (!!file) {

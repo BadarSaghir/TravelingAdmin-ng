@@ -15,7 +15,7 @@ import {
 } from "@angular/fire/firestore";
 import { Action, AngularFirestore } from "@angular/fire/compat/firestore";
 import { firstValueFrom, Observable } from "rxjs";
-import { Item } from "src/app/Models/firebase/product.model";
+import { Product } from "src/app/Models/firebase/product.model";
 import { User } from "src/app/Models/firebase/user.model";
 import { CollectionsTypes } from "src/app/shared/types/collection.type";
 
@@ -68,7 +68,7 @@ export class FireStoreService {
   }
 
   async addDocInCollection<
-    T extends { id?: string; uid?: string; item?: Item }
+    T extends { id?: string; uid?: string; item?: Product }
   >(user: T, id: "id" | "uid", collectionName: CollectionsTypes | string) {
     if (id == "id") user.id = doc(collection(this.store, id)).id;
     if (id == "uid") user.uid = doc(collection(this.store, id)).id;

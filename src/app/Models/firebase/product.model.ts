@@ -1,12 +1,12 @@
-export interface Product {
-  item: Item;
-}
+import { Timestamp } from "@angular/fire/firestore";
 
-export interface Item {
-  Description: string;
+export interface Product {
+  title: string;
+  seller: string;
+  description: string;
   id: string;
-  pid: string | null;
-  imageUrl: string;
-  name: string;
+  is_allowed: boolean;
+  image: string;
   price: string;
+  publish_at: Timestamp;
 }

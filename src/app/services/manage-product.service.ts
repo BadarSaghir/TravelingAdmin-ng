@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Product, Item } from "../Models/firebase/product.model";
+import { Product } from "../Models/firebase/product.model";
 import { FireStoreService } from "./firebase/firestore.service";
 import { PeriodicElement } from "../Nav-Modules/manage-product/view-product/view-product.component";
 import {
@@ -11,6 +11,7 @@ import {
   DocumentData,
 } from "@angular/fire/firestore";
 import { Observable } from "rxjs";
+import { AngularFirestore } from "@angular/fire/compat/firestore";
 
 @Injectable({
   providedIn: "root",
@@ -21,25 +22,35 @@ export class ManageProductService {
   // registerUser(user: any) {
   //   return this.http.post<any>(this._registerUrl, user);
   // }
-  constructor(private firestore: FireStoreService) {}
-
+  constructor(
+    private firestore: FireStoreService,
+    private angularFireStore: AngularFirestore
+  ) {}
   public setDataInTable(
     fn?: (tmp: PeriodicElement[]) => void,
     ignoreUid?: string
   ) {
-    this.firestore.getCollectionGroup((AngularStore, fireStore) => {
-      const ref = collectionData(
-        collectionGroup(fireStore, "items")
-      ) as Observable<Item[]>;
-      ref.subscribe((items) => {
-        const temp = this.getPeriodicElements(items, ignoreUid);
+    this.angularFireStore
+      .collection<Product>("Users", (ref) =>
+        ref.where("roles", "array-contains-any", ["tourist", "admin"])
+      )
+      .valueChanges()
+      .subscribe((product) => {
+        const temp = this.getPeriodicElements(product, ignoreUid);
         if (fn) {
           fn(temp);
         }
       });
-    });
+    // this.firestore.getCollectionData<User>("users").subscribe((user) => {
+    //   if (fn) {
+    //     const temp = this.getPeriodicElements(user, ignoreUid);
+    //     fn(temp);
+    //   } else {
+    //     this.getPeriodicElements(user, ignoreUid);
+    //   }
+    // });
   }
-  private getPeriodicElements(items: Item[], ignoreUid?: string) {
+  private getPeriodicElements(products: Product[], ignoreUid?: string) {
     this.products = [] as PeriodicElement[];
 
     let i = 0;
@@ -48,13 +59,20 @@ export class ManageProductService {
     // public description: string,
     // public image: string,
     // public price: string,
-    items.forEach((item, idx) => {
-      if (item.id != ignoreUid) {
+    products.forEach((product, idx) => {
+      if (product.id != ignoreUid) {
         i++;
         this.products.push({
+          id: product.id,
+          description: product.description,
+          image: product.image,
+          is_allowed: product.is_allowed,
+          price: product.price,
+          title: product.title,
+          publish_at: product.publish_at,
+          seller: product.seller,
           menu: "",
           position: idx + 1,
-          item: item,
         });
       }
     });
