@@ -13,10 +13,12 @@ import {
   Firestore,
 } from "@angular/fire/firestore";
 import { CollectionsTypes } from "src/app/shared/types/collection.type";
+import { MatDialog } from "@angular/material/dialog";
 
 export interface PeriodicElement extends Product {
   position: number;
   menu: string;
+  sellerName?: string;
 }
 const ELEMENT_DATA: PeriodicElement[] = [];
 
@@ -47,30 +49,30 @@ export class ViewProductComponent implements OnInit {
   constructor(
     private firestore: FireStoreService,
     public productService: ManageProductService,
+    public dialog: MatDialog,
     private store: Firestore
-    ) {}
-    
-    deleteProduct(id: string, pid: string | null) {
-      if (pid)
-        this.firestore.deleteDocument(`products/${id}/items`, { uid: pid });
-      console.log("id", id);
-      console.log("pid", pid);
-    
-      // deleteDoc(doc(collection(this.store, "products", id, "items"), pid));
-    }
-  
+  ) {}
+
+  deleteProduct(id: string) {
+    this.firestore.deleteDocument(`Products`, { uid: id });
+    console.log("id", id);
+
+    // deleteDoc(doc(collection(this.store, "products", id, "items"), pid));
+  }
+
   displayedColumns: string[] = [
     "position",
     "name",
     "description",
     "image",
+
     "price",
     "menu",
   ];
   dataToDisplay = [...ELEMENT_DATA];
-  
+
   dataSource = new ExampleDataSource(this.dataToDisplay);
-  
+
   addData() {
     const randomElementIndex = Math.floor(Math.random() * ELEMENT_DATA.length);
     this.dataToDisplay = [
@@ -79,7 +81,7 @@ export class ViewProductComponent implements OnInit {
     ];
     this.dataSource.setData(this.dataToDisplay);
   }
-  
+
   removeData() {
     this.dataToDisplay = this.dataToDisplay.slice(0, -1);
     this.dataSource.setData(this.dataToDisplay);

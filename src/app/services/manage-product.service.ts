@@ -10,8 +10,9 @@ import {
   collectionData,
   DocumentData,
 } from "@angular/fire/firestore";
-import { Observable } from "rxjs";
+import { firstValueFrom, lastValueFrom, Observable } from "rxjs";
 import { AngularFirestore } from "@angular/fire/compat/firestore";
+import { User } from "../Models/firebase/user.model";
 
 @Injectable({
   providedIn: "root",
@@ -31,12 +32,11 @@ export class ManageProductService {
     ignoreUid?: string
   ) {
     this.angularFireStore
-      .collection<Product>("Users", (ref) =>
-        ref.where("roles", "array-contains-any", ["tourist", "admin"])
-      )
+      .collection<Product>("Products")
       .valueChanges()
-      .subscribe((product) => {
-        const temp = this.getPeriodicElements(product, ignoreUid);
+      .subscribe(async (product) => {
+        console.log(product);
+        const temp = await this.getPeriodicElements(product, ignoreUid);
         if (fn) {
           fn(temp);
         }
@@ -50,19 +50,21 @@ export class ManageProductService {
     //   }
     // });
   }
-  private getPeriodicElements(products: Product[], ignoreUid?: string) {
+  public async getPeriodicElements(products: Product[], ignoreUid?: string) {
     this.products = [] as PeriodicElement[];
 
     let i = 0;
     this.firestore.totalProducts = 0;
+
     // public name: string,
     // public description: string,
     // public image: string,
     // public price: string,
-    products.forEach((product, idx) => {
+    products.forEach(async (product, idx) => {
       if (product.id != ignoreUid) {
         i++;
         this.products.push({
+          sellerName: "",
           id: product.id,
           description: product.description,
           image: product.image,
@@ -71,6 +73,7 @@ export class ManageProductService {
           title: product.title,
           publish_at: product.publish_at,
           seller: product.seller,
+
           menu: "",
           position: idx + 1,
         });
