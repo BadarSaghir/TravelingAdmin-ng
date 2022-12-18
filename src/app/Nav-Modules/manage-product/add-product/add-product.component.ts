@@ -38,6 +38,7 @@ export class AddProductComponent implements OnInit {
   showSpinner = false;
   manageProductData = {};
   Product = new Product("", "", "", "", false, "", "");
+  public selectedFiles: Array<File> = [];
 
   reactiveForm!: FormGroup;
   user: IUser;
@@ -59,33 +60,22 @@ export class AddProductComponent implements OnInit {
       )
       .valueChanges()
       .subscribe((s) => {
+        this.Product.seller = s[0].id;
         s.map((ss) => {
           this.sellers.push({ id: ss.id, name: ss.name });
         });
       });
 
     this.reactiveForm = new FormGroup({
-      name: new FormControl(this.user.name, [
-        Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(250),
-      ]),
-      nickname: new FormControl(this.user.nickname, [
-        Validators.required,
-        Validators.maxLength(10000),
-      ]),
-      description: new FormControl(this.user.description, [
-        Validators.required,
-        Validators.maxLength(10000),
-      ]),
+      description: new FormControl(this.user.description),
 
-      is_allowed: new FormControl(this.user.is_allowed, [Validators.required]),
+      is_allowed: new FormControl(this.user.is_allowed),
       title: new FormControl(this.user.title, [
         Validators.required,
-        Validators.maxLength(10000),
+        Validators.minLength(3),
       ]),
 
-      seller: new FormControl(this.user.seller, [Validators.required]),
+      seller: new FormControl(this.user.seller),
       image: new FormControl(this.user.image, [Validators.required]),
       price: new FormControl(this.user.price, [
         Validators.required,
@@ -114,10 +104,6 @@ export class AddProductComponent implements OnInit {
     return this.reactiveForm.get("is_allowed")!;
   }
 
-  get is_allowedprice() {
-    return this.reactiveForm.get("price")!;
-  }
-
   get title() {
     return this.reactiveForm.get("title")!;
   }
@@ -135,9 +121,14 @@ export class AddProductComponent implements OnInit {
   get image() {
     return this.reactiveForm.get("image")!;
   }
+  onFileChosen(event: any) {
+    this.selectedFiles = event.target.files; // just assigns the selected file/s in <input> this.selectedFiles
+  }
 
   public async validate() {
+    console.log("validate");
     if (this.reactiveForm.invalid) {
+      console.log("reactiveForm.invalid validate");
       for (const control of Object.keys(this.reactiveForm.controls)) {
         this.reactiveForm.controls[control].markAsTouched();
       }
@@ -161,42 +152,41 @@ export class AddProductComponent implements OnInit {
     //   .createUserWithEmailAndPassword(this.user.email, this.user.password)
     //   .then(async (auth) => {
     let url = "";
-    try {
-      const id = this._angularFire.createId();
-      const file = this.user.image[0];
-      const fileRef = await this.storage.ref("Products").child(id);
 
-      // Upload file in reference
-      if (!!file) {
-        const result = await fileRef.put(file);
+    const id = this._angularFire.createId();
+    const file = this.selectedFiles[0];
+    const fileRef = await this.storage.ref("Products").child(id);
 
-        const currentImageUrl = await firstValueFrom(
-          this.storage.ref(result.ref.fullPath).getDownloadURL()
-        );
-        url = currentImageUrl;
-        this._angularFire
-          .collection<IProduct>("Users")
-          .doc(id)
-          .set({
-            id: id,
-            description: this.user.description,
-            image: url,
-            price: this.user.price,
-            is_allowed: this.user.is_allowed,
-            seller: this.user.seller,
-            title: this.user.title,
-            publish_at: serverTimestamp() as Timestamp,
+    // Upload file in reference
+    let currentImageUrl = "";
+    if (!!file) {
+      const result = await fileRef.put(file);
 
-            // location: { latitude: this.lat, longitude: this.log },
-          });
-      }
-    } catch (error) {
-      url = "";
+      currentImageUrl = await firstValueFrom(
+        await this.storage.ref(result.ref.fullPath).getDownloadURL()
+      );
+
+      url = currentImageUrl;
+      await this._angularFire
+        .collection<IProduct>("Products")
+        .doc(id)
+        .set({
+          id: id,
+          description: this.user.description,
+          image: url,
+          price: this.user.price,
+          is_allowed: this.user.is_allowed,
+          seller: this.user.seller,
+          title: this.user.title,
+          publish_at: serverTimestamp() as Timestamp,
+
+          // location: { latitude: this.lat, longitude: this.log },
+        });
     }
 
     this.showSpinner = false;
 
-    this.router.navigateByUrl("/manage-product/product^view");
+    this.router.navigateByUrl("/manage-product/View^product");
     // })
     // .catch(() => {
     //   // this.showSpinner = false;

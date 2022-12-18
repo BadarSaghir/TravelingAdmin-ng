@@ -34,12 +34,10 @@
         <div class="col-md-12  mt-2">
           <label for="description" class="form-label">Description</label>
           <textarea [ngModel]="Product.description" type="text"  cols="5" 
-          rows="10" id="description" name="description" formControlName="nickname" placeholder="Your nickname" maxlength="100000" class="form-control form-control-sm p-2" [class.is-invalid]="description.invalid && (nickname.dirty || nickname.touched)"></textarea>
-          <div *ngIf="description.invalid && (nickname.dirty || nickname.touched)" class="invalid-feedback">
-            <div *ngIf="nickname.errors?.['maxlength']">
-              This field must have at most 10 characters.
-            </div>
-            <div *ngIf="name.errors?.['maxlength']">
+          rows="10" id="description" name="description" formControlName="description" placeholder="Your nickname" maxlength="100000" class="form-control form-control-sm p-2" [class.is-invalid]="description.invalid && (description.dirty || description.touched)"></textarea>
+          <div *ngIf="description.invalid && (description.dirty || description.touched)" class="invalid-feedback">
+        
+            <div *ngIf="description.errors?.['maxlength']">
               This field must have at most 1000 characters.
             </div>
           </div>
@@ -48,7 +46,8 @@
         <!-- third colum This is product image  -->
         <div class="col-md-6 mt-2">
           <label for="image" class="form-label">Product Image</label>
-          <input [ngModel]="Product.image" accept=".jpg, .jpeg, .png" type="file" id="image" name="image" formControlName="image" placeholder="product image" required minlength="1" maxlength="250" class="form-control form-control-sm p-2" [class.is-invalid]="image.invalid && (image.dirty || image.touched)">
+        
+          <input [ngModel]="Product.image"  (change)="onFileChosen($event)" accept=".jpg, .jpeg, .png" type="file" id="image" name="image" formControlName="image" placeholder="product image" required minlength="1" maxlength="250" class="form-control form-control-sm p-2" [class.is-invalid]="image.invalid && (image.dirty || image.touched)">
           <div *ngIf="image.invalid && (image.dirty || image.touched)" class="invalid-feedback">
             <div *ngIf="image.errors?.['required']">
               This field is required.
@@ -93,11 +92,11 @@
         <div class="col-md-12 mt-2">
           <div class="form-check form-switch">
             <input
-              [ngModel]="Product.is_allowed"
+              [(ngModel)]="Product.is_allowed"
               class="form-check-input"
               name="role"
               type="checkbox"
-              formControlName="role"
+              formControlName="is_allowed"
               id="flexSwitchCheckChecked"
               checked
             />
