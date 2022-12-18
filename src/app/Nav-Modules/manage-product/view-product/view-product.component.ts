@@ -65,7 +65,7 @@ export class ViewProductComponent implements OnInit {
     "name",
     "description",
     "image",
-
+    "publish",
     "price",
     "menu",
   ];
