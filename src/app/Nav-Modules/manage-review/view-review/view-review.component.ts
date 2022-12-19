@@ -33,6 +33,7 @@ export class ViewReviewComponent implements OnInit {
   ) {}
 
   deleteReview(id: string) {
+
     this.firestore.deleteDocument("Reviews" as CollectionsTypes, { uid: id });
     console.log("id", id);
 
