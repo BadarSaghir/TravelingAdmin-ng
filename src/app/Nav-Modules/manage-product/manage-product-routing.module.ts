@@ -19,6 +19,11 @@ const routes: Routes = [
         component: AddProductComponent,
       },
       {
+        path: "Edit^product/:id",
+        canActivate: [AuthGuardService],
+        component: AddProductComponent,
+      },
+      {
         path: "View^product",
         canActivate: [AuthGuardService],
         component: ViewProductComponent,

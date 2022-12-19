@@ -8,5 +8,5 @@ export interface Product {
   is_allowed: boolean;
   image: string;
   price: string;
-  publish_at: Timestamp;
+  published_at: Timestamp;
 }

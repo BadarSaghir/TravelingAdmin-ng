@@ -4,9 +4,9 @@ export class Product {
     public description: string,
     public image: string,
     public price: string,
-
     public is_allowed: boolean,
     public seller: string,
-    public title: string
+    public title: string,
+    public id?: string
   ) {}
 }

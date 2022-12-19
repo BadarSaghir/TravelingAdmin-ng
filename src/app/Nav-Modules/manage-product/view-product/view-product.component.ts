@@ -14,6 +14,7 @@ import {
 } from "@angular/fire/firestore";
 import { CollectionsTypes } from "src/app/shared/types/collection.type";
 import { MatDialog } from "@angular/material/dialog";
+import { Router } from "@angular/router";
 
 export interface PeriodicElement extends Product {
   position: number;
@@ -49,6 +50,7 @@ export class ViewProductComponent implements OnInit {
   constructor(
     private firestore: FireStoreService,
     public productService: ManageProductService,
+    public router: Router,
     public dialog: MatDialog,
     private store: Firestore
   ) {}
@@ -85,6 +87,9 @@ export class ViewProductComponent implements OnInit {
   removeData() {
     this.dataToDisplay = this.dataToDisplay.slice(0, -1);
     this.dataSource.setData(this.dataToDisplay);
+  }
+  editProduct(id: string) {
+    this.router.navigateByUrl("/manage-product/Edit^product/" + id);
   }
 }
 

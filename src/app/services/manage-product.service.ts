@@ -71,7 +71,7 @@ export class ManageProductService {
           is_allowed: product.is_allowed,
           price: product.price,
           title: product.title,
-          publish_at: product.publish_at,
+          published_at: product.published_at,
           seller: product.seller,
 
           menu: "",

@@ -47,21 +47,8 @@
         <div class="col-md-6 mt-2">
           <label for="image" class="form-label">Product Image</label>
         
-          <input [ngModel]="Product.image"  (change)="onFileChosen($event)" accept=".jpg, .jpeg, .png" type="file" id="image" name="image" formControlName="image" placeholder="product image" required minlength="1" maxlength="250" class="form-control form-control-sm p-2" [class.is-invalid]="image.invalid && (image.dirty || image.touched)">
-          <div *ngIf="image.invalid && (image.dirty || image.touched)" class="invalid-feedback">
-            <div *ngIf="image.errors?.['required']">
-              This field is required.
-            </div>
-            <div *ngIf="image.errors?.['minlength']">
-              This field must have at least 1 character.
-            </div>
-            <div *ngIf="image.errors?.['maxlength']">
-              This field must have at most 250 characters.
-            </div>
-            <div *ngIf="!image.errors?.['required'] && !image.errors?.['minlength'] && !image.errors?.['maxlength'] && image.errors?.['imageValidator']">
-              Invalid email format.
-            </div>
-          </div>        
+          <input [ngModel]="Product.image"  (change)="onFileChosen($event)" accept=".jpg, .jpeg, .png" type="file" id="image" name="image" formControlName="image" placeholder="product image"    class="form-control form-control-sm p-2" [class.is-invalid]="image.invalid && (image.dirty || image.touched)">
+              
         </div>
 
         <div class="col-md-6 mt-2">
@@ -76,12 +63,11 @@
         </div>
 
         <div class="col-md-12 mt-2">
-          <h4>Basic mat-select</h4>
           <mat-form-field appearance="fill">
-            <mat-label>Sellers food</mat-label>
+            <mat-label>Seller</mat-label>
             <mat-select [(value)]="Product.seller" required>
               <mat-option *ngFor="let seller_ of sellers" [value]="seller_.id">
-                {{seller_.name}}seller
+                {{seller_.name}}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -108,8 +94,8 @@
           </div>
       </div><!--row end-->
   
-      <button type="button" class="btn text-white btn-info mt-3 " (click)="validate()">Submit</button>
-  
+      <button type="button" class="btn text-white btn-info mt-3 " *ngIf="!isEdit" (click)="validate()">Add</button>
+      <button type="button" class="btn text-white btn-info mt-3 " *ngIf="isEdit" (click)="edit()">Update</button>
     </form>
   </div>
   
