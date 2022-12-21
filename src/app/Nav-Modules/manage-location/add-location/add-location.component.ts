@@ -12,6 +12,7 @@ import {
 import { async } from "@firebase/util";
 import { read } from "fs";
 import { firstValueFrom } from "rxjs";
+import { Place } from "src/app/Models/firebase/place.model";
 import { ManageLocation } from "../../../Models/manage-location";
 import { ManageProductService } from "../../../services/manage-product.service";
 
@@ -25,7 +26,19 @@ interface IUser {
   id?: string;
   images: string[];
   type: string;
+  hotels: [
+    {
+      address: string;
+      description: string;
+      id: string;
+      image: string;
+      price: string;
+      title: string;
+    }
+  ];
   location: GeoPoint;
+  lat: number;
+  log: number;
 }
 
 @Component({
@@ -34,6 +47,7 @@ interface IUser {
   styleUrls: ["./add-location.component.css"],
 })
 export class AddLocationComponent implements OnInit {
+  public showSpinner = true;
   manageProductData = {};
   ManageLocation = new ManageLocation("", "", "", "", "", "");
 
@@ -105,6 +119,7 @@ export class AddLocationComponent implements OnInit {
     reader.readAsDataURL(file);
   }
   ngOnInit(): void {
+    this.showSpinner = false;
     this.reactiveForm = new FormGroup({
       name: new FormControl(this.user.name),
       nickname: new FormControl(this.user.nickname),
@@ -161,7 +176,8 @@ export class AddLocationComponent implements OnInit {
     return this.reactiveForm.get("rating")!;
   }
 
-  public validate(): void {
+  public async validate() {
+    this.showSpinner = true;
     if (this.reactiveForm.invalid) {
       for (const control of Object.keys(this.reactiveForm.controls)) {
         this.reactiveForm.controls[control].markAsTouched();
@@ -171,12 +187,28 @@ export class AddLocationComponent implements OnInit {
 
     this.user = this.reactiveForm.value;
     console.info("Name:", this.user);
+    const id = this._angularFirestore.createId();
 
     console.info("Name:", this.user.name);
     console.info("nickname:", this.user.nickname);
     console.info("image:", this.user.images);
     console.info("price:", this.user.price);
     console.info("location:", this.user.location);
+    await this._angularFirestore
+      .collection<Place>("places")
+      .doc(id)
+      .set({
+        description: this.user.nickname,
+        history: this.user.history,
+        hotels: this.user.hotels,
+        id: id,
+        images: this.user.images,
+        location: new GeoPoint(this.user.lat, this.user.log),
+        rating: this.user.rating,
+        title: this.user.name,
+        type: this.user.type,
+      });
+      this.showSpinner=false
   }
 
   addHotel() {

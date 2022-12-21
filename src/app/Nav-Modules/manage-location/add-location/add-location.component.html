@@ -12,15 +12,16 @@
 
   
   <br />
-  
+  <mat-progress-spinner mode="indeterminate" *ngIf="showSpinner" style="margin-left: 50%;">
+  </mat-progress-spinner>
   <div class="container">
-    <form [formGroup]="reactiveForm" #form="ngForm" class="form p-4">
+    <form [formGroup]="reactiveForm"  *ngIf="!showSpinner" #form="ngForm" class="form p-4">
       <div class="row">
         <div class="col-md-6">
           
           <!-- First column This is name  -->
           <label for="name" class="form-label">Location Name:</label>
-          <input [ngModel]="ManageLocation.title" type="text" id="name" name="name" formControlName="name" placeholder="Your name" required minlength="1" maxlength="250" class="form-control form-control-sm p-2" [class.is-invalid]="name.invalid && (name.dirty || name.touched)">
+          <input [ngModel]="ManageLocation.title" type="text" id="name" name="name" formControlName="name" placeholder="Location name" required minlength="1" maxlength="250" class="form-control form-control-sm p-2" [class.is-invalid]="name.invalid && (name.dirty || name.touched)">
           <div *ngIf="name.invalid && (name.dirty || name.touched)" class="invalid-feedback">
             <div *ngIf="name.errors?.['required']">
               This field is required.
@@ -36,8 +37,8 @@
   
         <!-- second colum This is descriptions please carefully binding name is nickname not a description   -->
         <div class="col-md-6">
-          <label for="nickname" class="form-label">description:</label>
-          <input [ngModel]="ManageLocation.description" type="text" id="nickname" name="nickname" formControlName="nickname" placeholder="Your nickname" maxlength="100000" class="form-control form-control-sm p-2" [class.is-invalid]="nickname.invalid && (nickname.dirty || nickname.touched)">
+          <label for="nickname" class="form-label">Description:</label>
+          <input [ngModel]="ManageLocation.description" type="text" id="nickname" name="nickname" formControlName="nickname" placeholder="Description" maxlength="100000" class="form-control form-control-sm p-2" [class.is-invalid]="nickname.invalid && (nickname.dirty || nickname.touched)">
           <div *ngIf="nickname.invalid && (nickname.dirty || nickname.touched)" class="invalid-feedback">
             <div *ngIf="nickname.errors?.['maxlength']">
               This field must have at most 10 characters.
