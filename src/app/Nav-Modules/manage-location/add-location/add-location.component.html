@@ -187,8 +187,8 @@
 
       </div><!--row end-->
   
-      <button type="button" class="btn text-white btn-info mt-3 " (click)="validate()">Submit</button>
-  
+      <button type="button" class="btn text-white btn-info mt-3 " *ngIf="!isEdit" (click)="validate()">Add</button>
+      <button type="button" class="btn text-white btn-info mt-3 " *ngIf="isEdit" (click)="edit()">Update</button>  
     </form>
   </div>
   

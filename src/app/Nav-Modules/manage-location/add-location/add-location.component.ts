@@ -12,11 +12,10 @@ import {
 import { ActivatedRoute, Router } from "@angular/router";
 import { async } from "@firebase/util";
 import { read } from "fs";
-import { firstValueFrom, Subscription } from "rxjs";
+import { firstValueFrom, from, Subscription } from "rxjs";
 import { Place } from "src/app/Models/firebase/place.model";
 import { ManageLocation } from "../../../Models/manage-location";
 import { ManageProductService } from "../../../services/manage-product.service";
-
 interface IUser {
   price: any;
   name: string;
@@ -48,6 +47,8 @@ interface IUser {
   styleUrls: ["./add-location.component.css"],
 })
 export class AddLocationComponent implements OnInit, OnDestroy {
+  public id = "";
+
   public showSpinner = false;
   manageProductData = {};
   ManageLocation = new ManageLocation("", "", "", "", "", "");
@@ -68,6 +69,7 @@ export class AddLocationComponent implements OnInit, OnDestroy {
   ) {
     this.user = {} as IUser;
     this.user.location = new GeoPoint(0, 0);
+    this.showSpinner = true;
   }
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
@@ -128,7 +130,20 @@ export class AddLocationComponent implements OnInit, OnDestroy {
     reader.readAsDataURL(file);
   }
   async ngOnInit() {
-    this.showSpinner = true;
+    this.showSpinner = false;
+    this.reactiveForm = new FormGroup({
+      name: new FormControl(this.user.name),
+      nickname: new FormControl(this.user.nickname),
+      images: this.fb.array(this.user.images || []) as FormArray,
+      history: new FormControl(this.user.history),
+      location: new FormControl(this.user.location),
+      lat: new FormControl(this.user.location.latitude),
+      log: new FormControl(this.user.location.longitude),
+      type: new FormControl(this.user.type),
+
+      rating: new FormControl(this.user.rating),
+      hotels: this.fb.array(this.user.hotels || []) as FormArray,
+    });
     this.sub = this.route.paramMap.subscribe(async (m) => {
       console.log(m.get("id"));
       const id = m.get("id");
@@ -141,16 +156,48 @@ export class AddLocationComponent implements OnInit, OnDestroy {
 
         const data = await product.data();
         // console,
-
+        this.showSpinner = false;
         if (data) {
+          this.id = id;
+          this.reactiveForm.get("name")?.setValue(data.title);
+          this.reactiveForm.get("nickname")?.setValue(data.description);
+          this.reactiveForm.get("history")?.setValue(data.history);
+          this.reactiveForm.get("log")?.setValue(data.location.longitude);
+          this.reactiveForm.get("lat")?.setValue(data.location.latitude);
+          this.reactiveForm.get("location")?.setValue(data.location);
+          this.reactiveForm.get("type")?.setValue(data.type);
+          this.reactiveForm.get("rating")?.setValue(data.rating);
+
+          // const formImg = this.reactiveForm.get("images") as FormArray;
+
+          data.hotels.forEach((hotel) => {
+            const hotelForm = this.fb.group({
+              address: new FormControl(hotel.address),
+              description: new FormControl(hotel.description),
+              id: hotel.id,
+              image: new FormControl(hotel.image),
+              price: new FormControl(hotel.price),
+              title: new FormControl(hotel.title),
+            });
+            (this.reactiveForm.get("hotels") as FormArray).push(hotelForm);
+          });
+
+          data.images.forEach((img) => {
+            (this.reactiveForm.get("images") as FormArray).push(
+              new FormControl(img)
+            );
+          });
+          // this.images.controls.push()
+
           // name: new FormControl(this.user.name),
-          this.user.name = data.title;
+          // this.user.name = data.title;
           // nickname: new FormControl(this.user.nickname),
           this.user.nickname = data.description;
           this.user.history = data.history;
           // images: this.fb.array([]) as FormArray,
           this.user.images = data.images;
           this.user.id = data.id;
+
           // lat: new FormControl(this.user.location.latitude),
 
           this.user.lat = data.location.latitude;
@@ -178,21 +225,8 @@ export class AddLocationComponent implements OnInit, OnDestroy {
         }
       }
     });
-
     this.showSpinner = false;
-    this.reactiveForm = new FormGroup({
-      name: new FormControl(this.user.name),
-      nickname: new FormControl(this.user.nickname),
-      images: this.fb.array([]) as FormArray,
-      history: new FormControl(this.user.history),
-      location: new FormControl(this.user.location),
-      lat: new FormControl(this.user.location.latitude),
-      log: new FormControl(this.user.location.longitude),
-      type: new FormControl(this.user.type),
-
-      rating: new FormControl(this.user.rating),
-      hotels: this.fb.array([]) as FormArray,
-    });
+    console.log(this.user);
   }
 
   manageproduct() {
@@ -247,7 +281,10 @@ export class AddLocationComponent implements OnInit, OnDestroy {
     try {
       this.user = this.reactiveForm.value;
       console.info("Name:", this.user);
-      const id = this._angularFirestore.createId();
+      const id =
+        this.isEdit && this.user.id
+          ? this.user.id
+          : this._angularFirestore.createId();
 
       console.info("Name:", this.user.name);
       console.info("nickname:", this.user.nickname);
@@ -278,16 +315,57 @@ export class AddLocationComponent implements OnInit, OnDestroy {
     } catch (error) {}
     this.showSpinner = false;
   }
+  async edit() {
+    this.showSpinner = true;
+    if (this.reactiveForm.invalid) {
+      for (const control of Object.keys(this.reactiveForm.controls)) {
+        this.reactiveForm.controls[control].markAsTouched();
+      }
+      return;
+    }
+    try {
+      this.user = this.reactiveForm.value;
+      console.info("Name:", this.user);
+      const id = this.user.id;
 
+      console.info("Name:", this.user.name);
+      console.info("nickname:", this.user.nickname);
+      console.info("image:", this.user.images);
+      console.info("price:", this.user.price);
+      console.info("location:", this.user.location);
+
+      this.user.hotels.forEach((hotel, v) => {
+        this.user.hotels[v].price = this.user.hotels[v].price.toString();
+
+        return hotel;
+      });
+      await this._angularFirestore
+        .collection<Place>("Places")
+        .doc(this.id)
+        .update({
+          description: this.user.nickname,
+          history: this.user.history,
+          hotels: this.user.hotels,
+          id: this.id,
+          images: this.user.images,
+          location: new GeoPoint(this.user.lat, this.user.log),
+          rating: this.user.rating as string,
+          title: this.user.name,
+          type: this.user.type,
+        });
+      this.router.navigateByUrl("/manage^location/view^location");
+    } catch (error) {}
+    this.showSpinner = false;
+  }
   addHotel() {
     const id = this._angularFirestore.createId();
     const hotelForm = this.fb.group({
-      address: [""],
+      address: "",
       description: "",
       id: id,
       image: "",
-      price: ["0"],
-      title: [""],
+      price: "0",
+      title: "",
     });
     this.hotels.push(hotelForm);
   }
