@@ -216,7 +216,7 @@ export class AddLocationComponent implements OnInit {
           title: this.user.name,
           type: this.user.type,
         });
-      this.router.navigateByUrl("/manage-location/View^location");
+      this.router.navigateByUrl("/manage^location/view^location");
     } catch (error) {}
     this.showSpinner = false;
   }

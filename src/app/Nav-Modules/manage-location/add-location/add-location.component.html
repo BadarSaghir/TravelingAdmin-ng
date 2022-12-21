@@ -98,7 +98,7 @@
          
           <label for="rating" class="form-label">Rating</label>
           <div>
-          <ngx-star-rating [id]="'rating1'" [ngClass]="ManageLocation.rating" [class.is-invalid]="rating.invalid && (rating.dirty || rating.touched)" style="width: 20px;"></ngx-star-rating>
+          <ngx-star-rating [id]="'rating1'" formControlName="rating" [ngClass]="ManageLocation.rating" [class.is-invalid]="rating.invalid && (rating.dirty || rating.touched)" style="width: 20px;"></ngx-star-rating>
         </div>
           <!-- <input [ngModel]="ManageLocation.rating" type="text" id="rating" name="rating" formControlName="rating" placeholder="Your rating" required minlength="1" maxlength="250" class="form-control form-control-sm p-2" > -->
           <!-- <div *ngIf="rating.invalid && (rating.dirty || rating.touched)" class="invalid-feedback">
