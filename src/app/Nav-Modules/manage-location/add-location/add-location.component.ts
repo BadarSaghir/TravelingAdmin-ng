@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from "@angular/fire/compat/firestore";
 import { AngularFireStorage } from "@angular/fire/compat/storage";
 import { GeoPoint } from "@angular/fire/firestore";
 import {
@@ -23,6 +24,7 @@ interface IUser {
   history: string;
   id?: string;
   images: string[];
+  type: string;
   location: GeoPoint;
 }
 
@@ -41,9 +43,11 @@ export class AddLocationComponent implements OnInit {
   constructor(
     private _auth: ManageProductService,
     private fb: FormBuilder,
-    private storage: AngularFireStorage
+    private storage: AngularFireStorage,
+    private _angularFirestore: AngularFirestore
   ) {
     this.user = {} as IUser;
+    this.user.location = new GeoPoint(0, 0);
   }
   async deleteImage(index: number) {
     const imagesArray = this.reactiveForm.get("images") as FormArray;
@@ -105,8 +109,12 @@ export class AddLocationComponent implements OnInit {
       name: new FormControl(this.user.name),
       nickname: new FormControl(this.user.nickname),
       images: this.fb.array([]) as FormArray,
-      price: new FormControl(this.user.price),
+      history: new FormControl(this.user.history),
       location: new FormControl(this.user.location),
+      lat: new FormControl(this.user.location.latitude),
+      log: new FormControl(this.user.location.longitude),
+      type: new FormControl(this.user.type),
+
       rating: new FormControl(this.user.rating),
       hotels: this.fb.array([]) as FormArray,
     });
@@ -142,6 +150,13 @@ export class AddLocationComponent implements OnInit {
   get location() {
     return this.reactiveForm.get("location")!;
   }
+  get lat() {
+    return this.reactiveForm.get("lat")!;
+  }
+
+  get log() {
+    return this.reactiveForm.get("log")!;
+  }
   get rating() {
     return this.reactiveForm.get("rating")!;
   }
@@ -155,6 +170,8 @@ export class AddLocationComponent implements OnInit {
     }
 
     this.user = this.reactiveForm.value;
+    console.info("Name:", this.user);
+
     console.info("Name:", this.user.name);
     console.info("nickname:", this.user.nickname);
     console.info("image:", this.user.images);
@@ -163,10 +180,11 @@ export class AddLocationComponent implements OnInit {
   }
 
   addHotel() {
+    const id = this._angularFirestore.createId();
     const hotelForm = this.fb.group({
       address: [""],
       description: "",
-      id: [""],
+      id: id,
       image: "",
       price: ["0"],
       title: [""],

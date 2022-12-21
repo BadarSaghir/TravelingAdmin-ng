@@ -19,7 +19,7 @@
         <div class="col-md-6">
           
           <!-- First column This is name  -->
-          <label for="name" class="form-label">First Name:</label>
+          <label for="name" class="form-label">Location Name:</label>
           <input [ngModel]="ManageLocation.title" type="text" id="name" name="name" formControlName="name" placeholder="Your name" required minlength="1" maxlength="250" class="form-control form-control-sm p-2" [class.is-invalid]="name.invalid && (name.dirty || name.touched)">
           <div *ngIf="name.invalid && (name.dirty || name.touched)" class="invalid-feedback">
             <div *ngIf="name.errors?.['required']">
@@ -47,7 +47,19 @@
             </div>
           </div>
         </div>
+
+           <!-- fouth colum This is price -->
+           <div class="col-md-6 mt-2">
+            <label for="price" class="form-label">History</label>
+            <input [ngModel]="ManageLocation.history" class="form-control form-control-sm p-2" type="text" id="history" name="history" formControlName="history" placeholder="History" required minlength="1">
+        
+          </div>
   
+          <div class="col-md-6 mt-2">
+            <label for="price" class="form-label">Type</label>
+            <input [ngModel]="ManageLocation.history" class="form-control form-control-sm p-2" type="text" id="type" name="type" formControlName="type" placeholder="Type" required minlength="1">
+        
+          </div>
         <!-- third colum This is product image  -->
         <div class="col-md-12 mt-2">
          <div>
@@ -64,32 +76,22 @@
           </div>
         </div>
 
-        <!-- fouth colum This is price -->
-        <div class="col-md-6 mt-2">
-          <label for="price" class="form-label">History</label>
-          <input [ngModel]="ManageLocation.history" type="text" id="price" name="price" formControlName="price" placeholder="Your price" required minlength="1" maxlength="250" class="form-control form-control-sm p-2" [class.is-invalid]="price.invalid && (price.dirty || price.touched)">
-          <div *ngIf="price.invalid && (price.dirty || price.touched)" class="invalid-feedback">
-            <div *ngIf="price.errors?.['required']">
-              This field is required.
-            </div>
-            <div *ngIf="price.errors?.['minlength']">
-              This field must have at least 1 character.
-            </div>
-          </div>
-        </div>
+     
         <!-- fouth colum This is location -->
-        <div class="col-md-6 mt-2">
-          <label for="location" class="form-label">Location</label>
-          <input [ngModel]="ManageLocation.location" type="text" id="location" name="location" formControlName="location" placeholder="Your location" required minlength="1" maxlength="250" class="form-control form-control-sm p-2" [class.is-invalid]="location.invalid && (location.dirty || location.touched)">
-          <div *ngIf="location.invalid && (location.dirty || location.touched)" class="invalid-feedback">
-            <div *ngIf="location.errors?.['required']">
-              This field is required.
-            </div>
-            <div *ngIf="location.errors?.['minlength']">
-              This field must have at least 1 character.
-            </div>
-          </div>
+        <div class="col-md-12 mt-4 mb-3">
+          <div class="col-md-12" style="display: flex; justify-content: space-around;align-items: center;" >
+          <div class="col-md-3">
+          <label for="location" class="form-label">Latitude</label>
+          <input [ngModel]="ManageLocation.location" type="number" id="location" name="location" formControlName="lat" placeholder="Latitude"   min="-180" max="180"  minlength="1" maxlength="250" class="form-control form-control-sm p-2" >
         </div>
+        <div class="col-md-3">
+          <label for="location" class="form-label">Longitude</label>
+          <input [ngModel]="ManageLocation.location" type="number" id="location" name="location" formControlName="log" placeholder="Longitude" min="-180" max="180"  minlength="1" maxlength="250" class="form-control form-control-sm p-2">
+        </div>
+      </div>
+        </div>
+
+        
         <!-- fouth colum This is rating -->
         <div style="display: flex; justify-content: center;align-items: center;" class="col-md-12 mt-2 text-center">
          
@@ -122,7 +124,7 @@
            </div>
 
            <div  class="col-md-6 mt-2">
-            <label  class="form-label">Price:</label>
+            <label  class="form-label">Hotel Price:</label>
             <input type="number" class="form-control form-control-sm p-2" formControlName="price">
            </div>
 
