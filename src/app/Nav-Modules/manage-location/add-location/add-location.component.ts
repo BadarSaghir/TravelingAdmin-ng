@@ -226,6 +226,9 @@ export class AddLocationComponent implements OnInit, OnDestroy {
       }
     });
     this.showSpinner = false;
+    if (this.isEdit == false) {
+      this.addHotel();
+    }
     console.log(this.user);
   }
 
@@ -370,7 +373,7 @@ export class AddLocationComponent implements OnInit, OnDestroy {
     this.hotels.push(hotelForm);
   }
   removeHotel(i: number) {
-    this.hotels.removeAt(i);
+    if (this.hotels.length > 1) this.hotels.removeAt(i);
   }
   get hotels() {
     return this.reactiveForm.get("hotels") as FormArray;
