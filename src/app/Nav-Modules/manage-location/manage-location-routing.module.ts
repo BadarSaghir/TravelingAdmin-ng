@@ -22,7 +22,6 @@ const routes: Routes = [
         canActivate: [AuthGuardService],
         component: AddLocationComponent,
       },
-
       {
         path: "view^location",
         canActivate: [AuthGuardService],

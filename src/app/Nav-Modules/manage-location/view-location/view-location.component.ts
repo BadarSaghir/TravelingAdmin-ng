@@ -61,7 +61,8 @@ export class ViewLocationComponent implements OnInit {
     // });
   }
   editLocation(id: string) {
-    this.router.navigateByUrl("/manage-location/Edit^location/" + id);
+    console.log(id);
+    this.router.navigateByUrl("/manage^location/Edit^location/" + id);
   }
 
   constructor(
