@@ -57,10 +57,11 @@ export class UserService {
     this.firestore.totalUsers = 0;
 
     user.forEach((user, idx) => {
-      if (user.id != ignoreUid) {
+      if (user.is_deleted == false) {
         this.firestore.totalUsers++;
         i++;
         this.users.push({
+          is_deleted: false,
           email_address: user.email_address,
           id: user.id,
           image_url: user.email_address,

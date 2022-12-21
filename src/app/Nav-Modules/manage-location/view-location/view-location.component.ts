@@ -8,6 +8,7 @@ import { CollectionsTypes } from "src/app/shared/types/collection.type";
 import { doc } from "firebase/firestore";
 import { AngularFirestore } from "@angular/fire/compat/firestore";
 import { Product } from "src/app/Models/firebase/product.model";
+import { Router } from "@angular/router";
 
 export interface PeriodicElement {
   id?: string;
@@ -59,11 +60,15 @@ export class ViewLocationComponent implements OnInit {
     // );
     // });
   }
+  editLocation(id: string) {
+    this.router.navigateByUrl("/manage-location/Edit^location/" + id);
+  }
 
   constructor(
     private firestore: FireStoreService,
     public productService: LocationService,
     private store: Firestore,
+    private router: Router,
     private ngstore: AngularFirestore
   ) {}
 

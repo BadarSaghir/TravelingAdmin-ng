@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { AngularFirestore } from "@angular/fire/compat/firestore";
 import { AngularFireStorage } from "@angular/fire/compat/storage";
 import { GeoPoint } from "@angular/fire/firestore";
@@ -9,10 +9,10 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { async } from "@firebase/util";
 import { read } from "fs";
-import { firstValueFrom } from "rxjs";
+import { firstValueFrom, Subscription } from "rxjs";
 import { Place } from "src/app/Models/firebase/place.model";
 import { ManageLocation } from "../../../Models/manage-location";
 import { ManageProductService } from "../../../services/manage-product.service";
@@ -47,23 +47,30 @@ interface IUser {
   templateUrl: "./add-location.component.html",
   styleUrls: ["./add-location.component.css"],
 })
-export class AddLocationComponent implements OnInit {
+export class AddLocationComponent implements OnInit, OnDestroy {
   public showSpinner = false;
   manageProductData = {};
   ManageLocation = new ManageLocation("", "", "", "", "", "");
+  public isEdit = false;
 
   public reactiveForm!: FormGroup;
   user: IUser;
+  sub?: Subscription;
 
   constructor(
     private _auth: ManageProductService,
     private fb: FormBuilder,
+    private route: ActivatedRoute,
+
     private storage: AngularFireStorage,
     private _angularFirestore: AngularFirestore,
     private router: Router
   ) {
     this.user = {} as IUser;
     this.user.location = new GeoPoint(0, 0);
+  }
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe();
   }
   async deleteImage(index: number) {
     const imagesArray = this.reactiveForm.get("images") as FormArray;
@@ -120,7 +127,58 @@ export class AddLocationComponent implements OnInit {
     };
     reader.readAsDataURL(file);
   }
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.showSpinner = true;
+    this.sub = this.route.paramMap.subscribe(async (m) => {
+      console.log(m.get("id"));
+      const id = m.get("id");
+      if (id) {
+        this.showSpinner = true;
+        this.isEdit = true;
+        const product = await firstValueFrom(
+          await this._angularFirestore.collection<Place>("Places").doc(id).get()
+        );
+
+        const data = await product.data();
+        // console,
+
+        if (data) {
+          // name: new FormControl(this.user.name),
+          this.user.name = data.title;
+          // nickname: new FormControl(this.user.nickname),
+          this.user.nickname = data.description;
+          this.user.history = data.history;
+          // images: this.fb.array([]) as FormArray,
+          this.user.images = data.images;
+          this.user.id = data.id;
+          // lat: new FormControl(this.user.location.latitude),
+
+          this.user.lat = data.location.latitude;
+          this.user.log = data.location.longitude;
+          // location: new FormControl(this.user.location),
+          this.user.location = data.location;
+          // rating: new FormControl(this.user.rating),
+
+          this.user.rating = data.rating ? data.rating : "0";
+          // hotels: this.fb.array([]) as FormArray,
+
+          this.user.hotels = data.hotels;
+          // type: new FormControl(this.user.type),
+          this.user.type = data.type;
+          // history: new FormControl(this.user.history),
+          this.user.history = data.history;
+
+          this.isEdit = true;
+        } else {
+          // if (!this.isEdit)
+          this.isEdit = false;
+          this.showSpinner = false;
+
+          this.router.navigateByUrl("/manage-location/View^location");
+        }
+      }
+    });
+
     this.showSpinner = false;
     this.reactiveForm = new FormGroup({
       name: new FormControl(this.user.name),
@@ -212,7 +270,7 @@ export class AddLocationComponent implements OnInit {
           id: id,
           images: this.user.images,
           location: new GeoPoint(this.user.lat, this.user.log),
-          rating: this.user.rating,
+          rating: this.user.rating as string,
           title: this.user.name,
           type: this.user.type,
         });
@@ -236,7 +294,6 @@ export class AddLocationComponent implements OnInit {
   removeHotel(i: number) {
     this.hotels.removeAt(i);
   }
-
   get hotels() {
     return this.reactiveForm.get("hotels") as FormArray;
   }

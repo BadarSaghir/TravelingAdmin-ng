@@ -6,7 +6,7 @@ export interface Place {
   id: string;
   images: string[];
   location: GeoPoint;
-  rating: number | string;
+  rating: string;
   title: string;
   type: string;
   hotels: [
@@ -20,6 +20,7 @@ export interface Place {
     }
   ];
 }
+
 
 //
 // "Built in 1556 "

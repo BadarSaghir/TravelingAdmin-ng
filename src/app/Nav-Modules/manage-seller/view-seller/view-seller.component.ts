@@ -6,6 +6,10 @@ import { PeriodicElement } from "../../manage-user/view-user/view-user.component
 import { ManageSellerService } from "src/app/services/manage-seller.service";
 import { FireStoreService } from "src/app/services/firebase/firestore.service";
 import { Seller, User } from "src/app/Models/firebase/user.model";
+import { AngularFireAuth } from "@angular/fire/compat/auth";
+// import * as firebase from "firebase/app";
+
+import { environment } from "src/environments/environment";
 
 const ELEMENT_DATA: PeriodicElement[] = [];
 
@@ -17,9 +21,14 @@ const ELEMENT_DATA: PeriodicElement[] = [];
 export class ViewSellerComponent implements OnInit {
   constructor(
     private sellerService: ManageSellerService,
+    public auth: AngularFireAuth,
     public fireStoreService: FireStoreService
   ) {}
   ngOnInit(): void {
+    // firebase
+
+    // fireAdmin.auth(getApp());
+
     this.sellerService.setDataInTable((tmp) => {
       this.dataSource.setData(tmp);
     });
@@ -28,6 +37,7 @@ export class ViewSellerComponent implements OnInit {
   updateApproval(element: PeriodicElement) {
     this.fireStoreService.updateDoc<User>(
       {
+        is_deleted: false,
         email_address: element.email_address,
         name: element.name,
         roles: element.roles,
@@ -38,6 +48,7 @@ export class ViewSellerComponent implements OnInit {
         location: element.location,
       },
       {
+        is_deleted: false,
         email_address: element.email_address,
         name: element.name,
         roles: element.roles,
@@ -76,9 +87,38 @@ export class ViewSellerComponent implements OnInit {
     this.dataToDisplay = this.dataToDisplay.slice(0, -1);
     this.dataSource.setData(this.dataToDisplay);
   }
-  async deleteUser(uid: string) {
-    console.log("uid", uid);
-    this.fireStoreService.deleteDocument("Users", { uid: uid });
+  async deleteUser(element: any) {
+    // console.log("uid", uid);
+    // this.fireStoreService.deleteDocument("Users", { uid: uid });
+    this.fireStoreService.updateDoc<User>(
+      {
+        is_deleted: false,
+        email_address: element.email_address,
+        name: element.name,
+        roles: element.roles,
+        id: element.id,
+        image_url: element.image_url,
+        joined_at: element.joined_at,
+        is_allowed: element.is_allowed,
+        location: element.location,
+      },
+      {
+        is_deleted: true,
+        email_address: element.email_address,
+        name: element.name,
+        roles: element.roles,
+        id: element.id,
+        image_url: element.image_url,
+        joined_at: element.joined_at,
+        is_allowed: false,
+        location: element.location,
+      },
+      "Users"
+    );
+
+    // this.auth.
+    // this..deleteUser(userId)
+
     // const tmp = this.getPeriodicElements(ELEMENT_DATA, uid);
     // this.dataSource.setData(tmp);
   }

@@ -155,6 +155,7 @@ export class AddSellerComponent implements OnInit {
           .collection<User>("Users")
           .doc(auth.user?.uid)
           .set({
+            is_deleted: false,
             email_address: this.user.email,
             name: this.user.firstName,
             is_allowed: this.user.role,

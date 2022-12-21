@@ -18,6 +18,12 @@ const routes: Routes = [
         component: AddLocationComponent,
       },
       {
+        path: "Edit^location/:id",
+        canActivate: [AuthGuardService],
+        component: AddLocationComponent,
+      },
+
+      {
         path: "view^location",
         canActivate: [AuthGuardService],
         component: ViewLocationComponent,

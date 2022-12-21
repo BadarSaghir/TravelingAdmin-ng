@@ -32,9 +32,9 @@
 
     <!-- image column  -->
     <ng-container matColumnDef="image">
-      <th mat-header-cell *matHeaderCellDef>User image</th>
+      <th mat-header-cell *matHeaderCellDef>Location image</th>
       <td mat-cell *matCellDef="let element">
-        <img src="../assets/images/admin.jpg" class="img-fluid" width="30" alt="">
+        <img [src]="element.img?element.img:'../assets/images/admin.jpg'" class="img-fluid" width="30" alt="">
       </td>
     </ng-container>
   
@@ -64,7 +64,7 @@
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item>
+          <button (click)="editLocation(element.id)" mat-menu-item>
             <mat-icon>edit</mat-icon>
             <span>Edit</span>
           </button>

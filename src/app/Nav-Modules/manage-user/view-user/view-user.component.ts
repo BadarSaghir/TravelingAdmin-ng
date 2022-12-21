@@ -50,9 +50,38 @@ export class ViewUserComponent implements OnInit {
     this.dataToDisplay = this.dataToDisplay.slice(0, -1);
     this.dataSource.setData(this.dataToDisplay);
   }
-  async deleteUser(uid: string) {
-    console.log("uid", uid);
-    await this.firestore.deleteDocument("Users", { uid: uid });
+  async deleteUser(element: any) {
+    // console.log("uid", uid);
+    // this.fireStoreService.deleteDocument("Users", { uid: uid });
+    this.firestore.updateDoc<User>(
+      {
+        is_deleted: false,
+        email_address: element.email_address,
+        name: element.name,
+        roles: element.roles,
+        id: element.id,
+        image_url: element.image_url,
+        joined_at: element.joined_at,
+        is_allowed: element.is_allowed,
+        location: element.location,
+      },
+      {
+        is_deleted: true,
+        email_address: element.email_address,
+        name: element.name,
+        roles: element.roles,
+        id: element.id,
+        image_url: element.image_url,
+        joined_at: element.joined_at,
+        is_allowed: false,
+        location: element.location,
+      },
+      "Users"
+    );
+
+    // this.auth.
+    // this..deleteUser(userId)
+
     // const tmp = this.getPeriodicElements(ELEMENT_DATA, uid);
     // this.dataSource.setData(tmp);
   }

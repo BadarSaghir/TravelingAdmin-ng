@@ -49,7 +49,7 @@ export class ManageSellerService {
     this.firestore.totalUnApproveSellers = 0;
 
     sellers.forEach((seller, idx) => {
-      if (seller.id != ignoreUid) {
+      if (seller.is_deleted == false) {
         i++;
         if (seller.is_allowed == true) this.firestore.totalApproveSellers++;
         else {
@@ -57,6 +57,7 @@ export class ManageSellerService {
         }
 
         this.sellers.push({
+          is_deleted: false,
           email_address: seller.email_address,
           name: seller.name,
           position: idx + 1,

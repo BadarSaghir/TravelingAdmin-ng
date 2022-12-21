@@ -3,6 +3,7 @@ import { GeoPoint, Timestamp } from "firebase/firestore";
 export interface User {
   email_address: string;
   id: string;
+  is_deleted: boolean;
   image_url: string;
   is_allowed: boolean;
   joined_at: Timestamp;
