@@ -1,66 +1,118 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ManageLocation } from '../../../Models/manage-location';
-import { ManageProductService } from '../../../services/manage-product.service';
+import { AngularFireStorage } from "@angular/fire/compat/storage";
+import { GeoPoint } from "@angular/fire/firestore";
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from "@angular/forms";
+import { async } from "@firebase/util";
+import { read } from "fs";
+import { firstValueFrom } from "rxjs";
+import { ManageLocation } from "../../../Models/manage-location";
+import { ManageProductService } from "../../../services/manage-product.service";
 
 interface IUser {
   price: any;
   name: string;
   nickname: string;
-  image: string;
-  history: string;
-  location: string;
   rating: string;
+  description: string;
+  history: string;
+  id?: string;
+  images: string[];
+  location: GeoPoint;
 }
 
 @Component({
-  selector: 'app-add-location',
-  templateUrl: './add-location.component.html',
-  styleUrls: ['./add-location.component.css']
+  selector: "app-add-location",
+  templateUrl: "./add-location.component.html",
+  styleUrls: ["./add-location.component.css"],
 })
 export class AddLocationComponent implements OnInit {
+  manageProductData = {};
+  ManageLocation = new ManageLocation("", "", "", "", "", "");
 
-
-  manageProductData = {}
-  ManageLocation = new ManageLocation('tz', 'description', '', 'history', 'location', 'rating', );
-
-  reactiveForm!: FormGroup;
+  public reactiveForm!: FormGroup;
   user: IUser;
 
-  constructor(private _auth: ManageProductService) {
+  constructor(
+    private _auth: ManageProductService,
+    private fb: FormBuilder,
+    private storage: AngularFireStorage
+  ) {
     this.user = {} as IUser;
   }
+  async deleteImage(index: number) {
+    const imagesArray = this.reactiveForm.get("images") as FormArray;
+    const value = imagesArray.controls[index].value;
+    const fileRef = this.storage.storage.refFromURL(value);
+    await fileRef.delete();
+    console.log(value);
+    imagesArray.removeAt(index);
+  }
 
+  async deleteHotelImage(index: number) {
+    const hotelsArray = this.reactiveForm.get("hotels") as FormArray;
+    const value = hotelsArray.controls[index].get("image")?.value;
+    const fileRef = this.storage.storage.refFromURL(value);
+    await fileRef.delete();
+    console.log(value);
+    hotelsArray.controls[index].get("image")?.setValue("");
+  }
+
+  addImage(event: any) {
+    const file: File = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const imagesArray = this.reactiveForm.get("images") as FormArray;
+      console.log(file.name);
+      const filePath = "images/" + file.name;
+      const task = await this.storage.upload(filePath, file);
+      const path = await firstValueFrom(
+        await this.storage.ref(task.ref.fullPath).getDownloadURL()
+      );
+      console.log(path);
+      // const path = (await task).metadata.fullPath;
+      // console.log(reader.readAsDataURL(file));
+      // console.log(reader.result);
+      imagesArray.push(new FormControl(path));
+    };
+    reader.readAsDataURL(file);
+  }
+
+  addHotelImage(event: any, index: number) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const imagesArray = this.reactiveForm.get("hotels") as FormArray;
+      const filePath = "images/hotels/" + file.name;
+      const task = await this.storage.upload(filePath, file);
+      const path = await firstValueFrom(
+        await this.storage.ref(task.ref.fullPath).getDownloadURL()
+      );
+      (await task).metadata.fullPath;
+      console.log(path);
+
+      imagesArray.controls[index].get("image")?.setValue(path);
+    };
+    reader.readAsDataURL(file);
+  }
   ngOnInit(): void {
     this.reactiveForm = new FormGroup({
-      name: new FormControl(this.user.name, [
-        Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(250),
-      ]),
-      nickname: new FormControl(this.user.nickname, [
-        Validators.required,
-        Validators.maxLength(10000),
-      ]),
-      image: new FormControl(this.user.image, [
-        Validators.required,
-      ]),
-      price: new FormControl(this.user.price, [
-        Validators.required,
-        Validators.minLength(1),
-      ]),
-      location: new FormControl(this.user.location, [
-        Validators.required,
-        Validators.minLength(1),
-      ]),
-      rating: new FormControl(this.user.rating, [
-        Validators.required,
-
-      ]),
+      name: new FormControl(this.user.name),
+      nickname: new FormControl(this.user.nickname),
+      images: this.fb.array([]) as FormArray,
+      price: new FormControl(this.user.price),
+      location: new FormControl(this.user.location),
+      rating: new FormControl(this.user.rating),
+      hotels: this.fb.array([]) as FormArray,
     });
   }
 
-  manageproduct(){
+  manageproduct() {
     // this._auth.manageproduct(this.manageProductData)
     // .subscribe(
     //   res => console.log(res),
@@ -69,25 +121,29 @@ export class AddLocationComponent implements OnInit {
   }
 
   get name() {
-    return this.reactiveForm.get('name')!;
+    return this.reactiveForm.get("name")!;
   }
 
   get nickname() {
-    return this.reactiveForm.get('nickname')!;
+    return this.reactiveForm.get("nickname")!;
   }
 
-  get image() {
-    return this.reactiveForm.get('image')!;
+  get images() {
+    return this.reactiveForm.get("images") as FormArray;
   }
-
+  image(i: number) {
+    return (this.reactiveForm.get("hotels") as FormArray).controls[i].get(
+      "image"
+    );
+  }
   get price() {
-    return this.reactiveForm.get('price')!;
+    return this.reactiveForm.get("price")!;
   }
   get location() {
-    return this.reactiveForm.get('location')!;
+    return this.reactiveForm.get("location")!;
   }
   get rating() {
-    return this.reactiveForm.get('rating')!;
+    return this.reactiveForm.get("rating")!;
   }
 
   public validate(): void {
@@ -99,12 +155,29 @@ export class AddLocationComponent implements OnInit {
     }
 
     this.user = this.reactiveForm.value;
-
-    console.info('Name:', this.user.name);
-    console.info('nickname:', this.user.nickname);
-    console.info('image:', this.user.image);
-    console.info('price:', this.user.price);
-    console.info('location:', this.user.location);
+    console.info("Name:", this.user.name);
+    console.info("nickname:", this.user.nickname);
+    console.info("image:", this.user.images);
+    console.info("price:", this.user.price);
+    console.info("location:", this.user.location);
   }
 
+  addHotel() {
+    const hotelForm = this.fb.group({
+      address: [""],
+      description: "",
+      id: [""],
+      image: "",
+      price: ["0"],
+      title: [""],
+    });
+    this.hotels.push(hotelForm);
+  }
+  removeHotel(i: number) {
+    this.hotels.removeAt(i);
+  }
+
+  get hotels() {
+    return this.reactiveForm.get("hotels") as FormArray;
+  }
 }

@@ -49,25 +49,21 @@
         </div>
   
         <!-- third colum This is product image  -->
-        <div class="col-md-6 mt-2">
-          <label for="image" class="form-label">Product Image:</label>
-          <input [ngModel]="ManageLocation.image" type="file" id="image" name="image" formControlName="image" placeholder="product image" required minlength="1" maxlength="250" class="form-control form-control-sm p-2" [class.is-invalid]="image.invalid && (image.dirty || image.touched)">
-          <div *ngIf="image.invalid && (image.dirty || image.touched)" class="invalid-feedback">
-            <div *ngIf="image.errors?.['required']">
-              This field is required.
+        <div class="col-md-12 mt-2">
+         <div>
+            <div style="display: flex;gap: 2;" formArrayName="images">
+              <div  style="display: flex;gap: 2;margin-right: 2px;" *ngFor="let image of images.controls; let i = index">
+                <div   class="mr-2" style="display: flex;flex-direction: column;"> 
+                <img [src]="image.value" style="width: 100px; height: 100px;">
+                <button  class="btn btn-sm text-white btn-danger" (click)="deleteImage(i)">Delete</button>
+              </div>
+              </div>
             </div>
-            <div *ngIf="image.errors?.['minlength']">
-              This field must have at least 1 character.
-            </div>
-            <div *ngIf="image.errors?.['maxlength']">
-              This field must have at most 250 characters.
-            </div>
-            <div *ngIf="!image.errors?.['required'] && !image.errors?.['minlength'] && !image.errors?.['maxlength'] && image.errors?.['imageValidator']">
-              Invalid email format.
-            </div>
-          </div>        
+            <br>
+            <input  class="mt-1"  type="file" accept=".png,.jpeg,.jpg,.webp" (change)="addImage($event)">
+          </div>
         </div>
-  
+
         <!-- fouth colum This is price -->
         <div class="col-md-6 mt-2">
           <label for="price" class="form-label">History</label>
@@ -95,26 +91,92 @@
           </div>
         </div>
         <!-- fouth colum This is rating -->
-        <div class="col-md-6 mt-2">
+        <div style="display: flex; justify-content: center;align-items: center;" class="col-md-12 mt-2 text-center">
+         
           <label for="rating" class="form-label">Rating</label>
+          <div>
           <ngx-star-rating [id]="'rating1'" [ngClass]="ManageLocation.rating" [class.is-invalid]="rating.invalid && (rating.dirty || rating.touched)" style="width: 20px;"></ngx-star-rating>
+        </div>
           <!-- <input [ngModel]="ManageLocation.rating" type="text" id="rating" name="rating" formControlName="rating" placeholder="Your rating" required minlength="1" maxlength="250" class="form-control form-control-sm p-2" > -->
           <!-- <div *ngIf="rating.invalid && (rating.dirty || rating.touched)" class="invalid-feedback">
             <div *ngIf="rating.errors?.['required']">
               This field is required.
             </div>
           </div> -->
+        
         </div>
 
+
+          <!-- fouth colum This is location -->
+          <div class="col-md-12 mt-2" formArrayName="hotels">
+             <div class="col-md-12" *ngFor="let hotel of hotels.controls; index as i">
+          <div class="form p-4 row"  [formGroupName]="i" >
+              <div class="col-md-12">
+                <p>Hotel {{i+1}}</p>
+              </div>
+           
+           
+           <div class="col-md-6 mt-2" >
+            <label  class="form-label">Hotel Title:</label>
+            <input type="text" class="form-control form-control-sm p-2" formControlName="title" >
+           </div>
+
+           <div  class="col-md-6 mt-2">
+            <label  class="form-label">Price:</label>
+            <input type="number" class="form-control form-control-sm p-2" formControlName="price">
+           </div>
+
+           <div class="col-md-6 mt-2" >
+            <label  class="form-label">Hotel Address:</label>
+            <input type="text" class="form-control form-control-sm p-2" formControlName="address">
+           </div>
+
+           <div class="col-md-6 mt-2" >
+            <label  class="form-label">Hotel Description:</label>
+            <input type="text" class="form-control form-control-sm p-2" formControlName="description">
+           </div>
+
+           <div class="col-md-6 mt-2" >
+            <label  class="form-label">Hotel image :</label>
+            <!-- <input  class="mt-1" type="file"  (change)="addImage($event)"> -->
+            <div style="display: flex;gap: 2;">
+              <div  style="display: flex;gap: 2;margin-right: 2px;">
+                <div   class="mr-2" style="display: flex;flex-direction: column;"> 
+                  <div *ngIf="!image(i)?.value">
+                  <input   class="mt-1"  type="file" accept=".png,.jpeg,.jpg,.webp" (change)="addHotelImage($event,i)">
+                </div>
+                  <div *ngIf="image(i)?.value">
+                <img [src]="image(i)?.value" style="width: 100px; height: 100px;">
+                <button  class="btn btn-sm text-white btn-danger" (click)="deleteHotelImage(i)">Delete</button>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <br>
+            
+            <!-- <input type="file" accept=".png,.jpeg,.jpg,.webp" class="form-control form-control-sm p-2" formControlName="image"> -->
+           </div>
+
+           <div class="col-md-12">
+            <button class="btn text-white btn-info mt-3" (click)="removeHotel(i)">Remove Hotel</button>
+          </div>
+          </div>
+           <hr>
+          </div>
+          <div class="col-md-12">
+            <button class="btn text-white btn-info mt-3" (click)="addHotel()">Add Hotel</button>
+          </div>
+          
+
+          </div>
+
         <div class="d-flex rating-list align-items-center">
-          <p class="w-50">Overall Ratings</p>
+          <p class="w-50"></p>
           <div class="star w-50 rating-star">
 
           </div>
       </div>
-
-
-
 
 
 

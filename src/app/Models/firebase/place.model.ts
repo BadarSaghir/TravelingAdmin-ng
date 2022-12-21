@@ -1,9 +1,11 @@
+import { GeoPoint } from "firebase/firestore";
+
 export interface Place {
   description: string;
   history: string;
   id: string;
   images: string[];
-  location: { latitude?: number; longitude?: number };
+  location: GeoPoint;
   rating: number | string;
   title: string;
   type: string;
@@ -19,10 +21,9 @@ export interface Place {
   ];
 }
 
-
-// 
+//
 // "Built in 1556 "
-// 
+//
 // 0
 // address
 // "abbottabad pakistan"
