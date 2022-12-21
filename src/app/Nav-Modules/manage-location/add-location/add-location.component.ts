@@ -9,6 +9,7 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
+import { Router } from "@angular/router";
 import { async } from "@firebase/util";
 import { read } from "fs";
 import { firstValueFrom } from "rxjs";
@@ -47,7 +48,7 @@ interface IUser {
   styleUrls: ["./add-location.component.css"],
 })
 export class AddLocationComponent implements OnInit {
-  public showSpinner = true;
+  public showSpinner = false;
   manageProductData = {};
   ManageLocation = new ManageLocation("", "", "", "", "", "");
 
@@ -58,7 +59,8 @@ export class AddLocationComponent implements OnInit {
     private _auth: ManageProductService,
     private fb: FormBuilder,
     private storage: AngularFireStorage,
-    private _angularFirestore: AngularFirestore
+    private _angularFirestore: AngularFirestore,
+    private router: Router
   ) {
     this.user = {} as IUser;
     this.user.location = new GeoPoint(0, 0);
@@ -184,31 +186,39 @@ export class AddLocationComponent implements OnInit {
       }
       return;
     }
+    try {
+      this.user = this.reactiveForm.value;
+      console.info("Name:", this.user);
+      const id = this._angularFirestore.createId();
 
-    this.user = this.reactiveForm.value;
-    console.info("Name:", this.user);
-    const id = this._angularFirestore.createId();
+      console.info("Name:", this.user.name);
+      console.info("nickname:", this.user.nickname);
+      console.info("image:", this.user.images);
+      console.info("price:", this.user.price);
+      console.info("location:", this.user.location);
 
-    console.info("Name:", this.user.name);
-    console.info("nickname:", this.user.nickname);
-    console.info("image:", this.user.images);
-    console.info("price:", this.user.price);
-    console.info("location:", this.user.location);
-    await this._angularFirestore
-      .collection<Place>("places")
-      .doc(id)
-      .set({
-        description: this.user.nickname,
-        history: this.user.history,
-        hotels: this.user.hotels,
-        id: id,
-        images: this.user.images,
-        location: new GeoPoint(this.user.lat, this.user.log),
-        rating: this.user.rating,
-        title: this.user.name,
-        type: this.user.type,
+      const hotels = this.user.hotels.forEach((hotel, v) => {
+        this.user.hotels[v].price = this.user.hotels[v].price.toString();
+
+        return hotel;
       });
-      this.showSpinner=false
+      await this._angularFirestore
+        .collection<Place>("Places")
+        .doc(id)
+        .set({
+          description: this.user.nickname,
+          history: this.user.history,
+          hotels: this.user.hotels,
+          id: id,
+          images: this.user.images,
+          location: new GeoPoint(this.user.lat, this.user.log),
+          rating: this.user.rating,
+          title: this.user.name,
+          type: this.user.type,
+        });
+      this.router.navigateByUrl("/manage-location/View^location");
+    } catch (error) {}
+    this.showSpinner = false;
   }
 
   addHotel() {
