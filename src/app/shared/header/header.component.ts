@@ -28,6 +28,7 @@ export class HeaderComponent implements OnInit {
     this.image = img
       ? this.sanitize.bypassSecurityTrustResourceUrl(img)
       : environment.baseUrl + "/assets/images/dp.png";
+
     // this.image = this.auth.user?.photoURL
     //   ? this.auth.user?.photoURL
     //   : environment.baseUrl + "/assets/images/dp.png";
